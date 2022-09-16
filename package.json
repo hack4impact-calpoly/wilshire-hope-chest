@@ -21,8 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint-check": "prettier --check . && eslint .",
-    "lint-write": "prettier --write . && eslint --fix .",
+    "lint-check": "prettier --check . && eslint --cache .",
+    "lint-write": "prettier --write . && eslint --cache --fix .",
     "prepare": "husky install"
   },
   "eslintConfig": {
@@ -59,7 +59,6 @@
     "prettier": "2.7.1"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
+    "*": "prettier --write"
   }
 }
