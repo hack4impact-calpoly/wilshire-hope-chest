@@ -12,5 +12,4 @@ This project is a template repo for H4I teams to get their project teams off the
 
 ## Getting Started
 
-- If you are a tech lead on your team and want to customize this repo to your liking, please visit [repo-configuration.md](docs\template-repo\repo-configuration.md)
-- If you are a dev and want to get this repo set up on your local machine please visit [getting-started.md](docs\template-repo\getting-started.md)
+To get started, please visit [getting-started.md](/docs/template-repo/getting-started.md)!
