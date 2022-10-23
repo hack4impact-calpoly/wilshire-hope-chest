@@ -9,6 +9,14 @@ module.exports = {
     "airbnb-typescript",
     "prettier",
   ],
+  overrides: [
+    {
+      files: ["**/*.test.js", "**/*.test.jsx", "**/*.test.ts", "**/*.test.tsx"],
+      env: {
+        jest: true,
+      },
+    },
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
@@ -18,6 +26,13 @@ module.exports = {
     project: "./tsconfig.eslint.json",
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
-  rules: {},
+  plugins: ["react", "@typescript-eslint", "prettier"],
+  rules: {
+    "prettier/prettier": "error",
+    // suppress errors for missing 'import React' in files
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": "off",
+    "no-underscore-dangle": "off",
+    "no-plusplus": "off",
+  },
 };
