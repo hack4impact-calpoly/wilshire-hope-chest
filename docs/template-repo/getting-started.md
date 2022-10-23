@@ -70,3 +70,11 @@ When interacting with Git/GitHub, feel free to use the command line, VSCode exte
 - `git stash`: Temporarily remove all local changes to a branch and save them. Good when you need to hop to another branch without committing your current code.
 - `git stash apply`: Reapply most recent git stash.
 - `git merge orgin/main`: Pull all changes from the main branch to yours, good for resolving merge conflicts.
+
+## Project Structure
+
+- [**.github**](.github) Github Actions CI/CD
+- [**.husky**](.husky) Linting pre-commit hook [Read More](https://prettier.io/docs/en/precommit.html)
+- [**docs**](docs) Documentation
+- [**public**](public) Assets for frontend [Read More](https://create-react-app.dev/docs/using-the-public-folder/)
+- [**src**](src) Frontend code

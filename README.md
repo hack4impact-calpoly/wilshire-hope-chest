@@ -1,15 +1,34 @@
-# Hack4Impact React & TS Template Repo
+# name of non-profit
 
-This project is a template repo for H4I teams to get their project teams off the ground faster.
+{One sentence description of the project}
 
-## Project Structure
+## Table of Contents
 
-- [**.github**](.github) Github Actions CI/CD
-- [**.husky**](.husky) Linting pre-commit hook [Read More](https://prettier.io/docs/en/precommit.html)
-- [**docs**](docs) Documentation
-- [**public**](public) Assets for frontend [Read More](https://create-react-app.dev/docs/using-the-public-folder/)
-- [**src**](src) Frontend code
+- [Overview](#overview)
+  - [Purpose](#purpose)
+  - [Team](#team)
+- [Getting Started And Contributing](#getting-started-and-contributing)
 
-## Getting Started
+## Overview
 
-To get started, please visit [getting-started.md](/docs/template-repo/getting-started.md)!
+### Purpose
+
+{Short paragraph description of the non-profit mission and the purpose of this project. Who will this project help, why is it necessary. Impact of the project.}
+
+### Team
+
+The {non-profit name} team consists of {#} Cal Poly students. Over the course of about 9 months, we worked as a team to deploy this web application. The team members are listed below:
+
+- [First Last](https://www.linkedin.com/) - Project Manager
+- [First Last](https://www.linkedin.com/) - Designer
+- [First Last](https://www.linkedin.com/) - Tech Lead
+- [First Last](https://www.linkedin.com/) - Tech Lead
+- [First Last](https://www.linkedin.com/) - Software Developer
+
+## Getting Started And Contributing
+
+Visit [getting-started.md](docs\template-repo\getting-started.md.md) on info for how to set up this repo.
+
+Visit [contributing.md](docs\template-repo\contributing.md) on info for how to contribute to this repo.
+
+Thank you to The Land Conservancy team for this wonderful readme template!!
