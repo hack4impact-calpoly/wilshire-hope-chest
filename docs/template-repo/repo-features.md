@@ -13,7 +13,7 @@ There are many tools in this repository to help you with code quality and organi
 
 ## React boilerplate with Typescript
 
-This template repo was built for teams who want to use Typescript with a React project. All of the neccessary code is stored in the [src](/src/) directory.When the website first renders, the [App.tsx](/src/App.tsx) file will be displayed. The src directory also has a [tests](/src/tests/) directory where you can write tests. There is currently only one boilerplate test at the moment.
+This template repo was built for teams who want to use Typescript with a React project. All of the neccessary code is stored in the [src](/src/) directory. When the website first renders, the [App.tsx](/src/App.tsx) file will be displayed. The src directory also has a [tests](/src/tests/) directory where you can write tests. There is currently only one boilerplate test.
 
 ## Autoformatting with Prettier
 

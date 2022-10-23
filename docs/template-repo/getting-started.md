@@ -21,15 +21,16 @@ Welcome to the getting started page! Here is all you need to know to get this re
 5. Enable format on save in your IDE
    1. Click the settings button in the bottom left  
       <img src="../images/vs-code-settings.png" alt="VSCode Settings 1" width="500"/>
-   2. Search "format on save" and click the checkbox
+   2. Search "formatter" and set your default formatter to Prettier
+   3. Search "format on save" and click the checkbox
 6. Enable the pre-commit hook by running `npx mrm@2 lint-staged` at the root of your repository
 
 ## Setup for Tech Leads
 
 1. Review the [repo-features](./repo-features.md) document to understand what is included in this repository off the bat
 2. Edit the "One time setup" section above as needed, then execute those steps
-3. Follow the [amplify-setup](./amplify-setup.md) guide (assuming you are using Amplify for your backend)
-4. Turn on branch protections (TODO)
+3. Follow the [amplify-setup](./amplify-setup.md) guide (assuming you are using Amplify for your backend) (TODO)
+4. Turn on branch protections
    1. Visit your repo on [github.com](https://github.com)
    2. Click the Settings button on the top bar
    3. Click the branches tab on the left sidebar
@@ -37,11 +38,10 @@ Welcome to the getting started page! Here is all you need to know to get this re
    5. Click "Require a pull request before merging"
    6. Create  
       <img src="../images/require-code-review.png" alt="Require Code Review" width="500"/>
-5. Turn on GitHub projects by clicking the "Projects" button on the top bar of your repo (if you don't already have a Sprint board)
 
 ## Every time setup
 
-All of these commands should be executed on the root of your repo.
+Every time you start a new feature/branch, you should run all of these commands. All commands should be executed on the root of your repo.
 
 1. `git checkout main`
 2. `git pull`
