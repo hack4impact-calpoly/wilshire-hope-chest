@@ -1,10 +1,9 @@
 ---
 name: Feature request
 about: Add a feature request for development
-title: ''
-labels: ''
-assignees: ''
-
+title: ""
+labels: ""
+assignees: ""
 ---
 
 **Is your feature request related to a problem? Please describe.**
@@ -12,6 +11,7 @@ A clear and concise description of what the problem is. Ex. I'm always frustrate
 
 **Describe the steps you'd like a developer to take or the acceptance criteria**
 A clear and concise description of what you want to happen.
+
 - [ ] Step 1
 - [ ] Step 2
 - [ ] Step 3
