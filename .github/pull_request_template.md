@@ -1,9 +1,9 @@
 
-## Developer: {Full Name}
+## Developer: Full Name
 
 ### Pull Request Summary
 
-{Describe the purpose of your pull request}
+Describe the purpose of your pull request
 
 ### Pull Request Checklist
 - [ ] Code is neat, readable, and works
