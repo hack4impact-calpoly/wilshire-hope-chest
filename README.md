@@ -27,8 +27,8 @@ The {non-profit name} team consists of {#} Cal Poly students. Over the course of
 
 ## Getting Started And Contributing
 
-Visit [getting-started.md](docs\template-repo\getting-started.md.md) on info for how to set up this repo.
+Visit [getting-started.md](.\docs\template-repo\getting-started.md) on info for how to set up this repo.
 
-Visit [contributing.md](docs\template-repo\contributing.md) on info for how to contribute to this repo.
+Visit [contributing.md](.\docs\template-repo\contributing.md) on info for how to contribute to this repo.
 
 Thank you to The Land Conservancy team for this wonderful readme template!!
