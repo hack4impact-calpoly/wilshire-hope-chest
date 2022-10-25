@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Add a feature request for development
-title: ""
+title: unique issue id - issue title
 labels: ""
 assignees: ""
 ---
