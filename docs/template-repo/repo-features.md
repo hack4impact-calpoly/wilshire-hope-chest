@@ -9,7 +9,7 @@ There are many tools in this repository to help you with code quality and organi
 - Linting with ESLint
 - CI with GitHub Actions
 - Helpful npm commands
-- Documentation for repo features + setting up Amplify
+- Documentation for repo features
 
 ## React boilerplate with Typescript
 
@@ -101,6 +101,6 @@ This command will read all of your code and check it to make sure its conforming
 
 This command will read all of your code and check it to make sure its conforming to all Prettier and ESLint rules. Any rules that aren't followed will be automatically fixed. Note that all Prettier rules can be automatically fixed, but some ESLint rules must be manually fixed.
 
-## Documentation for repo features + setting up Amplify
+## Documentation for repo features
 
-Inside of the [docs](/docs) directory, you may see other other helpful documentation for getting started, setting up Amplify, and other useful info.
+Inside of the [docs](/docs) directory, you may see other other helpful documentation for getting started, contributing, and other useful info.

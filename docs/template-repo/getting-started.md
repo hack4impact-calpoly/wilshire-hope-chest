@@ -14,7 +14,7 @@ Welcome to the getting started page! Here is all you need to know to get this re
 
 1. Clone this repository `git clone <repo-url>`
 2. Run `npm i` at the root of the repository
-3. TODO: Install Amplify
+3. TODO: Setup backend
 4. Install IDE Extensions
    - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
    - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
@@ -29,7 +29,7 @@ Welcome to the getting started page! Here is all you need to know to get this re
 
 1. Review the [repo-features](./repo-features.md) document to understand what is included in this repository off the bat
 2. Edit the "One time setup" section above as needed, then execute those steps
-3. Follow the [amplify-setup](./amplify-setup.md) guide (assuming you are using Amplify for your backend) (TODO)
+3. Set up your backend
 4. Turn on branch protections
    1. Visit your repo on [github.com](https://github.com)
    2. Click the Settings button on the top bar
@@ -45,10 +45,9 @@ Every time you start a new feature/branch, you should run all of these commands.
 
 1. `git checkout main`
 2. `git pull`
-3. `amplify pull` (assuming you use amplify)
-4. `npm i`
-5. `git checkout -b <branch-name>`
-6. `npm start`
+3. `npm i`
+4. `git checkout -b <branch-name>`
+5. `npm start`
 
 ## How to make a Pull Request
 
