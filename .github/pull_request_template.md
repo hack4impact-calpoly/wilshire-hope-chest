@@ -15,11 +15,14 @@ Describe the purpose of your pull request
 
 ### Reviewer Checklist - PULL REQUEST REVIEWER ONLY
 
-IMPORTANT: The rest of the sections in this checklist should only be filled out by authorized pull request reviewers. If you are the individual template contributor, do not fill out the rest of the fields or check the boxes.
+IMPORTANT: The rest of the sections in this checklist should only be filled out by authorized pull request reviewers. If you are the individual contributor, do not fill out the rest of the fields or check the boxes.
+
+## Reviewer: Full Name
 
 NOTE: Pull requests should only be merged when all boxes are checked.
 
 - [ ] Assign yourself as reviewer if not assigned
+- [ ] The reviewer name is specified
 - [ ] The code is fully reviewed
 - [ ] Meaningful feedback is given
 - [ ] Let developer know a review has been made
