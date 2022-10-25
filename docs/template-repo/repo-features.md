@@ -23,6 +23,8 @@ If you ever want to change how Prettier is formatting your code, you can change 
 
 If you want certain files to be ignored by the autoformatter, you can specify them in the [.prettierignore](/.prettierignore) file.
 
+If you want to control the scope of files checked by the pre-commit hook, you can modify the glob before the colon in the `"lint-staged"` portion of [package.json](/package.json)
+
 For more info, visit the [Prettier Docs](https://prettier.io/docs/en/index.html)
 
 ## Linting with ESLint
@@ -32,6 +34,8 @@ A linter is an opinionated code quality tool that can be used to ensure your tea
 If you ever want to change how ESLint is analyzing your code, you can change it in the [.eslintrc.js](/.eslintrc.js) file.
 
 If you want certain files to be ignored by the linter, you can specify them in the [.eslintignore](/.eslintignore) file.
+
+If you want to control the scope of files checked by the linter, you can modify the `"include"` section of [tsconfig.eslint.json](/tsconfig.eslint.json)
 
 For more info, visit the [ESLint Docs](https://eslint.org/docs/latest/user-guide/)
 
