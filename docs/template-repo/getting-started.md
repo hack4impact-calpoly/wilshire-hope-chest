@@ -4,13 +4,12 @@ Welcome to the getting started page! Here is all you need to know to get this re
 
 ## Contents
 
-- [One time setup](#one-time-setup)
+- [Setup for All Developers](#setup-for-all-developers)
 - [Setup for Tech Leads](#setup-for-tech-leads)
-- [Every time setup](#every-time-setup)
-- [How to make a Pull Request](#how-to-make-a-pull-request)
 - [Helpful commands](#helpful-commands)
+- [Project Structure](#project-structure)
 
-## One time setup
+## Setup for all Developers
 
 1. Clone this repository `git clone <repo-url>`
 2. Run `npm i` at the root of the repository
@@ -24,12 +23,13 @@ Welcome to the getting started page! Here is all you need to know to get this re
    2. Search "formatter" and set your default formatter to Prettier
    3. Search "format on save" and click the checkbox
 6. Enable the pre-commit hook by running `npx mrm@2 lint-staged` at the root of your repository
+7. Familiarize yourself with [Helpful Commands](#helpful-commands), the [Project Structure](#project-structure), and the [steps for contributing](./contributing.md)
 
 ## Setup for Tech Leads
 
 1. Review the [repo-features](./repo-features.md) document to understand what is included in this repository off the bat
-2. Edit the "One time setup" section above as needed, then execute those steps
-3. Set up your backend
+2. Set up the backend for your team
+3. Edit the "One time setup" section above as needed, then execute those steps
 4. Turn on branch protections
    1. Visit your repo on [github.com](https://github.com)
    2. Click the Settings button on the top bar
@@ -38,28 +38,6 @@ Welcome to the getting started page! Here is all you need to know to get this re
    5. Click "Require a pull request before merging"
    6. Create  
       <img src="../images/require-code-review.png" alt="Require Code Review" width="500"/>
-
-## Every time setup
-
-Every time you start a new feature/branch, you should run all of these commands. All commands should be executed on the root of your repo.
-
-1. `git checkout main`
-2. `git pull`
-3. `npm i`
-4. `git checkout -b <branch-name>`
-5. `npm start`
-
-## How to make a Pull Request
-
-When interacting with Git/GitHub, feel free to use the command line, VSCode extension, or Github desktop. These steps assume you have already made a branch using `git checkout -b <branch-name>` and you have made all neccessary code changes for the provided task.
-
-1. View diffs of each file before `git add <file-path>` with the VSCode Github extension (3rd icon on far left bar of VSCode) or GitHub Desktop
-2. `git commit -m "<commit-message>"`
-3. `git push`
-4. Click notification to make Pull Request or visit your repo on [github.com](https://github.com/)
-5. Include pull request title, breif description, and request reviewer
-6. Wait to make sure CI (Github Actions) passes
-7. Update your Kanban board!
 
 ## Helpful commands
 
@@ -72,8 +50,14 @@ When interacting with Git/GitHub, feel free to use the command line, VSCode exte
 
 ## Project Structure
 
-- [**.github**](.github) Github Actions CI/CD
-- [**.husky**](.husky) Linting pre-commit hook [Read More](https://prettier.io/docs/en/precommit.html)
-- [**docs**](docs) Documentation
-- [**public**](public) Assets for frontend [Read More](https://create-react-app.dev/docs/using-the-public-folder/)
-- [**src**](src) Frontend code
+- [**.github**](/.github) Github Actions CI/CD and Issue/PR templates
+- [**.husky**](/.husky) Linting pre-commit hook [Read More](https://prettier.io/docs/en/precommit.html)
+- [**docs**](/docs) Documentation
+      - [**images**](/docs/images/) Images used for documentation
+      - [**template-repo**](/docs/template-repo/) Documentation that came with the template repository
+- [**public**](/public) Assets for frontend [Read More](https://create-react-app.dev/docs/using-the-public-folder/)
+- [**src**](/src) Frontend code
+      - [**tests**](/src/tests/) Tests for the frontend
+      - [**components**](/src/components/) React components
+      - [App.tsx](/src/App.tsx) Top level React component, where most routing goes
+      - [App.css](/src/App.css) Top level CSS, where all global CSS rules go

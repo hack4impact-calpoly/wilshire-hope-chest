@@ -4,12 +4,12 @@ There are many tools in this repository to help you with code quality and organi
 
 ## Features
 
-- React boilerplate with Typescript
-- Autoformatting with Prettier
-- Linting with ESLint
-- CI with GitHub Actions
-- Helpful npm commands
-- Documentation for repo features
+- [React boilerplate with Typescript](#react-boilerplate-with-typescript)
+- [Autoformatting with Prettier](#autoformatting-with-prettier)
+- [Linting with ESLint](#linting-with-eslint)
+- [CI with GitHub Actions](#ci-with-github-actions)
+- [Helpful npm commands](#helpful-npm-commands)
+- [Documentation for repo features](#documentation-for-repo-features)
 
 ## React boilerplate with Typescript
 
