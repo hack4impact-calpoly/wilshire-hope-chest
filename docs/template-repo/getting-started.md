@@ -23,7 +23,7 @@ Welcome to the getting started page! Here is all you need to know to get this re
    2. Search "formatter" and set your default formatter to Prettier
    3. Search "format on save" and click the checkbox
 6. Enable the pre-commit hook by running `npx mrm@2 lint-staged` at the root of your repository
-7. Familiarize yourself with [Helpful Commands](#helpful-commands), the [Project Structure](#project-structure), and the [steps for contributing](./contributing.md)
+7. Familiarize yourself with [Helpful Commands](#helpful-commands), the [Project Structure](#project-structure), the [steps for contributing](./contributing.md), and the [repository features](./repo-features.md).
 
 ## Setup for Tech Leads
 
