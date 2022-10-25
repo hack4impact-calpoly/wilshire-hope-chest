@@ -8,7 +8,7 @@ Describe the purpose of your pull request
 
 - [ ] Code is neat, readable, and works
 - [ ] Comments are appropriate
-- [ ] The commit message follows our [guidelines](https://h4i.notion.site/Conventional-Commits-593452ad1179489399ad3bd696ef772a)
+- [ ] The commit messages follows our [guidelines](https://h4i.notion.site/Conventional-Commits-593452ad1179489399ad3bd696ef772a)
 - [ ] The developer name is specified
 - [ ] The summary is completed
 - [ ] Ask for a review in communication channels
