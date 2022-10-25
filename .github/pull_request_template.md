@@ -1,4 +1,3 @@
-
 ## Developer: Full Name
 
 ### Pull Request Summary
@@ -6,6 +5,7 @@
 Describe the purpose of your pull request
 
 ### Pull Request Checklist
+
 - [ ] Code is neat, readable, and works
 - [ ] Comments are appropriate
 - [ ] The commit message follows our [guidelines](https://h4i.notion.site/Conventional-Commits-593452ad1179489399ad3bd696ef772a)
@@ -13,7 +13,7 @@ Describe the purpose of your pull request
 - [ ] The summary is completed
 - [ ] Ask for a review in communication channels
 
-### Reviewer Checklist  - PULL REQUEST REVIEWER ONLY
+### Reviewer Checklist - PULL REQUEST REVIEWER ONLY
 
 IMPORTANT: The rest of the sections in this checklist should only be filled out by authorized pull request reviewers. If you are the individual template contributor, do not fill out the rest of the fields or check the boxes.
 
