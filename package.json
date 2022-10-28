@@ -60,6 +60,7 @@
     "prettier": "2.7.1"
   },
   "lint-staged": {
-    "*": "prettier --write"
+    "*": "prettier --write",
+    "*.js": "eslint --cache --fix"
   }
 }
