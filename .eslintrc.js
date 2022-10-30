@@ -31,8 +31,11 @@ module.exports = {
     "prettier/prettier": "error",
     // suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
+    // allow prop-spreading
+    "react/jsx-props-no-spreading": "off",
     "react/jsx-filename-extension": "off",
     "no-underscore-dangle": "off",
     "no-plusplus": "off",
+    "no-console": "off",
   },
 };
