@@ -1,2 +1,5 @@
 .eslintrc.js
 src/models
+src/ui-components
+.vscode
+amplify
