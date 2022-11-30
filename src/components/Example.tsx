@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import { DataStore } from "@aws-amplify/datastore";
-import { Example } from "./models";
+import { useEffect } from "react";
+import { Example } from "../models";
 
 function DataTest() {
   useEffect(() => {
