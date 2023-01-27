@@ -2,4 +2,8 @@ docs
 src/ui-components
 .vscode
 amplify
-*.json
+.eslintcache
+.eslintignore
+/src/models
+/.github
+/public
