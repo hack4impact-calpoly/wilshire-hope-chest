@@ -2,3 +2,4 @@ docs
 src/ui-components
 .vscode
 amplify
+*.json
