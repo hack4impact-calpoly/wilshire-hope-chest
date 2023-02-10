@@ -5,7 +5,6 @@ Welcome to the getting started page! Here is all you need to know to get this re
 ## Contents
 
 - [Setup for All Developers](#setup-for-all-developers)
-- [Setup for Tech Leads](#setup-for-tech-leads)
 - [Helpful commands](#helpful-commands)
 - [Project Structure](#project-structure)
 
@@ -13,7 +12,10 @@ Welcome to the getting started page! Here is all you need to know to get this re
 
 1. Clone this repository `git clone <repo-url>`
 2. Run `npm i` at the root of the repository
-3. TODO: Setup backend
+3. Setup AWS Amplify
+   1. Install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+   2. Run `amplify pull --appId <app-id> --envName dev`
+      - get `app-id` from the top right in Amplify Studio
 4. Install IDE Extensions
    - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
    - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
@@ -22,22 +24,9 @@ Welcome to the getting started page! Here is all you need to know to get this re
       <img src="../images/vs-code-settings.png" alt="VSCode Settings 1" width="500"/>
    2. Search "formatter" and set your default formatter to Prettier
    3. Search "format on save" and click the checkbox
-6. Enable the pre-commit hook by running `npx mrm@2 lint-staged` at the root of your repository
-7. Familiarize yourself with [Helpful Commands](#helpful-commands), the [Project Structure](#project-structure), the [steps for contributing](./contributing.md), and the [repository features](./repo-features.md).
-
-## Setup for Tech Leads
-
-1. Review the [repo-features](./repo-features.md) document to understand what is included in this repository off the bat
-2. Set up the backend for your team
-3. Edit the "One time setup" section above as needed, then execute those steps
-4. Turn on branch protections
-   1. Visit your repo on [github.com](https://github.com)
-   2. Click the Settings button on the top bar
-   3. Click the branches tab on the left sidebar
-   4. Click add rule
-   5. Click "Require a pull request before merging"
-   6. Create  
-      <img src="../images/require-code-review.png" alt="Require Code Review" width="500"/>
+6. Create an `.env` file in the root directory and ask a TL for any secrets
+7. Enable the pre-commit hook by running `npx mrm@2 lint-staged` at the root of your repository
+8. Familiarize yourself with [Helpful Commands](#helpful-commands), the [Project Structure](#project-structure), the [steps for contributing](./contributing.md), and the [repository features](./repo-features.md).
 
 ## Helpful commands
 
@@ -46,7 +35,7 @@ Welcome to the getting started page! Here is all you need to know to get this re
 - `npm run lint-fix`: make sure Prettier and ESLint pass and try to automatically fix all issues (some ESLint issues must be resolved manually)
 - `git stash`: Temporarily remove all local changes to a branch and save them. Good when you need to hop to another branch without committing your current code.
 - `git stash apply`: Reapply most recent git stash.
-- `git merge orgin/main`: Pull all changes from the main branch to yours, good for resolving merge conflicts.
+- `git merge origin/main`: Pull all changes from the main branch to yours, good for resolving merge conflicts.
 
 ## Project Structure
 

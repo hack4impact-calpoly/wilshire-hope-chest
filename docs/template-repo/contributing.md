@@ -4,9 +4,10 @@ Here are all of the steps you should follow whenever contributing to this repo!
 
 ## Making Changes
 
-1. Before you start making changes, always make sure you're on the main branch, then `git pull` and `npm i` to make sure your code is up to date
+1. Before you start making changes, always make sure you're on the dev branch, then `git pull`, `npm i`, and `amplify pull` to make sure your code is up to date
 2. Create a branch `git checkout -b <name-of-branch>`
 3. Make changes to the code
+   - Any changes to Amplify must be done in the "dev" environment
 4. `npm run lint` to ensure code standards. (running `npm run lint-fix` will fix most of the styling errors)
 
 ## Commiting Changes
@@ -19,6 +20,7 @@ When interacting with Git/GitHub, feel free to use the command line, VSCode exte
    `git commit -m "<type>[optional scope]: <description>" -m "[optional body]"` or
    `git commit` to get a message prompt
 4. `git push -u origin <name-of-branch>`
+5. `amplify push`
 
 ## Making Pull Requests
 
