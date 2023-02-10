@@ -2,10 +2,6 @@
 
 A donation tracker for Wilshire Hospice Hope Chest thrift store in San Luis Obispo.
 
-[![Node.js CI](https://github.com/hack4impact-calpoly/wilshire-health/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/hack4impact-calpoly/wilshire-health/actions/workflows/node.js.yml) - main
-
-[![Node.js CI](https://github.com/hack4impact-calpoly/wilshire-health/actions/workflows/node.js.yml/badge.svg?branch=dev)](https://github.com/hack4impact-calpoly/wilshire-health/actions/workflows/node.js.yml) - dev
-
 ## Table of Contents
 
 - [Overview](#overview)
