@@ -7,7 +7,7 @@ Here are all of the steps you should follow whenever contributing to this repo!
 1. Before you start making changes, always make sure you're on the dev branch, then `git pull`, `npm i`, and `amplify pull` to make sure your code is up to date
 2. Create a branch `git checkout -b <name-of-branch>`
 3. Make changes to the code
-   - Any changes to Amplify must be done in the "dev" environment
+   - Any changes to Amplify must be done in the "staging" environment
 4. `npm run lint` to ensure code standards. (running `npm run lint-fix` will fix most of the styling errors)
 
 ## Commiting Changes

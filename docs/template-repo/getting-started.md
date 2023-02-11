@@ -14,7 +14,7 @@ Welcome to the getting started page! Here is all you need to know to get this re
 2. Run `npm i` at the root of the repository
 3. Setup AWS Amplify
    1. Install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-   2. Run `amplify pull --appId <app-id> --envName dev`
+   2. Run `amplify pull --appId <app-id> --envName staging`
       - get `app-id` from the top right in Amplify Studio
 4. Install IDE Extensions
    - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
