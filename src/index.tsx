@@ -6,23 +6,19 @@ import App from "./App";
 import config from "./aws-exports";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { withAuthenticator } from "@aws-amplify/ui-react";
 
 Amplify.configure(config);
-const AppWithAuthenticator = withAuthenticator(App);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
 const signOut = () => console.log("Signing out...");
-const user = {
-  username: "Kelvin",
-};
+const user = {};
 
 root.render(
   <React.StrictMode>
-    <AppWithAuthenticator signOut={signOut} user={user} />
+    <App signOut={signOut} user={user} />
   </React.StrictMode>
 );
 
