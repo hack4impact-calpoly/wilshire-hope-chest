@@ -13,12 +13,9 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const signOut = () => console.log("Signing out...");
-const user = {};
-
 root.render(
   <React.StrictMode>
-    <App signOut={signOut} user={user} />
+    <App />
   </React.StrictMode>
 );
 

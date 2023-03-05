@@ -2,30 +2,33 @@ import React from "react";
 import "./App.css";
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
-import { withAuthenticator } from "@aws-amplify/ui-react";
+import { Authenticator } from "@aws-amplify/ui-react";
 import awsExports from "./aws-exports";
 
 Amplify.configure(awsExports);
 
-type AppProps = {
-  signOut: () => void;
-  user: User;
-};
+// Configure Amplify in index file or root file
+// aws-export.js needs refactoring
+// what properties should be used in the authenticaiton object, needs a clarificaiton
+Amplify.configure({
+  Auth: {
+    region: awsExports.aws_project_region,
+  },
+});
 
-interface User {
-  username?: string;
-}
-
-function App({ signOut, user }: AppProps) {
+function App() {
   return (
-    <>
-      <p>Wilshire Hospice App</p>
-      <h1>Hello {user.username}</h1>
-      <button type="button" onClick={signOut}>
-        Sign out
-      </button>
-    </>
+    <Authenticator>
+      {({ signOut, user }: any) => (
+        <div>
+          <p>Welcome {user.username}</p>
+          <button type="button" onClick={signOut}>
+            Sign out
+          </button>
+        </div>
+      )}
+    </Authenticator>
   );
 }
 
-export default withAuthenticator(App);
+export default App;
