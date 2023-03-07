@@ -13,12 +13,12 @@ export default function ItemCard({ itemName, date, money }: ItemCardProps) {
       <div className="item-card-imgbox" />
       <div className="item-card-info">
         <div className="item-titlebox">
-          <p className="item-card-name">{itemName}</p>
-          <p className="item-card-date">{date}</p>
+          <div className="item-card-name">{itemName}</div>
+          <div className="item-card-date">{date}</div>
         </div>
-        <p className="item-card-price">{money}</p>
+        <div className="item-card-price">{money}</div>
         {/* <div className="item-card-categories">
-          {props.tags.map((tag) => (
+          {tags.map((tag) => (
             <p className="item-card-tag">{tag}</p>
           ))}
         </div> */}
