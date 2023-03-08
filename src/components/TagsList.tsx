@@ -9,7 +9,7 @@ export default function TagsList({ categories }: TagsListProps) {
   return (
     <div className="tags-container">
       {categories.map((name: string) => (
-        <Tag name={name} />
+        <Tag key={name} name={name} />
       ))}
     </div>
   );
