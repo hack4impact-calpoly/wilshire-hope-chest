@@ -1,0 +1,16 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #a8d5db;
+  width: 79px;
+  height: 40px;
+  border-radius: 100px;
+}
+
+.tags-container{
+    display: flex;
+    flex-direction: row;
+    gap: 25px
+}
