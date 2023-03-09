@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { Example } from "../models";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -21,11 +21,11 @@ export declare type ExampleUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
     description?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ExampleUpdateFormOverridesProps = {
-    ExampleUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
-    description?: PrimitiveOverrideProps<TextFieldProps>;
+    ExampleUpdateFormGrid?: FormProps<GridProps>;
+    name?: FormProps<TextFieldProps>;
+    description?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ExampleUpdateFormProps = React.PropsWithChildren<{
     overrides?: ExampleUpdateFormOverridesProps | undefined | null;
@@ -35,6 +35,7 @@ export declare type ExampleUpdateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: ExampleUpdateFormInputValues) => ExampleUpdateFormInputValues;
     onSuccess?: (fields: ExampleUpdateFormInputValues) => void;
     onError?: (fields: ExampleUpdateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: ExampleUpdateFormInputValues) => ExampleUpdateFormInputValues;
     onValidate?: ExampleUpdateFormValidationValues;
 } & React.CSSProperties>;
