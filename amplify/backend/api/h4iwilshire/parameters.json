@@ -1,5 +1,6 @@
 {
   "AppSyncApiName": "h4iwilshire",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2023-03-09T03:30:55.095Z"
 }

@@ -5,14 +5,13 @@ import "@aws-amplify/ui-react/styles.css";
 import { Authenticator } from "@aws-amplify/ui-react";
 import awsExports from "./aws-exports";
 
-Amplify.configure(awsExports);
+// Amplify.configure(awsExports);
 
-// Configure Amplify in index file or root file
-// aws-export.js needs refactoring
-// what properties should be used in the authenticaiton object, needs a clarificaiton
 Amplify.configure({
   Auth: {
     region: awsExports.aws_project_region,
+    userPoolId: awsExports.aws_user_pools_id,
+    userPoolWebClientId: awsExports.aws_user_pools_web_client_id,
   },
 });
 
