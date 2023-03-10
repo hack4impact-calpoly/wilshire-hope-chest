@@ -19,11 +19,12 @@ module.exports = {
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
+    project: "tsconfig.json",
+    tsconfigRootDir: __dirname,
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 13,
-    project: "./tsconfig.eslint.json",
     sourceType: "module",
   },
   plugins: ["react", "@typescript-eslint", "prettier"],
