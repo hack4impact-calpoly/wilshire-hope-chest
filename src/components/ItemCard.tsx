@@ -3,7 +3,7 @@ import TagsList from "./TagsList";
 
 interface ItemCardProps {
   itemName: string;
-  date: string;
+  date: Date;
   money: number;
   tags: string[];
 }
@@ -20,7 +20,9 @@ export default function ItemCard({
       <div className="item-card-info">
         <div className="item-titlebox">
           <div className="item-card-name">{itemName}</div>
-          <div className="item-card-date">{date}</div>
+          <div className="item-card-date">
+            {date.getMonth()}/{date.getDate()}/{date.getFullYear()}
+          </div>
         </div>
         <div className="item-card-price">${money.toFixed(2)}</div>
         <TagsList categories={tags} />
