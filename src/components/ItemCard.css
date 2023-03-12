@@ -1,27 +1,23 @@
 .item-card {
-  position: absolute;
   width: 420px;
   height: 450px;
-  /* left: 950px;
-  top: 233px; */
-
-  border: 2px solid #000000;
+  border: 2px solid black;
   border-radius: 12px;
 }
 
 .item-card-imgbox {
-  position: absolute;
-  left: 0%;
-  right: 0%;
-  top: 0%;
-  bottom: 38.89%;
-
+  height: 275px;
   background: #b7b7b7;
   border-radius: 12px 12px 0px 0px;
 }
 
+.item-titlebox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .item-card-name {
-  position: absolute;
   left: 2.9%;
   right: 58.71%;
   top: 64.67%;
@@ -37,7 +33,6 @@
 }
 
 .item-card-date {
-  position: absolute;
   width: 93px;
   height: 29px;
   left: 318px;
@@ -59,7 +54,6 @@
 }
 
 .item-card-price {
-  position: absolute;
   width: 31px;
   height: 20px;
   left: 12px;
