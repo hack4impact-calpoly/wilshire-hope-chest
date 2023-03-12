@@ -8,13 +8,12 @@
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Example } from "../models";
+import { Item } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-export default function ExampleUpdateForm(props) {
+export default function ItemCreateForm(props) {
   const {
-    id: idProp,
-    example,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -25,33 +24,27 @@ export default function ExampleUpdateForm(props) {
   } = props;
   const initialValues = {
     name: "",
-    description: "",
+    dateAdded: "",
+    value: "",
+    image: "",
   };
   const [name, setName] = React.useState(initialValues.name);
-  const [description, setDescription] = React.useState(
-    initialValues.description
-  );
+  const [dateAdded, setDateAdded] = React.useState(initialValues.dateAdded);
+  const [value, setValue] = React.useState(initialValues.value);
+  const [image, setImage] = React.useState(initialValues.image);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = exampleRecord
-      ? { ...initialValues, ...exampleRecord }
-      : initialValues;
-    setName(cleanValues.name);
-    setDescription(cleanValues.description);
+    setName(initialValues.name);
+    setDateAdded(initialValues.dateAdded);
+    setValue(initialValues.value);
+    setImage(initialValues.image);
     setErrors({});
   };
-  const [exampleRecord, setExampleRecord] = React.useState(example);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp ? await DataStore.query(Example, idProp) : example;
-      setExampleRecord(record);
-    };
-    queryData();
-  }, [idProp, example]);
-  React.useEffect(resetStateValues, [exampleRecord]);
   const validations = {
     name: [],
-    description: [],
+    dateAdded: [],
+    value: [],
+    image: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -79,7 +72,9 @@ export default function ExampleUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
-          description,
+          dateAdded,
+          value,
+          image,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -109,13 +104,12 @@ export default function ExampleUpdateForm(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(
-            Example.copyOf(exampleRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await DataStore.save(new Item(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -123,7 +117,7 @@ export default function ExampleUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ExampleUpdateForm")}
+      {...getOverrideProps(overrides, "ItemCreateForm")}
       {...rest}
     >
       <TextField
@@ -136,7 +130,9 @@ export default function ExampleUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               name: value,
-              description,
+              dateAdded,
+              value,
+              image,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -152,43 +148,103 @@ export default function ExampleUpdateForm(props) {
         {...getOverrideProps(overrides, "name")}
       ></TextField>
       <TextField
-        label="Description"
+        label="Date added"
         isRequired={false}
         isReadOnly={false}
-        value={description}
+        type="date"
+        value={dateAdded}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
-              description: value,
+              dateAdded: value,
+              value,
+              image,
             };
             const result = onChange(modelFields);
-            value = result?.description ?? value;
+            value = result?.dateAdded ?? value;
           }
-          if (errors.description?.hasError) {
-            runValidationTasks("description", value);
+          if (errors.dateAdded?.hasError) {
+            runValidationTasks("dateAdded", value);
           }
-          setDescription(value);
+          setDateAdded(value);
         }}
-        onBlur={() => runValidationTasks("description", description)}
-        errorMessage={errors.description?.errorMessage}
-        hasError={errors.description?.hasError}
-        {...getOverrideProps(overrides, "description")}
+        onBlur={() => runValidationTasks("dateAdded", dateAdded)}
+        errorMessage={errors.dateAdded?.errorMessage}
+        hasError={errors.dateAdded?.hasError}
+        {...getOverrideProps(overrides, "dateAdded")}
+      ></TextField>
+      <TextField
+        label="Value"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={value}
+        onChange={(e) => {
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              name,
+              dateAdded,
+              value: value,
+              image,
+            };
+            const result = onChange(modelFields);
+            value = result?.value ?? value;
+          }
+          if (errors.value?.hasError) {
+            runValidationTasks("value", value);
+          }
+          setValue(value);
+        }}
+        onBlur={() => runValidationTasks("value", value)}
+        errorMessage={errors.value?.errorMessage}
+        hasError={errors.value?.hasError}
+        {...getOverrideProps(overrides, "value")}
+      ></TextField>
+      <TextField
+        label="Image"
+        isRequired={false}
+        isReadOnly={false}
+        value={image}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              dateAdded,
+              value,
+              image: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.image ?? value;
+          }
+          if (errors.image?.hasError) {
+            runValidationTasks("image", value);
+          }
+          setImage(value);
+        }}
+        onBlur={() => runValidationTasks("image", image)}
+        errorMessage={errors.image?.errorMessage}
+        hasError={errors.image?.hasError}
+        {...getOverrideProps(overrides, "image")}
       ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || example)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -198,10 +254,7 @@ export default function ExampleUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || example) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
