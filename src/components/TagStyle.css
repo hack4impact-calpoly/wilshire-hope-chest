@@ -9,8 +9,8 @@
   border-radius: 100px;
 }
 
-.tags-container{
-    display: flex;
-    flex-direction: row;
-    gap: 25px
+.tags-container {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
 }
