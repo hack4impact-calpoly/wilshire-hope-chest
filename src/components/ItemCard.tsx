@@ -1,13 +1,19 @@
 import "./ItemCard.css";
+import TagsList from "./TagsList";
 
 interface ItemCardProps {
   itemName: string;
   date: string;
   money: string;
-  //   tags: string[];
+  tags: string[];
 }
 
-export default function ItemCard({ itemName, date, money }: ItemCardProps) {
+export default function ItemCard({
+  itemName,
+  date,
+  money,
+  tags,
+}: ItemCardProps) {
   return (
     <div className="item-card">
       <div className="item-card-imgbox" />
@@ -17,11 +23,7 @@ export default function ItemCard({ itemName, date, money }: ItemCardProps) {
           <div className="item-card-date">{date}</div>
         </div>
         <div className="item-card-price">{money}</div>
-        {/* <div className="item-card-categories">
-          {tags.map((tag) => (
-            <p className="item-card-tag">{tag}</p>
-          ))}
-        </div> */}
+        <TagsList categories={tags} />
       </div>
     </div>
   );
