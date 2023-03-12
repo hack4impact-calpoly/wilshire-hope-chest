@@ -1,4 +1,4 @@
-import "./dropdown_styles.css";
+import "./DropdownStyles.css";
 import { BiPlus } from "react-icons/bi";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { useState } from "react";

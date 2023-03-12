@@ -1,12 +1,7 @@
 import "./App.css";
-import Styledropdown from "./components/style_dropdown";
 
 function App() {
-  return (
-    <div>
-      <Styledropdown />
-    </div>
-  );
+  return <p>Wilshire Hospice App</p>;
 }
 
 export default App;
