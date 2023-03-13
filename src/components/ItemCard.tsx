@@ -25,7 +25,9 @@ export default function ItemCard({
           </div>
         </div>
         <div className="item-card-price">${money.toFixed(2)}</div>
-        <TagsList categories={tags} />
+        <div className="item-card-tags">
+          <TagsList categories={tags} />
+        </div>
       </div>
     </div>
   );
