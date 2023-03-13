@@ -1,0 +1,71 @@
+.item-card {
+  width: 420px;
+  height: 450px;
+  border: 2px solid black;
+  border-radius: 12px;
+}
+
+.item-card-imgbox {
+  height: 275px;
+  background: #b7b7b7;
+  border-radius: 12px 12px 0px 0px;
+}
+
+.item-titlebox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-card-name {
+  padding-left: 2.5%;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+
+  color: #000000;
+}
+
+.item-card-date {
+  width: 93px;
+  height: 29px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 29px;
+  text-align: center;
+  padding: 2.5% 0;
+  /* or 125% */
+
+  color: #000000;
+}
+
+.item-card-price {
+  width: 200px;
+  height: 20px;
+  padding: 2.5% 2.5%;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 20px;
+  /* identical to box height, or 83% */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.1px;
+
+  color: #000000;
+}
+
+.item-card-tags {
+  padding: 2.5%;
+}
