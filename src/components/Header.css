@@ -1,0 +1,47 @@
+.header {
+  background-color: white;
+  position: fixed;
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+  height: 100px;
+  z-index: 100;
+}
+
+.search-bar-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 21.4px;
+  padding-left: 21.4px;
+  box-sizing: border-box;
+  position: fixed;
+  width: 640px;
+  height: 50px;
+  left: 400px;
+  top: 33px;
+  z-index: 100001;
+  background-color: white;
+  border: 1px solid #000000;
+  border-radius: 30px;
+}
+
+.search-bar {
+  width: 95%;
+  height: 50%;
+  border: black;
+  outline: none;
+}
+
+.search-image {
+  width: 17.6px;
+  height: 17.58px;
+}
+
+.wilshire-logo {
+  position: fixed;
+  width: 160px;
+  height: 50px;
+  left: 70px;
+  top: 30px;
+}
