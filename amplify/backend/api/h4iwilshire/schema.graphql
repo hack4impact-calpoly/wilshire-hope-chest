@@ -1,5 +1,14 @@
+type Item @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  dateAdded: AWSDate
+  value: Float
+  image: String
+}
+
 type Example @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   description: String
 }
+ 
