@@ -18,7 +18,6 @@ border: none;
 
 /* parent div: move this if you want to relocate the button */
 .dropdown {
-   position: absolute;
    display: flexbox;
    width: 100px;
    left: 100px;
@@ -52,8 +51,7 @@ border: none;
    font-size: 14px;
    margin-left: 7px;
    position: relative;
-   bottom: 2px;
-   
+   bottom: 2px; 
 }
 
 /* icon */
@@ -144,5 +142,4 @@ input[type=checkbox]:checked:after {
    left: 6px;
 }
 
- 
  .show {display:block;}
