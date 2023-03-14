@@ -1,5 +1,5 @@
 {
-  "prod": {
+  "staging": {
     "awscloudformation": {
       "AuthRoleName": "amplify-h4iwilshire-prod-223022-authRole",
       "UnauthRoleArn": "arn:aws:iam::919773233004:role/amplify-h4iwilshire-prod-223022-unauthRole",
