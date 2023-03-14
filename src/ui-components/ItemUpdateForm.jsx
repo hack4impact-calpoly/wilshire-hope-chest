@@ -6,28 +6,29 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Item } from "../models";
 import { fetchByPath, validateField } from "./utils";
+import { Item } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
 export default function ItemUpdateForm(props) {
   const {
-    id: idProp,
+    id,
     item,
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    name: "",
-    dateAdded: "",
-    value: "",
-    image: "",
+    name: undefined,
+    dateAdded: undefined,
+    value: undefined,
+    image: undefined,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [dateAdded, setDateAdded] = React.useState(initialValues.dateAdded);
@@ -35,9 +36,7 @@ export default function ItemUpdateForm(props) {
   const [image, setImage] = React.useState(initialValues.image);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = itemRecord
-      ? { ...initialValues, ...itemRecord }
-      : initialValues;
+    const cleanValues = { ...initialValues, ...itemRecord };
     setName(cleanValues.name);
     setDateAdded(cleanValues.dateAdded);
     setValue(cleanValues.value);
@@ -47,11 +46,11 @@ export default function ItemUpdateForm(props) {
   const [itemRecord, setItemRecord] = React.useState(item);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Item, idProp) : item;
+      const record = id ? await DataStore.query(Item, id) : item;
       setItemRecord(record);
     };
     queryData();
-  }, [idProp, item]);
+  }, [id, item]);
   React.useEffect(resetStateValues, [itemRecord]);
   const validations = {
     name: [],
@@ -59,14 +58,7 @@ export default function ItemUpdateForm(props) {
     value: [],
     image: [],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -112,11 +104,6 @@ export default function ItemUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
-            }
-          });
           await DataStore.save(
             Item.copyOf(itemRecord, (updated) => {
               Object.assign(updated, modelFields);
@@ -131,14 +118,14 @@ export default function ItemUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ItemUpdateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "ItemUpdateForm")}
     >
       <TextField
         label="Name"
         isRequired={false}
         isReadOnly={false}
-        value={name}
+        defaultValue={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -166,7 +153,7 @@ export default function ItemUpdateForm(props) {
         isRequired={false}
         isReadOnly={false}
         type="date"
-        value={dateAdded}
+        defaultValue={dateAdded}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -195,11 +182,16 @@ export default function ItemUpdateForm(props) {
         isReadOnly={false}
         type="number"
         step="any"
-        value={value}
+        defaultValue={value}
         onChange={(e) => {
-          let value = isNaN(parseFloat(e.target.value))
-            ? e.target.value
-            : parseFloat(e.target.value);
+          let value = Number(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              value: "Value must be a valid number",
+            }));
+            return;
+          }
           if (onChange) {
             const modelFields = {
               name,
@@ -224,7 +216,7 @@ export default function ItemUpdateForm(props) {
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        value={image}
+        defaultValue={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -254,11 +246,7 @@ export default function ItemUpdateForm(props) {
         <Button
           children="Reset"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
-          isDisabled={!(idProp || item)}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -266,13 +254,18 @@ export default function ItemUpdateForm(props) {
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
+          <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || item) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

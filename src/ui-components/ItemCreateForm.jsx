@@ -6,10 +6,10 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Item } from "../models";
 import { fetchByPath, validateField } from "./utils";
+import { Item } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
 export default function ItemCreateForm(props) {
   const {
@@ -17,16 +17,17 @@ export default function ItemCreateForm(props) {
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    name: "",
-    dateAdded: "",
-    value: "",
-    image: "",
+    name: undefined,
+    dateAdded: undefined,
+    value: undefined,
+    image: undefined,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [dateAdded, setDateAdded] = React.useState(initialValues.dateAdded);
@@ -46,14 +47,7 @@ export default function ItemCreateForm(props) {
     value: [],
     image: [],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -99,11 +93,6 @@ export default function ItemCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
-            }
-          });
           await DataStore.save(new Item(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
@@ -117,14 +106,13 @@ export default function ItemCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ItemCreateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "ItemCreateForm")}
     >
       <TextField
         label="Name"
         isRequired={false}
         isReadOnly={false}
-        value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -152,7 +140,6 @@ export default function ItemCreateForm(props) {
         isRequired={false}
         isReadOnly={false}
         type="date"
-        value={dateAdded}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -181,11 +168,15 @@ export default function ItemCreateForm(props) {
         isReadOnly={false}
         type="number"
         step="any"
-        value={value}
         onChange={(e) => {
-          let value = isNaN(parseFloat(e.target.value))
-            ? e.target.value
-            : parseFloat(e.target.value);
+          let value = Number(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              value: "Value must be a valid number",
+            }));
+            return;
+          }
           if (onChange) {
             const modelFields = {
               name,
@@ -210,7 +201,6 @@ export default function ItemCreateForm(props) {
         label="Image"
         isRequired={false}
         isReadOnly={false}
-        value={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -240,16 +230,21 @@ export default function ItemCreateForm(props) {
         <Button
           children="Clear"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
+          <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
           <Button
             children="Submit"
             type="submit"
