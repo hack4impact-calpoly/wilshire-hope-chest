@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function Styledropdown() {
   const [icon, setIcon] = useState(<BiPlus size={18} />);
   function Showhide() {
-    const click = document.getElementById("StyleDropdown");
+    const click = document.getElementById("PriceDropdown");
     if (click?.style.display === "none") {
       click.style.display = "block";
       setIcon(<IoCheckmarkSharp size={18} />);
@@ -19,41 +19,30 @@ export default function Styledropdown() {
     <div className="dropdown">
       <button type="button" onClick={Showhide} className="dropbtn">
         <span id="Change"> {icon} </span>
-        <span className="C1"> Style </span>
+        <span className="C1"> Price </span>
       </button>
-      <div id="StyleDropdown" className="dropdown-content-three-items">
+      <div id="PriceDropdown" className="dropdown-content-two-items">
         <div className="font">
           <ul>
             <li>
               <span className="items">
-                Clothes
+                Low to High
                 <input
-                  type="checkbox"
-                  name="checkbox"
+                  type="radio"
+                  name="price"
                   value="value"
-                  className="clothes"
+                  className="lowToHigh"
                 />
               </span>
             </li>
             <li>
               <span className="items">
-                Jewelry
+                High to Low
                 <input
-                  type="checkbox"
-                  name="checkbox"
+                  type="radio"
+                  name="price"
                   value="value"
-                  className="jewelry"
-                />
-              </span>
-            </li>
-            <li>
-              <span className="items">
-                Shoes
-                <input
-                  type="checkbox"
-                  name="checkbox"
-                  value="value"
-                  className="shoes"
+                  className="highToLow"
                 />
               </span>
             </li>
