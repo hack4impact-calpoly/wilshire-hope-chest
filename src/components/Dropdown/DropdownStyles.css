@@ -19,6 +19,7 @@
 /* parent div: move this if you want to relocate the button */
 .dropdown {
   padding: 10px;
+  width: 200px;
 }
 
 /* Dropdown Content for Style (Hidden by Default) */
@@ -28,7 +29,7 @@
   width: 196px;
   display: none;
   border-radius: 10px;
-  position: inherit;
+  position: absolute;
   z-index: 1;
   background-color: white;
   border-style: solid;
@@ -42,7 +43,7 @@
   width: 196px;
   display: none;
   border-radius: 10px;
-  position: inherit;
+  position: absolute;
   z-index: 1;
   background-color: white;
   border-style: solid;

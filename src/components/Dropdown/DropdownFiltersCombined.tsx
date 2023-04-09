@@ -6,7 +6,7 @@ import Datedropdown from "./DateDropdown";
 export default function DropdownFiltersCombined() {
   return (
     <div className="flexbox-container">
-      <span className="dropdown"> Sort by: </span>
+      <span style={{ padding: 15 }}> Sort by: </span>
       <div>
         <Styledropdown />
       </div>
