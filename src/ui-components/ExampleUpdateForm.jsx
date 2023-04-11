@@ -14,7 +14,7 @@ import { DataStore } from "aws-amplify";
 export default function ExampleUpdateForm(props) {
   const {
     id: idProp,
-    example,
+    example: exampleModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -40,14 +40,16 @@ export default function ExampleUpdateForm(props) {
     setDescription(cleanValues.description);
     setErrors({});
   };
-  const [exampleRecord, setExampleRecord] = React.useState(example);
+  const [exampleRecord, setExampleRecord] = React.useState(exampleModelProp);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Example, idProp) : example;
+      const record = idProp
+        ? await DataStore.query(Example, idProp)
+        : exampleModelProp;
       setExampleRecord(record);
     };
     queryData();
-  }, [idProp, example]);
+  }, [idProp, exampleModelProp]);
   React.useEffect(resetStateValues, [exampleRecord]);
   const validations = {
     name: [],
@@ -58,9 +60,10 @@ export default function ExampleUpdateForm(props) {
     currentValue,
     getDisplayValue
   ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+    const value =
+      currentValue && getDisplayValue
+        ? getDisplayValue(currentValue)
+        : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -187,7 +190,7 @@ export default function ExampleUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || example)}
+          isDisabled={!(idProp || exampleModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -199,7 +202,7 @@ export default function ExampleUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || example) ||
+              !(idProp || exampleModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}
