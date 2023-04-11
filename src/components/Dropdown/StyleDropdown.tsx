@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function Styledropdown() {
   const [icon, setIcon] = useState(<BiPlus size={18} />);
   function Showhide() {
-    const click = document.getElementById("myDropdown");
+    const click = document.getElementById("StyleDropdown");
     if (click?.style.display === "none") {
       click.style.display = "block";
       setIcon(<IoCheckmarkSharp size={18} />);
@@ -21,7 +21,7 @@ export default function Styledropdown() {
         <span id="Change"> {icon} </span>
         <span className="C1"> Style </span>
       </button>
-      <div id="myDropdown" className="dropdown-content">
+      <div id="StyleDropdown" className="dropdown-content-three-items">
         <div className="font">
           <ul>
             <li>
