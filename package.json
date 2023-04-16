@@ -17,6 +17,7 @@
     "@types/react-dom": "^18.0.6",
     "aws-amplify": "^5.0.14",
     "react": "^18.2.0",
+    "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-scripts": "5.0.1",
@@ -51,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-datepicker": "^4.10.0",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "eslint": "^8.21.0",

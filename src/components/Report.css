@@ -1,0 +1,78 @@
+::placeholder {
+  color: black;
+}
+.report_box {
+    border: 1px;
+    border-color: blue;
+    border-radius: 0px;
+}
+.intro-text{
+    padding-top: 40px;
+    padding-left: 10px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 40px;  
+}
+#icon{
+    padding-left: 70px;
+    bottom: 10px;
+}
+#segment {
+  width: 1200px;
+}
+.InsideContent {
+  display: inline-block;
+}
+#logtable {
+  margin-bottom: -18px;
+  margin-left: 5px;
+}
+ .date_box{
+text-align: center;
+font-family: 'Roboto';
+font-style: normal;
+box-sizing: border-box;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+width: 104px;
+height: 40px;
+border: 1px solid #79747E;
+border-radius: 100px 0px 0px 100px;
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 1;
+ }
+
+ .date_box2 {
+    text-align: center;
+    font-family: 'Roboto';
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
+    width: 95px;
+    height: 38px;
+    border: 1px solid #79747E;
+    border-radius: 0px 100px 100px 0px;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 1;
+ }
+
+ :placeholder-shown{
+    text-align: center;
+    font-family: 'Roboto';
+    font-style: normal;
+ } 
+
+ 

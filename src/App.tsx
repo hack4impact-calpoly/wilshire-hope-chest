@@ -1,7 +1,8 @@
 import "./App.css";
+import Report from "./components/Report";
 
 function App() {
-  return <p>Wilshire Hospice App</p>;
+  return <Report />;
 }
 
 export default App;
