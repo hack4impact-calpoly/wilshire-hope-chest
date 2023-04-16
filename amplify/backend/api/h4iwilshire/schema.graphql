@@ -1,9 +1,17 @@
+type Category @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  description: String
+  itemID: ID @index(name: "byItem")
+}
+
 type Item @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   dateAdded: AWSDate
   value: Float
   image: String
+  Categories: [Category] @hasMany(indexName: "byItem", fields: ["id"])
 }
 
 type Example @model @auth(rules: [{allow: public}]) {
