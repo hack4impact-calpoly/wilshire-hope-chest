@@ -1,6 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
 
 
 
@@ -14,7 +14,7 @@ type EagerCategory = {
   readonly id: string;
   readonly name?: string | null;
   readonly description?: string | null;
-  readonly itemID?: string | null;
+  readonly Items?: (CategoryItem | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -27,7 +27,7 @@ type LazyCategory = {
   readonly id: string;
   readonly name?: string | null;
   readonly description?: string | null;
-  readonly itemID?: string | null;
+  readonly Items: AsyncCollection<CategoryItem>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -48,7 +48,7 @@ type EagerItem = {
   readonly dateAdded?: string | null;
   readonly value?: number | null;
   readonly image?: string | null;
-  readonly Categories?: (Category | null)[] | null;
+  readonly categorys?: (CategoryItem | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -63,7 +63,7 @@ type LazyItem = {
   readonly dateAdded?: string | null;
   readonly value?: number | null;
   readonly image?: string | null;
-  readonly Categories: AsyncCollection<Category>;
+  readonly categorys: AsyncCollection<CategoryItem>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -102,4 +102,38 @@ export declare type Example = LazyLoading extends LazyLoadingDisabled ? EagerExa
 
 export declare const Example: (new (init: ModelInit<Example>) => Example) & {
   copyOf(source: Example, mutator: (draft: MutableModel<Example>) => MutableModel<Example> | void): Example;
+}
+
+type EagerCategoryItem = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CategoryItem, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly categoryId?: string | null;
+  readonly itemId?: string | null;
+  readonly category: Category;
+  readonly item: Item;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCategoryItem = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CategoryItem, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly categoryId?: string | null;
+  readonly itemId?: string | null;
+  readonly category: AsyncItem<Category>;
+  readonly item: AsyncItem<Item>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type CategoryItem = LazyLoading extends LazyLoadingDisabled ? EagerCategoryItem : LazyCategoryItem
+
+export declare const CategoryItem: (new (init: ModelInit<CategoryItem>) => CategoryItem) & {
+  copyOf(source: CategoryItem, mutator: (draft: MutableModel<CategoryItem>) => MutableModel<CategoryItem> | void): CategoryItem;
 }

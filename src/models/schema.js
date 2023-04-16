@@ -24,12 +24,21 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "itemID": {
-                    "name": "itemID",
-                    "isArray": false,
-                    "type": "ID",
+                "Items": {
+                    "name": "Items",
+                    "isArray": true,
+                    "type": {
+                        "model": "CategoryItem"
+                    },
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "category"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -54,15 +63,6 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byItem",
-                        "fields": [
-                            "itemID"
-                        ]
-                    }
                 },
                 {
                     "type": "auth",
@@ -120,11 +120,11 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Categories": {
-                    "name": "Categories",
+                "categorys": {
+                    "name": "categorys",
                     "isArray": true,
                     "type": {
-                        "model": "Category"
+                        "model": "CategoryItem"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -132,7 +132,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "itemID"
+                            "item"
                         ]
                     }
                 },
@@ -243,10 +243,108 @@ export const schema = {
                     }
                 }
             ]
+        },
+        "CategoryItem": {
+            "name": "CategoryItem",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "categoryId": {
+                    "name": "categoryId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "itemId": {
+                    "name": "itemId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "category": {
+                    "name": "category",
+                    "isArray": false,
+                    "type": {
+                        "model": "Category"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "categoryId"
+                        ]
+                    }
+                },
+                "item": {
+                    "name": "item",
+                    "isArray": false,
+                    "type": {
+                        "model": "Item"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "itemId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "CategoryItems",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCategory",
+                        "fields": [
+                            "categoryId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byItem",
+                        "fields": [
+                            "itemId"
+                        ]
+                    }
+                }
+            ]
         }
     },
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "30cd0ff92885e7af0902237332b4c40c"
+    "version": "2b593d15c7c4ea236908adf0c8c74b04"
 };

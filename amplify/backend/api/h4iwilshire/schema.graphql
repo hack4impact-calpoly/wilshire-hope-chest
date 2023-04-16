@@ -2,7 +2,7 @@ type Category @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   description: String
-  itemID: ID @index(name: "byItem")
+  Items: [Item] @manyToMany(relationName: "CategoryItem")
 }
 
 type Item @model @auth(rules: [{allow: public}]) {
@@ -11,7 +11,7 @@ type Item @model @auth(rules: [{allow: public}]) {
   dateAdded: AWSDate
   value: Float
   image: String
-  Categories: [Category] @hasMany(indexName: "byItem", fields: ["id"])
+  categorys: [Category] @manyToMany(relationName: "CategoryItem")
 }
 
 type Example @model @auth(rules: [{allow: public}]) {
