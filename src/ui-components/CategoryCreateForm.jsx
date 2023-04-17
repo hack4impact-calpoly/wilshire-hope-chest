@@ -8,13 +8,12 @@
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Example } from "../models";
+import { Category } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-export default function ExampleUpdateForm(props) {
+export default function CategoryCreateForm(props) {
   const {
-    id: idProp,
-    example,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -33,22 +32,10 @@ export default function ExampleUpdateForm(props) {
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = exampleRecord
-      ? { ...initialValues, ...exampleRecord }
-      : initialValues;
-    setName(cleanValues.name);
-    setDescription(cleanValues.description);
+    setName(initialValues.name);
+    setDescription(initialValues.description);
     setErrors({});
   };
-  const [exampleRecord, setExampleRecord] = React.useState(example);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp ? await DataStore.query(Example, idProp) : example;
-      setExampleRecord(record);
-    };
-    queryData();
-  }, [idProp, example]);
-  React.useEffect(resetStateValues, [exampleRecord]);
   const validations = {
     name: [],
     description: [],
@@ -109,13 +96,12 @@ export default function ExampleUpdateForm(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(
-            Example.copyOf(exampleRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await DataStore.save(new Category(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -123,7 +109,7 @@ export default function ExampleUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ExampleUpdateForm")}
+      {...getOverrideProps(overrides, "CategoryCreateForm")}
       {...rest}
     >
       <TextField
@@ -181,14 +167,13 @@ export default function ExampleUpdateForm(props) {
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || example)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -198,10 +183,7 @@ export default function ExampleUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || example) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
