@@ -1,10 +1,22 @@
 import "./DropdownStyles.css";
 import { BiPlus } from "react-icons/bi";
 import { IoCheckmarkSharp } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { DataStore } from "aws-amplify";
+import { Category } from "../../models";
 
 export default function Styledropdown() {
   const [icon, setIcon] = useState(<BiPlus size={18} />);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const fetchedCategories = await DataStore.query(Category);
+      setCategories(fetchedCategories);
+    }
+    fetchCategories();
+  }, []);
+
   function Showhide() {
     const click = document.getElementById("StyleDropdown");
     if (click?.style.display === "none") {
@@ -24,7 +36,7 @@ export default function Styledropdown() {
       <div id="StyleDropdown" className="dropdown-content-three-items">
         <div className="font">
           <ul>
-            <li>
+            {/* <li>
               <span className="items">
                 Clothes
                 <input
@@ -56,7 +68,20 @@ export default function Styledropdown() {
                   className="shoes"
                 />
               </span>
-            </li>
+            </li> */}
+            {categories.map((category) => (
+              <li key={category.id}>
+                <span className="items">
+                  {category.name}
+                  <input
+                    type="checkbox"
+                    name="checkbox"
+                    value="value"
+                    className={category.name?.toLowerCase()}
+                  />
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
