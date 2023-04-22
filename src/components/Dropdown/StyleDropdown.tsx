@@ -36,7 +36,18 @@ export default function Styledropdown() {
     fetchCategories();
   }, []);
 
-  console.log(categories, seed);
+  // const getCategories = async () => {
+  //   await DataStore.save(
+  //     new Category({
+  //       name: "test",
+  //       description: "test categories",
+  //     })
+  //   );
+  //   const fetchedCategories = await DataStore.query(Category);
+  //   console.log(fetchedCategories);
+  // };
+
+  console.log(categories);
 
   function Showhide() {
     const click = document.getElementById("StyleDropdown");
@@ -60,7 +71,9 @@ export default function Styledropdown() {
   };
 
   const handleDeleteSeed = async () => {
-    await DataStore.delete(Category, (category) => category.name.eq("test")); // delete all the posts
+    await DataStore.delete(Category, (category) =>
+      category.name.contains("test")
+    ); // delete all the posts
   };
   return (
     <div className="dropdown">
