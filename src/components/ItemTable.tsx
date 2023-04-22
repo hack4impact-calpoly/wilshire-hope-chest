@@ -10,21 +10,28 @@ import TagsList from "./TagsList";
 const rows: GridRowsProp = [
   {
     id: 1,
-    name: "Air Jordan Air Jordan Air Jordan Air Jordan Air Jordan",
+    name: "Air Jordan",
     price: "$60",
+    date: "2/14/2023",
+    tags: ["Clothing", "tag3", "tag4"],
+  },
+  {
+    id: 2,
+    name: "New balance sneaker",
+    price: "$120",
     date: "2/23/2023",
-    tags: ["Clothing", "tag2"],
+    tags: ["Alothing", "tag2", "tag3", "tag4", "tag5"],
   },
 ];
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", minWidth: 200 },
-  { field: "price", headerName: "Price", minWidth: 100 },
-  { field: "date", headerName: "Date Added", minWidth: 170 },
+  { field: "price", headerName: "Price", minWidth: 150 },
+  { field: "date", headerName: "Date Added", minWidth: 150 },
   {
     field: "tags",
     headerName: "Tags",
-    flex: 1,
+    minWidth: 550,
     renderCell: (params: GridRenderCellParams<Date>) => (
       <strong>
         <TagsList categories={params.value} />
@@ -32,18 +39,6 @@ const columns: GridColDef[] = [
     ),
   },
 ];
-
-// type Item = {
-//   id: String; // Amplify shows tyep = ID!
-//   name: String;
-//   dateAdded: Date;
-//   value: number; // ts doesn't have float
-//   image: String;
-// };
-
-// type ItemListProps = {
-//   items: Item[];
-// };
 
 export default function ItemTable() {
   return (
