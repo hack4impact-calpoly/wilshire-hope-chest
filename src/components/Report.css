@@ -11,7 +11,7 @@
     padding-left: 10px;
     font-family: 'Roboto';
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 20px;
     line-height: 40px;  
 }
@@ -75,4 +75,35 @@ flex-grow: 1;
     font-style: normal;
  } 
 
- 
+ #sales-text {
+    padding-left: 10px;
+    font: 'Roboto';
+    font-size: 20px;
+    padding-top: 15px;
+    font-weight: 600;
+
+ }
+
+#cat {
+    padding-left: 10px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+#catt {
+    padding-left: 10px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+}
+#subtitle {
+    padding-left: 10px;
+    font-size: 13px;
+}
+#subtitle2 {
+    padding-left: 120px;
+    font-size: 13px;
+}

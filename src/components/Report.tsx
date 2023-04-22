@@ -33,6 +33,22 @@ export default function Report() {
           />
         </div>
       </div>
+      <p id="sales-text"> Total Sales: $ </p>
+      <p id="catt"> Clothing </p>
+      <span id="subtitle"> Total Sales: $</span>
+      <span id="subtitle2"> Total Items: </span>
+      <p id="cat"> Jewlery </p>
+      <span id="subtitle"> Total Sales: $</span>
+      <span id="subtitle2"> Total Items: </span>
+      <p id="cat"> Household Items </p>
+      <span id="subtitle"> Total Sales: $</span>
+      <span id="subtitle2"> Total Items: </span>
+      <p id="cat"> Art </p>
+      <span id="subtitle"> Total Sales: $</span>
+      <span id="subtitle2"> Total Items: </span>
+      <p id="cat"> Collectibles </p>
+      <span id="subtitle"> Total Sales: $</span>
+      <span id="subtitle2"> Total Items: </span>
     </div>
   );
 }
