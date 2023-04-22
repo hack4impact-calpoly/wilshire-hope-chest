@@ -2,7 +2,7 @@ import "./DropdownStyles.css";
 import { BiPlus } from "react-icons/bi";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
-import { DataStore } from "aws-amplify";
+import { DataStore } from "@aws-amplify/datastore";
 import { Category } from "../../models";
 
 export default function Styledropdown() {
@@ -16,6 +16,8 @@ export default function Styledropdown() {
     }
     fetchCategories();
   }, []);
+
+  console.log(categories);
 
   function Showhide() {
     const click = document.getElementById("StyleDropdown");
