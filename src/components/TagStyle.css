@@ -1,16 +1,18 @@
-.box {
+.tag {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #a8d5db;
-  width: 79px;
+  width: 75px;
   height: 40px;
   border-radius: 100px;
 }
 
 .tags-container {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  gap: 25px;
+  gap: 10px;
+  padding: 6px 0px;
 }

@@ -1,4 +1,4 @@
-import "./ItemTable.css";
+import "./TagStyle.css";
 import {
   DataGrid,
   GridRowsProp,
@@ -31,7 +31,8 @@ const columns: GridColDef[] = [
   {
     field: "tags",
     headerName: "Tags",
-    minWidth: 550,
+    minWidth: 350,
+    flex: 2,
     renderCell: (params: GridRenderCellParams<Date>) => (
       <strong>
         <TagsList categories={params.value} />
@@ -43,7 +44,7 @@ const columns: GridColDef[] = [
 export default function ItemTable() {
   return (
     <div style={{ height: 300, width: "100%" }}>
-      <DataGrid rows={rows} columns={columns} />
+      <DataGrid rows={rows} columns={columns} getRowHeight={() => "auto"} />
     </div>
   );
 }
