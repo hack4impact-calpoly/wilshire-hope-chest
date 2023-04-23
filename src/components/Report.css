@@ -79,7 +79,7 @@ flex-grow: 1;
     padding-left: 10px;
     font: 'Roboto';
     font-size: 20px;
-    padding-top: 15px;
+    padding-top: 10px;
     font-weight: 600;
 
  }
@@ -90,6 +90,8 @@ flex-grow: 1;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
+    margin: 0;
+    padding-top: 10px;
 }
 
 #catt {
@@ -98,6 +100,7 @@ flex-grow: 1;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
+    margin: 0;
 }
 #subtitle {
     padding-left: 10px;
