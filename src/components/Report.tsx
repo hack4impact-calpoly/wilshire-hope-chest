@@ -20,7 +20,7 @@ export default function Report() {
               className="date_box"
               selected={startDate}
               onChange={(date) => setStartDate(date)}
-              placeholderText="mm/dd/yy"
+              placeholderText="Start Date"
             />
           </table>
         </div>

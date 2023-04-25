@@ -2,9 +2,12 @@
   color: black;
 }
 .report_box {
-    border: 1px;
-    border-color: blue;
-    border-radius: 0px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: solid;
+    border-color: black;
+    margin-right: 1180px;
+    padding-bottom: 10px;
 }
 .intro-text{
     padding-top: 40px;
