@@ -125,15 +125,13 @@ export default function Styledropdown() {
             </li> */}
             {categories.map((category) => (
               <li key={category.id}>
-                <span className="items">
-                  {category.name}
-                  <input
-                    type="checkbox"
-                    name="checkbox"
-                    value="value"
-                    className={category.name?.toLowerCase()}
-                  />
-                </span>
+                <span className="items">{category.name}</span>
+                <input
+                  type="checkbox"
+                  name="checkbox"
+                  value="value"
+                  className={category.name?.toLowerCase()}
+                />
               </li>
             ))}
           </ul>
