@@ -5,7 +5,10 @@ import {
   GridColDef,
   GridRenderCellParams,
 } from "@mui/x-data-grid";
+import { DataStore } from "aws-amplify";
+import { useEffect, useState } from "react";
 import TagsList from "./TagsList";
+import { Category, LazyCategory } from "../models";
 
 const rows: GridRowsProp = [
   {
@@ -23,6 +26,20 @@ const rows: GridRowsProp = [
     tags: ["Alothing", "tag2", "tag3", "tag4", "tag5"],
   },
 ];
+
+// const fetchData = async () => {
+//   try {
+//     const posts = await DataStore.query(Category);
+//     console.log(
+//       "Posts retrieved successfully!",
+//       JSON.stringify(posts, null, 2)
+//     );
+//     return posts;
+//   } catch (error) {
+//     console.log("Error retrieving posts", error);
+//     return error;
+//   }
+// };
 
 const columns: GridColDef[] = [
   { field: "name", headerName: "Name", minWidth: 200 },
@@ -42,6 +59,27 @@ const columns: GridColDef[] = [
 ];
 
 export default function ItemTable() {
+  const [columnsList, setColumnsList] = useState<LazyCategory[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const posts = await DataStore.query(Category);
+        console.log(
+          "Posts retrieved successfully!",
+          JSON.stringify(posts, null, 2)
+        );
+        console.log("posts = ", posts);
+        setColumnsList(posts);
+      } catch (error) {
+        console.log("Error retrieving posts", error);
+      }
+    };
+
+    fetchData();
+    console.log("columnsList = ", columnsList);
+  }, []);
+
   return (
     <div style={{ height: 300, width: "100%" }}>
       <DataGrid rows={rows} columns={columns} getRowHeight={() => "auto"} />

@@ -8,13 +8,13 @@
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Example } from "../models";
+import { Category } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-export default function ExampleUpdateForm(props) {
+export default function CategoryUpdateForm(props) {
   const {
     id: idProp,
-    example,
+    category,
     onSuccess,
     onError,
     onSubmit,
@@ -33,22 +33,24 @@ export default function ExampleUpdateForm(props) {
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = exampleRecord
-      ? { ...initialValues, ...exampleRecord }
+    const cleanValues = categoryRecord
+      ? { ...initialValues, ...categoryRecord }
       : initialValues;
     setName(cleanValues.name);
     setDescription(cleanValues.description);
     setErrors({});
   };
-  const [exampleRecord, setExampleRecord] = React.useState(example);
+  const [categoryRecord, setCategoryRecord] = React.useState(category);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Example, idProp) : example;
-      setExampleRecord(record);
+      const record = idProp
+        ? await DataStore.query(Category, idProp)
+        : category;
+      setCategoryRecord(record);
     };
     queryData();
-  }, [idProp, example]);
-  React.useEffect(resetStateValues, [exampleRecord]);
+  }, [idProp, category]);
+  React.useEffect(resetStateValues, [categoryRecord]);
   const validations = {
     name: [],
     description: [],
@@ -110,7 +112,7 @@ export default function ExampleUpdateForm(props) {
             }
           });
           await DataStore.save(
-            Example.copyOf(exampleRecord, (updated) => {
+            Category.copyOf(categoryRecord, (updated) => {
               Object.assign(updated, modelFields);
             })
           );
@@ -123,7 +125,7 @@ export default function ExampleUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "ExampleUpdateForm")}
+      {...getOverrideProps(overrides, "CategoryUpdateForm")}
       {...rest}
     >
       <TextField
@@ -187,7 +189,7 @@ export default function ExampleUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || example)}
+          isDisabled={!(idProp || category)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -199,7 +201,7 @@ export default function ExampleUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || example) ||
+              !(idProp || category) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}
