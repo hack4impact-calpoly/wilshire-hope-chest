@@ -3,6 +3,7 @@ import { BiPlus } from "react-icons/bi";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { DataStore } from "@aws-amplify/datastore";
+
 import { Category } from "../../models";
 
 export default function Styledropdown() {
@@ -18,34 +19,9 @@ export default function Styledropdown() {
     async function fetchCategories() {
       const fetchedCategories = await DataStore.query(Category);
       setCategories(fetchedCategories);
-
-      // const existingCatNames = fetchCategories.map((el) => el.name);
-
-      // seed.forEach(async (el) => {
-      //   if (!existingCatNames.includes(el.name)) {
-      //     await DataStore.save(
-      //       new Category({
-      //         ...el,
-      //       })
-      //     );
-      //   }
-      // });
-
-      // await DataStore.delete(Category, (category) => category.name.eq("test")); //delete all the posts
     }
     fetchCategories();
   }, []);
-
-  // const getCategories = async () => {
-  //   await DataStore.save(
-  //     new Category({
-  //       name: "test",
-  //       description: "test categories",
-  //     })
-  //   );
-  //   const fetchedCategories = await DataStore.query(Category);
-  //   console.log(fetchedCategories);
-  // };
 
   console.log(categories);
 
@@ -60,6 +36,7 @@ export default function Styledropdown() {
     }
   }
 
+  // this functin can be removed any timee, just for testing purposes
   const handleSeed = async () => {
     seed.forEach(async (el) => {
       await DataStore.save(
@@ -70,6 +47,7 @@ export default function Styledropdown() {
     });
   };
 
+  // this functin can be removed any timee, just for testing purposes
   const handleDeleteSeed = async () => {
     await DataStore.delete(Category, (category) =>
       category.name.contains("test")
@@ -77,16 +55,26 @@ export default function Styledropdown() {
   };
   return (
     <div className="dropdown">
+      {/* div and two buttons two buttons can be removed at any time, just for testing purposes */}
+      <div style={{ margin: "5px" }}>
+        <button
+          type="button"
+          style={{ marginRight: "10px" }}
+          className="test"
+          onClick={handleSeed}
+        >
+          Seed
+        </button>
+        <button type="button" className="test" onClick={handleDeleteSeed}>
+          Delete Seed
+        </button>
+      </div>
+
       <button type="button" onClick={Showhide} className="dropbtn">
         <span id="Change"> {icon} </span>
         <span className="C1"> Style </span>
       </button>
-      <button type="button" className="test" onClick={handleSeed}>
-        Seed
-      </button>
-      <button type="button" className="test" onClick={handleDeleteSeed}>
-        Delete Seed
-      </button>
+
       <div id="StyleDropdown" className="dropdown-content-three-items">
         <div className="font">
           <ul>
