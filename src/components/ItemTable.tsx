@@ -5,10 +5,10 @@ import {
   GridColDef,
   GridRenderCellParams,
 } from "@mui/x-data-grid";
-import { DataStore } from "aws-amplify";
+import { DataStore } from "@aws-amplify/datastore";
 import { useEffect, useState } from "react";
 import TagsList from "./TagsList";
-import { Category, LazyCategory } from "../models";
+import { Item, LazyItem } from "../models";
 
 const rows: GridRowsProp = [
   {
@@ -59,12 +59,12 @@ const columns: GridColDef[] = [
 ];
 
 export default function ItemTable() {
-  const [columnsList, setColumnsList] = useState<LazyCategory[]>([]);
+  const [columnsList, setColumnsList] = useState<LazyItem[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const posts = await DataStore.query(Category);
+        const posts = await DataStore.query(Item);
         console.log(
           "Posts retrieved successfully!",
           JSON.stringify(posts, null, 2)
