@@ -24,8 +24,6 @@
 
 /* Dropdown Content for Style (Hidden by Default) */
 .dropdown-content-three-items {
-  /* margin-top: 18px; */
-  /* height: 120px; */
   height: auto;
   width: 196px;
   display: none;
@@ -85,15 +83,6 @@
 .items {
   width: 116px;
   height: 24px;
-  /* font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.5px;
-  color: #1c1b1f;
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0; */
   display: inline-flex;
   align-items: center;
 }
@@ -115,13 +104,6 @@ li {
 }
 
 /* checkbox styling */
-/* input[type="checkbox"] {
-  position: absolute;
-  cursor: pointer;
-  margin-left: 100px;
-  margin-bottom: 10px;
-  margin-left: 135px;
-} */
 input[type="checkbox"] {
   position: relative;
   cursor: pointer;
