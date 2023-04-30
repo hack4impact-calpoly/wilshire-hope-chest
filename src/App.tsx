@@ -4,7 +4,8 @@ import { Auth } from "aws-amplify";
 import "./App.css";
 import Home from "./components/Home";
 import awsconfig from "./aws-exports";
-// import configuraiton of AWS authentication
+
+// import configuration of AWS authentication
 Auth.configure(awsconfig);
 
 function App() {
