@@ -1,7 +1,7 @@
 import "./TagStyle.css";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { DataStore } from "@aws-amplify/datastore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // import TagsList from "./TagsList";
 import { Item } from "../models";
 
@@ -15,8 +15,6 @@ const rows: GridRowsProp = [
     value: 60,
     image: "",
     categorys: ["Clothing", "tag3", "tag4"],
-    createdAt: "2023-03-12T01:32:37.785Z",
-    updatedAt: "2023-03-12T01:32:37.785Z",
   },
   {
     id: 2,
@@ -25,8 +23,6 @@ const rows: GridRowsProp = [
     value: "$60",
     image: "",
     categorys: ["Alothing", "tag2", "tag3", "tag4", "tag5"],
-    createdAt: "2023-03-13T01:32:37.785Z",
-    updatedAt: "2023-03-13T01:32:37.785Z",
   },
 ];
 
@@ -34,8 +30,6 @@ const columns: GridColDef[] = [
   { field: "name", headerName: "Name", minWidth: 200 },
   { field: "value", headerName: "Price", minWidth: 150 },
   { field: "dataAdded", headerName: "Date Added", minWidth: 150 },
-  { field: "createdAt", headerName: "Created At", minWidth: 200 },
-  { field: "updatedAt", headerName: "Updated At", minWidth: 200 },
   // TODO: put the Categorys back once the fetch call is fixed
   /* {
     field: "categorys",
@@ -52,6 +46,10 @@ const columns: GridColDef[] = [
 
 export default function ItemTable() {
   // const [rows, setRows] = useState<LazyItem[]>([]);
+  const [paginationModel, setPaginationModel] = useState({
+    pageSize: 25,
+    page: 0,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,11 +69,14 @@ export default function ItemTable() {
   }, []);
 
   return (
-    <div style={{ height: 300, width: "100%" }}>
+    <div style={{ height: 400, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}
         getRowHeight={() => "auto"}
+        paginationModel={paginationModel}
+        onPaginationModelChange={setPaginationModel}
+        pageSizeOptions={[10, 25, 50]}
         sx={{
           "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": { py: "8px" },
           "&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell": {
