@@ -24,8 +24,7 @@
 
 /* Dropdown Content for Style (Hidden by Default) */
 .dropdown-content-three-items {
-  margin-top: 18px;
-  height: 120px;
+  height: auto;
   width: 196px;
   display: none;
   border-radius: 10px;
@@ -34,6 +33,12 @@
   background-color: white;
   border-style: solid;
   border-color: #006d7d;
+}
+
+.dropdown-content-three-items ul {
+  max-height: 200px; /* set a maximum height for the dropdown menu */
+  overflow-y: auto; /* enable vertical scrolling */
+  padding-top: 10px;
 }
 
 /* Dropdown Content for Price and Date (Hidden by Default) */
@@ -78,17 +83,8 @@
 .items {
   width: 116px;
   height: 24px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  letter-spacing: 0.5px;
-  color: #1c1b1f;
-  flex: none;
-  order: 1;
-  align-self: stretch;
-  flex-grow: 0;
 }
 
 /* list for way items are spaced */
@@ -103,15 +99,17 @@ li {
   margin: 8px 8px 0px 0;
   margin-bottom: 26px;
   margin-top: -9px;
+  display: flex;
+  flex-grow: 1;
 }
 
 /* checkbox styling */
 input[type="checkbox"] {
-  position: absolute;
+  position: relative;
   cursor: pointer;
-  margin-left: 100px;
-  margin-bottom: 10px;
-  margin-left: 135px;
+  margin-left: 10px;
+  margin-right: 5px;
+  vertical-align: middle;
 }
 
 input[type="checkbox"]:before {
