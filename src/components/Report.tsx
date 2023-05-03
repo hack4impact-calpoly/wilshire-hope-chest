@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./Report.css";
 import { BsCalendarEvent } from "react-icons/bs";
+import "./Report.css";
 
 export default function Report() {
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -19,7 +19,9 @@ export default function Report() {
             <DatePicker
               className="date_box"
               selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              onChange={(date: React.SetStateAction<Date | null>) =>
+                setStartDate(date)
+              }
               placeholderText="Start Date"
             />
           </table>
@@ -28,7 +30,9 @@ export default function Report() {
           <DatePicker
             className="date_box2"
             selected={endDate}
-            onChange={(date) => setEndDate(date)}
+            onChange={(date: React.SetStateAction<Date | null>) =>
+              setEndDate(date)
+            }
             placeholderText="End Date"
           />
         </div>
