@@ -49,7 +49,7 @@ const columns: GridColDef[] = [
 ];
 
 export default function ItemTable() {
-  const [rows, setRows] = useState<any>([]);
+  const [rows, setRows] = useState<Item[]>([]);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
     page: 0,
