@@ -6,7 +6,7 @@ import {
   GridValueFormatterParams,
 } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { Category, CategoryItem, Item } from "../models";
+import { Category, Item, ItemCategory } from "../models";
 import "./TagStyle.css";
 import TagsList from "./TagsList";
 
@@ -33,7 +33,7 @@ const columns: GridColDef[] = [
     },
   },
   {
-    field: "categories",
+    field: "cats",
     headerName: "Categories",
     minWidth: 350,
     flex: 2,
@@ -61,21 +61,21 @@ export default function ItemTable() {
         const items = await DataStore.query(Item);
         // for every item, retrieve the categories and add them to the item
         const temp = items.map(async (item) => {
-          // query the categoryItems table for all the categoryItems that have the itemId of the current item
-          const categoryItems = await DataStore.query(CategoryItem, (ci) =>
+          // query the itemCategories table for all the itemCategories that have the itemId of the current item
+          const itemCategories = await DataStore.query(ItemCategory, (ci) =>
             ci.itemId.eq(item.id)
           );
-          // for each categoryItem, query the category table for the category name from the categoryId in CategoryItem
+          // for each categoryItem, query the category table for the category name from the categoryId in ItemCategory
           const categories = await Promise.all(
-            categoryItems.map(async (ci) => {
+            itemCategories.map(async (ci) => {
               if (!ci.categoryId) return "";
               const category = await DataStore.query(Category, ci.categoryId);
               return category?.name;
             })
           );
-          return { ...item, categories };
+          return { ...item, cats: categories };
         });
-        const itemsWithCategories = await Promise.all(temp);
+        const itemsWithCategories: Item[] = await Promise.all(temp);
         setRows(itemsWithCategories);
       } catch (error) {
         console.log("Error retrieving posts", error);
