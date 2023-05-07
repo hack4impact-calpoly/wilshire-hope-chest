@@ -21,19 +21,27 @@ function AddItemButton() {
       dateAdded: "2023-04-06",
       value: 120.0,
     });
-    await DataStore.save(item);
+    try {
+      await DataStore.save(item);
+    } catch (error) {
+      console.log("Error adding an item", error);
+    }
 
     // Add the CategoryItem one by one
-    await Promise.all(
-      categories.map(async (category) => {
-        const categoryItem = new CategoryItem({
-          item,
-          category,
-        });
-        await DataStore.save(categoryItem);
-        console.log("Added a categoryItem = ", categoryItem);
-      })
-    );
+    try {
+      await Promise.all(
+        categories.map(async (category) => {
+          const categoryItem = new CategoryItem({
+            item,
+            category,
+          });
+          await DataStore.save(categoryItem);
+          console.log("Added a categoryItem = ", categoryItem);
+        })
+      );
+    } catch (error) {
+      console.log("Error adding a categoryItem", error);
+    }
   }
 
   return (
