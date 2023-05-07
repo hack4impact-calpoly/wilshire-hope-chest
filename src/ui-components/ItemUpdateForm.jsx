@@ -14,7 +14,7 @@ import { DataStore } from "aws-amplify";
 export default function ItemUpdateForm(props) {
   const {
     id: idProp,
-    item,
+    item: itemModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -27,12 +27,10 @@ export default function ItemUpdateForm(props) {
     name: "",
     dateAdded: "",
     value: "",
-    image: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [dateAdded, setDateAdded] = React.useState(initialValues.dateAdded);
   const [value, setValue] = React.useState(initialValues.value);
-  const [image, setImage] = React.useState(initialValues.image);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = itemRecord
@@ -41,32 +39,33 @@ export default function ItemUpdateForm(props) {
     setName(cleanValues.name);
     setDateAdded(cleanValues.dateAdded);
     setValue(cleanValues.value);
-    setImage(cleanValues.image);
     setErrors({});
   };
-  const [itemRecord, setItemRecord] = React.useState(item);
+  const [itemRecord, setItemRecord] = React.useState(itemModelProp);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Item, idProp) : item;
+      const record = idProp
+        ? await DataStore.query(Item, idProp)
+        : itemModelProp;
       setItemRecord(record);
     };
     queryData();
-  }, [idProp, item]);
+  }, [idProp, itemModelProp]);
   React.useEffect(resetStateValues, [itemRecord]);
   const validations = {
     name: [],
     dateAdded: [],
     value: [],
-    image: [],
   };
   const runValidationTasks = async (
     fieldName,
     currentValue,
     getDisplayValue
   ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+    const value =
+      currentValue && getDisplayValue
+        ? getDisplayValue(currentValue)
+        : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -87,7 +86,6 @@ export default function ItemUpdateForm(props) {
           name,
           dateAdded,
           value,
-          image,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -146,7 +144,6 @@ export default function ItemUpdateForm(props) {
               name: value,
               dateAdded,
               value,
-              image,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -174,7 +171,6 @@ export default function ItemUpdateForm(props) {
               name,
               dateAdded: value,
               value,
-              image,
             };
             const result = onChange(modelFields);
             value = result?.dateAdded ?? value;
@@ -205,7 +201,6 @@ export default function ItemUpdateForm(props) {
               name,
               dateAdded,
               value: value,
-              image,
             };
             const result = onChange(modelFields);
             value = result?.value ?? value;
@@ -220,33 +215,6 @@ export default function ItemUpdateForm(props) {
         hasError={errors.value?.hasError}
         {...getOverrideProps(overrides, "value")}
       ></TextField>
-      <TextField
-        label="Image"
-        isRequired={false}
-        isReadOnly={false}
-        value={image}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              dateAdded,
-              value,
-              image: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.image ?? value;
-          }
-          if (errors.image?.hasError) {
-            runValidationTasks("image", value);
-          }
-          setImage(value);
-        }}
-        onBlur={() => runValidationTasks("image", image)}
-        errorMessage={errors.image?.errorMessage}
-        hasError={errors.image?.hasError}
-        {...getOverrideProps(overrides, "image")}
-      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
@@ -258,7 +226,7 @@ export default function ItemUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || item)}
+          isDisabled={!(idProp || itemModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -270,7 +238,7 @@ export default function ItemUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || item) ||
+              !(idProp || itemModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}
