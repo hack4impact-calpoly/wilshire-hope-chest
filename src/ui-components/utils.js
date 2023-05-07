@@ -7,7 +7,7 @@
 /* eslint-disable */
 export const validateField = (value, validations) => {
   for (const validation of validations) {
-    if (value === undefined || value === "") {
+    if (value === undefined || value === "" || value === null) {
       if (validation.type === "Required") {
         return {
           hasError: true,

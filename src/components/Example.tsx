@@ -1,15 +1,15 @@
 import { DataStore } from "@aws-amplify/datastore";
 import { useEffect } from "react";
-import { Example } from "../models";
+import { Category } from "../models";
 
 function DataTest() {
   useEffect(() => {
-    DataStore.query(Example).then((models: any) => console.log(models));
+    DataStore.query(Category).then((models: any) => console.log(models));
   }, []);
 
   async function handleClick() {
     await DataStore.save(
-      new Example({
+      new Category({
         name: "Lorem ipsum dolor sit amet",
         description: "Lorem ipsum dolor sit amet",
       })

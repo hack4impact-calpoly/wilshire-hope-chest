@@ -14,7 +14,7 @@ type EagerCategory = {
   readonly id: string;
   readonly name?: string | null;
   readonly description?: string | null;
-  readonly Items?: (CategoryItem | null)[] | null;
+  readonly items?: (CategoryItem | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -27,7 +27,7 @@ type LazyCategory = {
   readonly id: string;
   readonly name?: string | null;
   readonly description?: string | null;
-  readonly Items: AsyncCollection<CategoryItem>;
+  readonly items: AsyncCollection<CategoryItem>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -47,7 +47,6 @@ type EagerItem = {
   readonly name?: string | null;
   readonly dateAdded?: string | null;
   readonly value?: number | null;
-  readonly image?: string | null;
   readonly categorys?: (CategoryItem | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -62,7 +61,6 @@ type LazyItem = {
   readonly name?: string | null;
   readonly dateAdded?: string | null;
   readonly value?: number | null;
-  readonly image?: string | null;
   readonly categorys: AsyncCollection<CategoryItem>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -72,36 +70,6 @@ export declare type Item = LazyLoading extends LazyLoadingDisabled ? EagerItem :
 
 export declare const Item: (new (init: ModelInit<Item>) => Item) & {
   copyOf(source: Item, mutator: (draft: MutableModel<Item>) => MutableModel<Item> | void): Item;
-}
-
-type EagerExample = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Example, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly name?: string | null;
-  readonly description?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyExample = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Example, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly name?: string | null;
-  readonly description?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Example = LazyLoading extends LazyLoadingDisabled ? EagerExample : LazyExample
-
-export declare const Example: (new (init: ModelInit<Example>) => Example) & {
-  copyOf(source: Example, mutator: (draft: MutableModel<Example>) => MutableModel<Example> | void): Example;
 }
 
 type EagerCategoryItem = {
