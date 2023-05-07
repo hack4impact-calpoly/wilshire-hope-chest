@@ -28,7 +28,7 @@ export const schema = {
                     "name": "items",
                     "isArray": true,
                     "type": {
-                        "model": "CategoryItem"
+                        "model": "ItemCategory"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -113,11 +113,11 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "categorys": {
-                    "name": "categorys",
+                "categories": {
+                    "name": "categories",
                     "isArray": true,
                     "type": {
-                        "model": "CategoryItem"
+                        "model": "ItemCategory"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -171,8 +171,8 @@ export const schema = {
                 }
             ]
         },
-        "CategoryItem": {
-            "name": "CategoryItem",
+        "ItemCategory": {
+            "name": "ItemCategory",
             "fields": {
                 "id": {
                     "name": "id",
@@ -243,7 +243,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "CategoryItems",
+            "pluralName": "ItemCategories",
             "attributes": [
                 {
                     "type": "model",
@@ -273,5 +273,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.6",
-    "version": "95f99ed523f62a2f37d7e3be53e3cca2"
+    "version": "e5eca3420c9478b54db43a2fa4d95899"
 };

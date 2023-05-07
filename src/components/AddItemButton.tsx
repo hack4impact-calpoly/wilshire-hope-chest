@@ -1,19 +1,19 @@
 import { DataStore } from "@aws-amplify/datastore";
-import { Category, CategoryItem, Item } from "../models";
+import { Category, ItemCategory, Item } from "../models";
 
 function AddItemButton() {
   // Sample data for testing
   const items = [
     {
-      name: "bluetooth speaker",
-      dateAdded: "2023-04-12",
-      value: 80.0,
-      categories: ["Electronics", "Furniture"],
+      name: "white desk",
+      dateAdded: "2023-04-16",
+      value: 30.0,
+      categories: ["Furniture"],
     },
     {
-      name: "keychain",
-      dateAdded: "2023-04-12",
-      value: 2.0,
+      name: "leather cardholder",
+      dateAdded: "2023-04-16",
+      value: 5.0,
       categories: ["Misc"],
     },
   ];
@@ -50,11 +50,11 @@ function AddItemButton() {
           console.log("Error adding an item", error);
         }
 
-        // Add the CategoryItem one by one
+        // Add the ItemCategory one by one
         try {
           await Promise.all(
             categories.map(async (category) => {
-              const categoryItem = new CategoryItem({
+              const categoryItem = new ItemCategory({
                 item: newItem,
                 category,
               });

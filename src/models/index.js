@@ -4,10 +4,10 @@ import { schema } from './schema';
 
 
 
-const { Category, Item, CategoryItem } = initSchema(schema);
+const { Category, Item, ItemCategory } = initSchema(schema);
 
 export {
   Category,
   Item,
-  CategoryItem
+  ItemCategory
 };

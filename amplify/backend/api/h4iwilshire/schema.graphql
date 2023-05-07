@@ -2,7 +2,7 @@ type Category @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   description: String
-  items: [Item] @manyToMany(relationName: "CategoryItem")
+  items: [Item] @manyToMany(relationName: "ItemCategory")
 }
 
 type Item @model @auth(rules: [{allow: public}]) {
@@ -10,6 +10,6 @@ type Item @model @auth(rules: [{allow: public}]) {
   name: String
   dateAdded: AWSDate
   value: Float
-  categorys: [Category] @manyToMany(relationName: "CategoryItem")
+  categories: [Category] @manyToMany(relationName: "ItemCategory")
 }
  
