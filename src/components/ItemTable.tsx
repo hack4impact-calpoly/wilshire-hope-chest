@@ -1,51 +1,55 @@
-import "./TagStyle.css";
-import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { DataStore } from "@aws-amplify/datastore";
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridValueFormatterParams,
+} from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-// import TagsList from "./TagsList";
-import { Item } from "../models";
-
-// Sample data, should remove it after the fetch call is fixed
-// REMARKS: the type of categorys here doesn't matched with the data
-const rows: GridRowsProp = [
-  {
-    id: 1,
-    name: "Air Jordan",
-    dataAdded: "2/14/2023",
-    value: 60,
-    image: "",
-    categorys: ["Clothing", "tag3", "tag4"],
-  },
-  {
-    id: 2,
-    name: "New balance sneaker",
-    dataAdded: "2/23/2023",
-    value: "$60",
-    image: "",
-    categorys: ["Alothing", "tag2", "tag3", "tag4", "tag5"],
-  },
-];
+import { Category, Item, ItemCategory } from "../models";
+import "./TagStyle.css";
+import TagsList from "./TagsList";
 
 const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", minWidth: 200 },
-  { field: "value", headerName: "Price", minWidth: 150 },
-  { field: "dataAdded", headerName: "Date Added", minWidth: 150 },
-  // TODO: put the Categorys back once the fetch call is fixed
-  /* {
-    field: "categorys",
-    headerName: "Categorys",
+  { field: "name", headerName: "Name", minWidth: 350 },
+  {
+    field: "value",
+    headerName: "Price",
+    minWidth: 200,
+    flex: 0.5,
+    valueFormatter: (params: GridValueFormatterParams) => {
+      const value = params.value as number;
+      return `$${value.toFixed(2)}`;
+    },
+  },
+  {
+    field: "dateAdded",
+    headerName: "Date Added",
+    minWidth: 200,
+    flex: 0.5,
+    valueFormatter: (params: GridValueFormatterParams) => {
+      const date = new Date(params.value as string);
+      return date.toLocaleDateString();
+    },
+  },
+  {
+    field: "cats",
+    headerName: "Categories",
     minWidth: 350,
     flex: 2,
-    renderCell: (params: GridRenderCellParams<Date>) => (
-      <strong>
-        <TagsList categories={params.value} />
-      </strong>
+    renderCell: (params: GridRenderCellParams) => (
+      <TagsList categories={params.value as string[]} />
     ),
-  }, */
+    sortComparator: (v1: string[], v2: string[]) => {
+      const v1Str = v1.join("");
+      const v2Str = v2.join("");
+      return v1Str.localeCompare(v2Str);
+    },
+  },
 ];
 
 export default function ItemTable() {
-  // const [rows, setRows] = useState<LazyItem[]>([]);
+  const [rows, setRows] = useState<Item[]>([]);
   const [paginationModel, setPaginationModel] = useState({
     pageSize: 25,
     page: 0,
@@ -55,11 +59,24 @@ export default function ItemTable() {
     const fetchData = async () => {
       try {
         const items = await DataStore.query(Item);
-        console.log(
-          "Items retrieved successfully!",
-          JSON.stringify(items, null, 2)
-        );
-        // setRows(items);
+        // for every item, retrieve the categories and add them to the item
+        const temp = items.map(async (item) => {
+          // query the itemCategories table for all the itemCategories that have the itemId of the current item
+          const itemCategories = await DataStore.query(ItemCategory, (ci) =>
+            ci.itemId.eq(item.id)
+          );
+          // for each categoryItem, query the category table for the category name from the categoryId in ItemCategory
+          const categories = await Promise.all(
+            itemCategories.map(async (ci) => {
+              if (!ci.categoryId) return "";
+              const category = await DataStore.query(Category, ci.categoryId);
+              return category?.name;
+            })
+          );
+          return { ...item, cats: categories };
+        });
+        const itemsWithCategories: Item[] = await Promise.all(temp);
+        setRows(itemsWithCategories);
       } catch (error) {
         console.log("Error retrieving posts", error);
       }
@@ -69,7 +86,7 @@ export default function ItemTable() {
   }, []);
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: "70vh" }}>
       <DataGrid
         rows={rows}
         columns={columns}
