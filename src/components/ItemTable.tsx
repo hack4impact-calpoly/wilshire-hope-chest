@@ -1,10 +1,10 @@
-import { DataStore } from "@aws-amplify/datastore";
 import {
   DataGrid,
   GridColDef,
   GridRenderCellParams,
   GridValueFormatterParams,
 } from "@mui/x-data-grid";
+import { DataStore } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { Category, Item, ItemCategory } from "../models";
 import "./TagStyle.css";
