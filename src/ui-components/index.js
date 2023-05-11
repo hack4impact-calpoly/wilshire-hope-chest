@@ -9,5 +9,3 @@ export { default as CategoryCreateForm } from "./CategoryCreateForm";
 export { default as CategoryUpdateForm } from "./CategoryUpdateForm";
 export { default as ItemCreateForm } from "./ItemCreateForm";
 export { default as ItemUpdateForm } from "./ItemUpdateForm";
-export { default as ExampleCreateForm } from "./ExampleCreateForm";
-export { default as ExampleUpdateForm } from "./ExampleUpdateForm";

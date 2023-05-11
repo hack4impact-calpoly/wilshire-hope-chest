@@ -17,13 +17,11 @@ export declare type ItemUpdateFormInputValues = {
     name?: string;
     dateAdded?: string;
     value?: number;
-    image?: string;
 };
 export declare type ItemUpdateFormValidationValues = {
     name?: ValidationFunction<string>;
     dateAdded?: ValidationFunction<string>;
     value?: ValidationFunction<number>;
-    image?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ItemUpdateFormOverridesProps = {
@@ -31,7 +29,6 @@ export declare type ItemUpdateFormOverridesProps = {
     name?: PrimitiveOverrideProps<TextFieldProps>;
     dateAdded?: PrimitiveOverrideProps<TextFieldProps>;
     value?: PrimitiveOverrideProps<TextFieldProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ItemUpdateFormProps = React.PropsWithChildren<{
     overrides?: ItemUpdateFormOverridesProps | undefined | null;

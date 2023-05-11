@@ -16,13 +16,11 @@ export declare type ItemCreateFormInputValues = {
     name?: string;
     dateAdded?: string;
     value?: number;
-    image?: string;
 };
 export declare type ItemCreateFormValidationValues = {
     name?: ValidationFunction<string>;
     dateAdded?: ValidationFunction<string>;
     value?: ValidationFunction<number>;
-    image?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ItemCreateFormOverridesProps = {
@@ -30,7 +28,6 @@ export declare type ItemCreateFormOverridesProps = {
     name?: PrimitiveOverrideProps<TextFieldProps>;
     dateAdded?: PrimitiveOverrideProps<TextFieldProps>;
     value?: PrimitiveOverrideProps<TextFieldProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ItemCreateFormProps = React.PropsWithChildren<{
     overrides?: ItemCreateFormOverridesProps | undefined | null;
