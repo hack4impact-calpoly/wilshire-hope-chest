@@ -2,40 +2,16 @@ import { Drawer } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
 import "./ItemDrawer.css";
-import {
-  DataGrid,
-  GridColDef,
-  GridRenderCellParams,
-  GridRowsProp,
-} from "@mui/x-data-grid";
-import { DataStore } from "@aws-amplify/datastore";
-import TagsList from "./TagsList";
-// import { Item } from "../models";
-
-const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", minWidth: 200 },
-  { field: "value", headerName: "Price", minWidth: 150 },
-  { field: "dataAdded", headerName: "Date Added", minWidth: 150 },
-  {
-    field: "categorys",
-    headerName: "Categorys",
-    minWidth: 350,
-    flex: 2,
-    renderCell: (params: GridRenderCellParams<Date>) => (
-      <strong>
-        <TagsList categories={params.value} />
-      </strong>
-    ),
-  },
-];
+import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
+import { DataStore } from "aws-amplify";
+import { columns } from "./ItemTable";
 
 const testRow = {
   id: 2,
   name: "New balance sneaker",
-  dataAdded: "2/23/2023",
-  value: "$60",
-  image: "",
-  categorys: ["Alothing", "tag2", "tag3", "tag4", "tag5"],
+  dateAdded: "01 Jan 1970 00:00:00 GMT",
+  value: 60,
+  cats: ["Alothing", "tag2", "tag3", "tag4", "tag5"],
 };
 
 function ItemDrawer() {
@@ -69,7 +45,7 @@ function ItemDrawer() {
         console.log("Error sending row", error);
       }
     }
-    setRows(() => []);
+    setRows([]);
   }
 
   return (
@@ -91,7 +67,7 @@ function ItemDrawer() {
         open={isDrawerOpen}
         onClose={() => {
           setIsDrawerOpen(false);
-          setRows(() => []);
+          setRows([]);
         }}
       >
         <div>
@@ -115,7 +91,6 @@ function ItemDrawer() {
               // need to change this to get new item from Add Item modal
             >
               <div className="button-layout">
-                {/* <div className="plus" /> */}
                 <AddIcon sx={{ color: "white", fontSize: 12 }} />
                 <div className="add-text">Add Item</div>
               </div>
@@ -148,7 +123,7 @@ function ItemDrawer() {
               type="button"
               onClick={() => {
                 setIsDrawerOpen(false);
-                setRows(() => []);
+                setRows([]);
               }}
             >
               Cancel
