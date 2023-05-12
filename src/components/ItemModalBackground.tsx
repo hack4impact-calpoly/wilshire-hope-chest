@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
+import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -9,13 +10,22 @@ export default function ItemModalBackground({
 }: {
   setOpenModal: () => void;
 }) {
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [nameError, setNameError] = useState(false);
+  const [priceError, setPriceError] = useState(false);
   const [formData, setFormData] = useState({});
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      Categories: selectedTags,
+    });
+  }, [selectedTags]);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const handleTagClick = (tag: string) => {
     const index = selectedTags.indexOf(tag);
@@ -25,12 +35,37 @@ export default function ItemModalBackground({
       setSelectedTags([...selectedTags, tag]);
     }
   };
-  useEffect(() => {
-    setFormData({
-      ...formData,
-      Categories: selectedTags,
-    });
-  }, [selectedTags]);
+
+  const handleSubmit = () => {
+    console.log(formData);
+    if (
+      formData["Name" as keyof typeof formData] === undefined ||
+      formData["Name" as keyof typeof formData] === ""
+    ) {
+      setNameError(true);
+    } else {
+      setNameError(false);
+    }
+    if (
+      formData["Price" as keyof typeof formData] === undefined ||
+      formData["Price" as keyof typeof formData] === "" ||
+      Number.isNaN(Number(formData["Price" as keyof typeof formData]))
+    ) {
+      setPriceError(true);
+    } else {
+      setPriceError(false);
+    }
+    // close the modal if fields are valid
+    if (
+      formData["Name" as keyof typeof formData] !== undefined &&
+      formData["Name" as keyof typeof formData] !== "" &&
+      formData["Price" as keyof typeof formData] !== undefined &&
+      formData["Price" as keyof typeof formData] !== "" &&
+      !Number.isNaN(Number(formData["Price" as keyof typeof formData]))
+    ) {
+      setOpenModal();
+    }
+  };
 
   return (
     <div className="modalBackground">
@@ -40,7 +75,7 @@ export default function ItemModalBackground({
             X
           </button>
         </div>
-        <div className="title">
+        <div style={{ marginLeft: 25 }} className="title">
           <h1>Add Item</h1>
         </div>
         <div>
@@ -48,10 +83,12 @@ export default function ItemModalBackground({
           <Box>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <TextField
+                error={nameError}
+                helperText={nameError ? "Name Required" : ""}
                 name="Name"
                 className="textField"
                 sx={{
-                  width: 550,
+                  width: 600,
                   paddingBottom: 2,
                 }}
                 label="Name"
@@ -67,14 +104,16 @@ export default function ItemModalBackground({
               <div
                 style={{
                   display: "flex",
-                  paddingRight: 30,
+                  marginRight: 10,
                 }}
               >
                 <TextField
+                  error={priceError}
+                  helperText={priceError ? "Enter Valid Dollar Amount" : ""}
                   name="Price"
                   className="textField"
                   sx={{
-                    width: 260,
+                    width: 295,
                   }}
                   label="Price"
                   onChange={handleInputChange}
@@ -85,10 +124,11 @@ export default function ItemModalBackground({
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   sx={{
-                    width: 260,
+                    width: 295,
                   }}
                   disableFuture
                   label="Date Added"
+                  value={dayjs()} // default to today
                   onChange={(newValue) => {
                     setFormData({ ...formData, DateAdded: newValue });
                   }}
@@ -106,6 +146,7 @@ export default function ItemModalBackground({
                 alignItems: "center",
                 paddingBottom: 20,
                 paddingTop: 20,
+                marginLeft: 25,
               }}
             >
               <div style={{ marginRight: 10 }}>
@@ -126,60 +167,43 @@ export default function ItemModalBackground({
               style={{
                 display: "flex",
                 flexDirection: "row",
-                alignItems: "center",
                 paddingBottom: 30,
+                justifyContent: "center",
               }}
             >
-              <button
-                style={{ marginRight: 10 }}
-                type="button"
-                className={
-                  selectedTags.includes("Clothing") ? "tag" : "tagSelected"
-                }
-                onClick={() => handleTagClick("Clothing")}
+              {/* Category Selectable Buttons */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  paddingBottom: 30,
+                  justifyContent: "center",
+                }}
               >
-                Clothing
-              </button>
-              <button
-                style={{ marginRight: 10 }}
-                type="button"
-                className={
-                  selectedTags.includes("Collectibles") ? "tag" : "tagSelected"
-                }
-                onClick={() => handleTagClick("Collectibles")}
-              >
-                Collectibles
-              </button>
-              <button
-                style={{ marginRight: 10 }}
-                type="button"
-                className={
-                  selectedTags.includes("Jewlery") ? "tag" : "tagSelected"
-                }
-                onClick={() => handleTagClick("Jewlery")}
-              >
-                Jewlery
-              </button>
-              <button
-                style={{ marginRight: 10 }}
-                type="button"
-                className={selectedTags.includes("Art") ? "tag" : "tagSelected"}
-                onClick={() => handleTagClick("Art")}
-              >
-                Art
-              </button>
-              <button
-                style={{ marginRight: 10, width: 150 }}
-                type="button"
-                className={
-                  selectedTags.includes("Household Items")
-                    ? "tag"
-                    : "tagSelected"
-                }
-                onClick={() => handleTagClick("Household Items")}
-              >
-                Household Items
-              </button>
+                {/* Map tag names to their buttons */}
+                {[
+                  "Clothing",
+                  "Collectibles",
+                  "Jewlery",
+                  "Art",
+                  "Household Items",
+                ].map((tag) => (
+                  <button
+                    style={{
+                      marginRight: 10,
+                      width: tag === "Household Items" ? 150 : 100,
+                    }}
+                    type="button"
+                    className={
+                      selectedTags.includes(tag) ? "tag" : "tagSelected"
+                    }
+                    onClick={() => handleTagClick(tag)}
+                    key={tag}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -189,7 +213,7 @@ export default function ItemModalBackground({
               style={{ borderRadius: 10 }}
               type="button"
               className="dropbtn"
-              onClick={() => console.log(formData)}
+              onClick={() => handleSubmit()}
             >
               Submit
             </button>

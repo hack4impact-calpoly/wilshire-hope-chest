@@ -11,15 +11,11 @@ export default function BasicModal() {
 
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <button type="button" onClick={handleOpen} className="dropbtn">
         <span id="Change"> {icon} </span>
         Add Item
       </button>
       {open && <ItemModalBackground setOpenModal={handleClose} />}
-      {/* <Modal
-        return <ItemModalBackground setOpenModal={handleClose} />;
-      </Modal> */}
     </div>
   );
 }

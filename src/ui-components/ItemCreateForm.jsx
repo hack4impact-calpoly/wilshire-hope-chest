@@ -26,25 +26,21 @@ export default function ItemCreateForm(props) {
     name: "",
     dateAdded: "",
     value: "",
-    image: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [dateAdded, setDateAdded] = React.useState(initialValues.dateAdded);
   const [value, setValue] = React.useState(initialValues.value);
-  const [image, setImage] = React.useState(initialValues.image);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
     setDateAdded(initialValues.dateAdded);
     setValue(initialValues.value);
-    setImage(initialValues.image);
     setErrors({});
   };
   const validations = {
     name: [],
     dateAdded: [],
     value: [],
-    image: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -74,7 +70,6 @@ export default function ItemCreateForm(props) {
           name,
           dateAdded,
           value,
-          image,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -132,7 +127,6 @@ export default function ItemCreateForm(props) {
               name: value,
               dateAdded,
               value,
-              image,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -160,7 +154,6 @@ export default function ItemCreateForm(props) {
               name,
               dateAdded: value,
               value,
-              image,
             };
             const result = onChange(modelFields);
             value = result?.dateAdded ?? value;
@@ -191,7 +184,6 @@ export default function ItemCreateForm(props) {
               name,
               dateAdded,
               value: value,
-              image,
             };
             const result = onChange(modelFields);
             value = result?.value ?? value;
@@ -205,33 +197,6 @@ export default function ItemCreateForm(props) {
         errorMessage={errors.value?.errorMessage}
         hasError={errors.value?.hasError}
         {...getOverrideProps(overrides, "value")}
-      ></TextField>
-      <TextField
-        label="Image"
-        isRequired={false}
-        isReadOnly={false}
-        value={image}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              dateAdded,
-              value,
-              image: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.image ?? value;
-          }
-          if (errors.image?.hasError) {
-            runValidationTasks("image", value);
-          }
-          setImage(value);
-        }}
-        onBlur={() => runValidationTasks("image", image)}
-        errorMessage={errors.image?.errorMessage}
-        hasError={errors.image?.hasError}
-        {...getOverrideProps(overrides, "image")}
       ></TextField>
       <Flex
         justifyContent="space-between"

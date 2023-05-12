@@ -24,11 +24,11 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Items": {
-                    "name": "Items",
+                "items": {
+                    "name": "items",
                     "isArray": true,
                     "type": {
-                        "model": "CategoryItem"
+                        "model": "ItemCategory"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -113,18 +113,11 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "image": {
-                    "name": "image",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "categorys": {
-                    "name": "categorys",
+                "categories": {
+                    "name": "categories",
                     "isArray": true,
                     "type": {
-                        "model": "CategoryItem"
+                        "model": "ItemCategory"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -178,74 +171,8 @@ export const schema = {
                 }
             ]
         },
-        "Example": {
-            "name": "Example",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "name": {
-                    "name": "name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "description": {
-                    "name": "description",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Examples",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "CategoryItem": {
-            "name": "CategoryItem",
+        "ItemCategory": {
+            "name": "ItemCategory",
             "fields": {
                 "id": {
                     "name": "id",
@@ -316,7 +243,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "CategoryItems",
+            "pluralName": "ItemCategories",
             "attributes": [
                 {
                     "type": "model",
@@ -346,5 +273,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "2b593d15c7c4ea236908adf0c8c74b04"
+    "version": "e5eca3420c9478b54db43a2fa4d95899"
 };
