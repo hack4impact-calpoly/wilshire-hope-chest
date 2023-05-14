@@ -10,7 +10,7 @@ import { Category, Item, ItemCategory } from "../models";
 import "./TagStyle.css";
 import TagsList from "./TagsList";
 
-const columns: GridColDef[] = [
+export const columns: GridColDef[] = [
   { field: "name", headerName: "Name", minWidth: 350 },
   {
     field: "value",
