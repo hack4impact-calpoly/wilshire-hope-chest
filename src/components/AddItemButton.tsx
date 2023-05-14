@@ -69,10 +69,32 @@ function AddItemButton() {
     );
   }
 
+  const handleEmailSubmit = () => {
+    // e.preventDefault();
+    fetch("https://xgjrtv69b5.execute-api.us-west-2.amazonaws.com/sendEmail", {
+      mode: "no-cors",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        senderName: "wilshire-health",
+        senderEmail: "lukeforadream@gmail.com",
+        message: "HI HERE IS YOUR DONATION LIST...",
+        date: new Date(),
+      }),
+    });
+  };
+
   return (
     <div>
       <button type="button" onClick={handleClick}>
         Submit item
+      </button>
+
+      <button type="button" onClick={handleEmailSubmit}>
+        Send email
       </button>
     </div>
   );
