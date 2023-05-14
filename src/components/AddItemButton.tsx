@@ -82,7 +82,8 @@ function AddItemButton() {
         senderName: "wilshire-health",
         senderEmail: "lukeforadream@gmail.com",
         message: "HI HERE IS YOUR DONATION LIST...",
-        date: new Date(),
+        toAddress: ["lukeforadream@gmail.com"],
+        // date: new Date(),
       }),
     });
   };
