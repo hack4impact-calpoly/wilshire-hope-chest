@@ -5,5 +5,5 @@ type TagProps = {
 };
 
 export default function Tag({ name }: TagProps) {
-  return <div className="box">{name}</div>;
+  return <div className="tag">{name}</div>;
 }

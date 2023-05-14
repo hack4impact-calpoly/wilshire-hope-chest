@@ -4,3 +4,5 @@ src/ui-components
 .vscode
 amplify
 src\models
+
+amplify-codegen-temp\models
