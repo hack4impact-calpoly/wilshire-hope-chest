@@ -3,6 +3,7 @@ import "../App.css";
 import Header from "./Header";
 import "./Home.css";
 import ItemTable from "./ItemTable";
+import ItemDrawer from "./ItemDrawer";
 
 function Home() {
   async function signOut() {
@@ -22,6 +23,7 @@ function Home() {
           Sign out
         </button>
         <ItemTable />
+        <ItemDrawer />
       </div>
     </>
   );

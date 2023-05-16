@@ -2,9 +2,54 @@ import { Drawer } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
 import "./ItemDrawer.css";
-import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridRowsProp,
+  GridValueFormatterParams,
+} from "@mui/x-data-grid";
 import { DataStore } from "aws-amplify";
-import { columns } from "./ItemTable";
+import TagsList from "./TagsList";
+// import { columns } from "./ItemTable";
+
+const columns: GridColDef[] = [
+  { field: "name", headerName: "Name", minWidth: 350 },
+  {
+    field: "value",
+    headerName: "Price",
+    minWidth: 200,
+    flex: 0.5,
+    valueFormatter: (params: GridValueFormatterParams) => {
+      const value = params.value as number;
+      return `$${value.toFixed(2)}`;
+    },
+  },
+  {
+    field: "dateAdded",
+    headerName: "Date Added",
+    minWidth: 200,
+    flex: 0.5,
+    valueFormatter: (params: GridValueFormatterParams) => {
+      const date = new Date(params.value as string);
+      return date.toLocaleDateString();
+    },
+  },
+  {
+    field: "cats",
+    headerName: "Categories",
+    minWidth: 350,
+    flex: 2,
+    renderCell: (params: GridRenderCellParams) => (
+      <TagsList categories={params.value as string[]} />
+    ),
+    sortComparator: (v1: string[], v2: string[]) => {
+      const v1Str = v1.join("");
+      const v2Str = v2.join("");
+      return v1Str.localeCompare(v2Str);
+    },
+  },
+];
 
 const testRow = {
   id: 2,
