@@ -1,10 +1,10 @@
-import { Drawer } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { useEffect, useState } from "react";
-import "./ItemDrawer.css";
+import { Drawer } from "@mui/material";
 import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
 import { DataStore } from "aws-amplify";
-import Table from "./Table";
+import { useEffect, useState } from "react";
+import "../../styles/ItemDrawer.css";
+import Table from "../tables/Table";
 
 const testRow = {
   id: 2324,

@@ -1,4 +1,4 @@
-import "./TagStyle.css";
+import "../../styles/TagStyle.css";
 
 type TagProps = {
   name: string;

@@ -1,5 +1,5 @@
+import "../../styles/TagStyle.css";
 import Tag from "./Tag";
-import "./TagStyle.css";
 
 type TagsListProps = {
   categories: string[];

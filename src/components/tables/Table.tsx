@@ -16,7 +16,7 @@ import {
   GridValueFormatterParams,
 } from "@mui/x-data-grid";
 import { useState } from "react";
-import TagsList from "./TagsList";
+import TagsList from "../categories/TagsList";
 
 type TableProps = {
   tableHeight: string;

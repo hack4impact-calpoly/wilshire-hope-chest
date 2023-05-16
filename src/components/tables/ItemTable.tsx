@@ -1,7 +1,7 @@
 import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
 import { DataStore } from "aws-amplify";
 import { useEffect, useState } from "react";
-import { Category, Item, ItemCategory } from "../models";
+import { Category, Item, ItemCategory } from "../../models";
 import Table from "./Table";
 
 export default function ItemTable() {

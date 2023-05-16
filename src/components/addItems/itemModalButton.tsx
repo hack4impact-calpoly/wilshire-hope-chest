@@ -1,6 +1,6 @@
 import React from "react";
-import "./ItemModal.css";
 import { BiPlus } from "react-icons/bi";
+import "../styles/ItemModal.css";
 import ItemModalBackground from "./ItemModalBackground";
 
 export default function BasicModal() {
