@@ -85,7 +85,9 @@ export default function Table({
       flex: 0.5,
       valueFormatter: (params: GridValueFormatterParams) => {
         const date = new Date(params.value as string);
-        return date.toLocaleDateString();
+        const timeZoneOffset = date.getTimezoneOffset() * 60000;
+        const newDate = new Date(date.getTime() + timeZoneOffset);
+        return newDate.toLocaleDateString();
       },
       editable: true,
     },
