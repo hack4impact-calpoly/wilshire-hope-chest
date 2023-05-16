@@ -1,20 +1,20 @@
-import {
-  GridRowModesModel,
-  GridRowModes,
-  DataGrid,
-  GridColDef,
-  GridActionsCellItem,
-  GridRowId,
-  GridRenderCellParams,
-  GridValueFormatterParams,
-  GridRowModel,
-  GridValidRowModel,
-  GridRowsProp,
-} from "@mui/x-data-grid";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridColDef,
+  GridRenderCellParams,
+  GridRowId,
+  GridRowModel,
+  GridRowModes,
+  GridRowModesModel,
+  GridRowsProp,
+  GridValidRowModel,
+  GridValueFormatterParams,
+} from "@mui/x-data-grid";
 import { useState } from "react";
 import TagsList from "./TagsList";
 
@@ -81,6 +81,7 @@ export default function Table({
     {
       field: "dateAdded",
       headerName: "Date Added",
+      type: "date",
       minWidth: 200,
       flex: 0.5,
       valueFormatter: (params: GridValueFormatterParams) => {
