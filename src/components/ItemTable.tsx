@@ -1,59 +1,135 @@
-import {
-  DataGrid,
-  GridColDef,
-  GridRenderCellParams,
-  GridValueFormatterParams,
-} from "@mui/x-data-grid";
+import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
 import { DataStore } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { Category, Item, ItemCategory } from "../models";
-import "./TagStyle.css";
-import TagsList from "./TagsList";
-
-export const columns: GridColDef[] = [
-  { field: "name", headerName: "Name", minWidth: 350 },
-  {
-    field: "value",
-    headerName: "Price",
-    minWidth: 200,
-    flex: 0.5,
-    valueFormatter: (params: GridValueFormatterParams) => {
-      const value = params.value as number;
-      return `$${value.toFixed(2)}`;
-    },
-  },
-  {
-    field: "dateAdded",
-    headerName: "Date Added",
-    minWidth: 200,
-    flex: 0.5,
-    valueFormatter: (params: GridValueFormatterParams) => {
-      const date = new Date(params.value as string);
-      return date.toLocaleDateString();
-    },
-  },
-  {
-    field: "cats",
-    headerName: "Categories",
-    minWidth: 350,
-    flex: 2,
-    renderCell: (params: GridRenderCellParams) => (
-      <TagsList categories={params.value as string[]} />
-    ),
-    sortComparator: (v1: string[], v2: string[]) => {
-      const v1Str = v1.join("");
-      const v2Str = v2.join("");
-      return v1Str.localeCompare(v2Str);
-    },
-  },
-];
+import Table from "./Table";
 
 export default function ItemTable() {
-  const [rows, setRows] = useState<Item[]>([]);
-  const [paginationModel, setPaginationModel] = useState({
-    pageSize: 25,
-    page: 0,
-  });
+  const [rows, setRows] = useState<GridRowsProp>([]);
+
+  const handleDeleteClick = (id: GridRowId) => async () => {
+    console.log("deleting id = ", id);
+    const rowToDelete = await DataStore.query(Item, (itemId) =>
+      itemId.id.eq(id.toString())
+    );
+    console.log("toDelete =", rowToDelete);
+
+    if (rowToDelete.length === 1) {
+      try {
+        DataStore.delete(rowToDelete[0]);
+        console.log("Row deleted");
+      } catch (error) {
+        console.log("Error! cannot remove the item ", error);
+      }
+    }
+
+    setRows(rows.filter((row) => row.id !== id));
+  };
+
+  const handleRowEditCommit = async (newRow: GridRowModel) => {
+    let categories = newRow.cats;
+    let editCats = false;
+    if (typeof categories === "string") {
+      categories = categories.replace(/\s/g, "").split(",").sort();
+      editCats = true;
+    }
+    const rowFormatter = {
+      ...newRow,
+      value: parseFloat(newRow.value),
+      cats: categories,
+    };
+
+    // find the item first
+    const row = await DataStore.query(Item, (item) => item.id.eq(newRow.id));
+
+    if (row) {
+      try {
+        // update the Item
+        const updatedItem = await DataStore.save(
+          Item.copyOf(row[0], (updated) => {
+            const rowFormatterCopy = { ...rowFormatter };
+            delete rowFormatterCopy.cats;
+            Object.assign(updated, rowFormatterCopy);
+          })
+        );
+        console.log("Updated the Item = ", updatedItem);
+
+        // update the Category
+        if (editCats) {
+          // Get all the existing category
+          const allCategories = await DataStore.query(Category);
+          // list all the existing category name
+          const allCategoryNames = allCategories.map(
+            (category) => category.name
+          );
+          // Get the invalid name
+          const invalidCategoryNames = categories.filter(
+            (name: string) => !allCategoryNames.includes(name)
+          );
+          // Throw error if there is any invalid category name
+          if (invalidCategoryNames.length > 0) {
+            throw new Error(
+              `Error! Invalid category names: ${invalidCategoryNames.join(
+                ", "
+              )}`
+            );
+            // update ItemCategory
+          } else {
+            // Get the old categories associated with the item
+            const oldCategories = await DataStore.query(ItemCategory, (ic) =>
+              ic.itemId.eq(newRow.id)
+            );
+            // Get the ID of the old categories
+            const getOldCategoriesID = oldCategories.map(
+              (category) => category.categoryId
+            );
+
+            // Get all the IDs that need to be added
+            const IdsToAdd = allCategories
+              .filter((category) => categories.includes(category.name))
+              .filter((category) => !getOldCategoriesID.includes(category.id))
+              .map((category) => category.id);
+            if (IdsToAdd.length > 0) {
+              IdsToAdd.map(async (cID) => {
+                const categoryToAdd = await DataStore.query(Category, (c) =>
+                  c.id.eq(cID)
+                );
+                const categoryItem = new ItemCategory({
+                  item: updatedItem,
+                  category: categoryToAdd[0],
+                });
+                await DataStore.save(categoryItem);
+                console.log("Added categoryItem = ", categoryItem);
+              });
+            }
+
+            // Remove the old categories
+            const IdToDelete = allCategories
+              .filter((category) => getOldCategoriesID.includes(category.id))
+              .filter((category) => !categories.includes(category.name))
+              .map((category) => category.id);
+            if (IdToDelete.length > 0) {
+              IdToDelete.map(async (cID) => {
+                const categoryToDelete = await DataStore.query(
+                  ItemCategory,
+                  (ic) =>
+                    ic.and((ic1) => [
+                      ic1.categoryId.eq(cID),
+                      ic1.itemId.eq(updatedItem.id),
+                    ])
+                );
+                await DataStore.delete(categoryToDelete[0]);
+                console.log("Removed categoryItem = ", categoryToDelete[0]);
+              });
+            }
+          }
+        }
+      } catch (error) {
+        console.log("Error! Cannot update the row ", error);
+      }
+    }
+    return rowFormatter;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,29 +157,15 @@ export default function ItemTable() {
         console.log("Error retrieving posts", error);
       }
     };
-
     fetchData();
   }, []);
 
   return (
-    <div style={{ height: "70vh" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        getRowHeight={() => "auto"}
-        paginationModel={paginationModel}
-        onPaginationModelChange={setPaginationModel}
-        pageSizeOptions={[10, 25, 50]}
-        sx={{
-          "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": { py: "8px" },
-          "&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell": {
-            py: "15px",
-          },
-          "&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell": {
-            py: "22px",
-          },
-        }}
-      />
-    </div>
+    <Table
+      tableHeight="70vh"
+      rows={rows}
+      handleDeleteClick={handleDeleteClick}
+      handleRowEditCommit={handleRowEditCommit}
+    />
   );
 }

@@ -2,12 +2,12 @@ import { Drawer } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
 import "./ItemDrawer.css";
-import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
+import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
 import { DataStore } from "aws-amplify";
-import { columns } from "./ItemTable";
+import Table from "./Table";
 
 const testRow = {
-  id: 2,
+  id: 2324,
   name: "New balance sneaker",
   dateAdded: "01 Jan 1970 00:00:00 GMT",
   value: 60,
@@ -15,11 +15,6 @@ const testRow = {
 };
 
 function ItemDrawer() {
-  const [paginationModel, setPaginationModel] = useState({
-    pageSize: 25,
-    page: 0,
-  });
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const [isDisabled, setIsDisabled] = useState(true);
@@ -47,6 +42,28 @@ function ItemDrawer() {
     }
     setRows([]);
   }
+
+  const handleDeleteClick = (id: GridRowId) => () => {
+    setRows(rows.filter((row) => row.id !== id));
+  };
+
+  // This function will only be called when user click edit and save button
+  // The newRow is the updated row, and the table will display the updated row
+  // TODO: modify this function to update the rows with the newRow
+  // suggestion: find the old row by id and update the field
+  const handleRowEditCommit = (newRow: GridRowModel) => {
+    let categories = newRow.cats;
+    if (typeof categories === "string") {
+      categories = categories.replace(/\s/g, "").split(",").sort();
+    }
+    // reformat the newRow to match the type of each column
+    const rowFormatter = {
+      ...newRow,
+      value: parseFloat(newRow.value),
+      cats: categories,
+    };
+    return rowFormatter;
+  };
 
   return (
     <>
@@ -97,24 +114,11 @@ function ItemDrawer() {
             </button>
           </div>
           <div className="data-table">
-            <DataGrid
+            <Table
+              tableHeight="54vh"
               rows={rows}
-              columns={columns}
-              getRowHeight={() => "auto"}
-              paginationModel={paginationModel}
-              onPaginationModelChange={setPaginationModel}
-              pageSizeOptions={[10, 25, 50]}
-              sx={{
-                "&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell": {
-                  py: "8px",
-                },
-                "&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell": {
-                  py: "15px",
-                },
-                "&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell": {
-                  py: "22px",
-                },
-              }}
+              handleDeleteClick={handleDeleteClick}
+              handleRowEditCommit={handleRowEditCommit}
             />
           </div>
           <div className="end-buttons">
