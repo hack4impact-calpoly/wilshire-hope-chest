@@ -70,7 +70,6 @@ function AddItemButton() {
   }
 
   const handleEmailSubmit = () => {
-    // e.preventDefault();
     fetch("https://xgjrtv69b5.execute-api.us-west-2.amazonaws.com/sendEmail", {
       mode: "no-cors",
       method: "POST",
@@ -83,7 +82,7 @@ function AddItemButton() {
         senderEmail: "lukeforadream@gmail.com",
         message: "HI HERE IS YOUR DONATION LIST...",
         toAddress: ["lukeforadream@gmail.com"],
-        // date: new Date(),
+        date: new Date(),
       }),
     });
   };
