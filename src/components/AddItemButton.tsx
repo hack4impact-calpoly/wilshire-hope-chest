@@ -19,6 +19,7 @@ function AddItemButton() {
   ];
 
   const handleEmailSubmit = () => {
+    // Sends a POST request to the specified API endpoint for sending emails
     fetch("https://xgjrtv69b5.execute-api.us-west-2.amazonaws.com/sendEmail", {
       mode: "no-cors",
       method: "POST",
@@ -26,6 +27,7 @@ function AddItemButton() {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
+      // Converts the data into a JSON string and sets it as the request body
       body: JSON.stringify({
         senderName: "wilshire-health",
         senderEmail: "lukeforadream@gmail.com",
@@ -94,10 +96,6 @@ function AddItemButton() {
       <button type="button" onClick={handleClick}>
         Submit item
       </button>
-
-      {/* <button type="button" onClick={handleEmailSubmit}>
-        Send email
-      </button> */}
     </div>
   );
 }
