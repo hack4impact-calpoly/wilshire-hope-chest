@@ -2,6 +2,7 @@ import { Auth } from "aws-amplify";
 import "../styles/Home.css";
 import Header from "./Header";
 import ItemDrawer from "./addItems/ItemDrawer";
+import EditCategoriesModal from "./categories/EditCategoriesModal";
 import ItemTable from "./tables/ItemTable";
 
 function Home() {
@@ -23,6 +24,7 @@ function Home() {
         </button>
         <ItemTable />
         <ItemDrawer />
+        <EditCategoriesModal />
       </div>
     </>
   );
