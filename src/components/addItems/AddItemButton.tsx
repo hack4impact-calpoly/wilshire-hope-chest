@@ -18,6 +18,26 @@ function AddItemButton() {
     },
   ];
 
+  const handleEmailSubmit = () => {
+    // Sends a POST request to the specified API endpoint for sending emails
+    fetch("https://xgjrtv69b5.execute-api.us-west-2.amazonaws.com/sendEmail", {
+      mode: "no-cors",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      // Converts the data into a JSON string and sets it as the request body
+      body: JSON.stringify({
+        senderName: "wilshire-health",
+        senderEmail: "lukeforadream@gmail.com",
+        message: "HI HERE IS YOUR DONATION LIST...",
+        toAddress: ["lukeforadream@gmail.com"], // developer's test email
+        date: new Date(),
+      }),
+    });
+  };
+
   async function handleClick() {
     // Handle a request to add a list of items
     await Promise.all(
@@ -67,6 +87,8 @@ function AddItemButton() {
         }
       })
     );
+
+    handleEmailSubmit();
   }
 
   return (
