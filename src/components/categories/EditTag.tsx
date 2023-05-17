@@ -1,6 +1,6 @@
 import EditIcon from "@mui/icons-material/Edit";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { DataStore } from "aws-amplify";
 import { useState } from "react";
 import { Category } from "../../models";
@@ -49,29 +49,27 @@ function EditTag({
   };
 
   return (
-    <Tooltip title={description} placement="bottom">
-      <div className="tag">
-        <IconButton aria-label="edit" size="small" onClick={handleOpen}>
-          <EditIcon />
-        </IconButton>
-        {name}
-        <IconButton
-          aria-label="delete"
-          size="small"
-          onClick={() => handleDelete(id)}
-        >
-          <HighlightOffIcon />
-        </IconButton>
-        <EditCategoryChildModal
-          open={open}
-          handleClose={handleClose}
-          handleEdit={handleEditRequest}
-          id={id}
-          name={name}
-          description={description}
-        />
-      </div>
-    </Tooltip>
+    <div className="tag">
+      <IconButton aria-label="edit" size="small" onClick={handleOpen}>
+        <EditIcon />
+      </IconButton>
+      {name}
+      <IconButton
+        aria-label="delete"
+        size="small"
+        onClick={() => handleDelete(id)}
+      >
+        <HighlightOffIcon />
+      </IconButton>
+      <EditCategoryChildModal
+        open={open}
+        handleClose={handleClose}
+        handleEdit={handleEditRequest}
+        id={id}
+        name={name}
+        description={description}
+      />
+    </div>
   );
 }
 
