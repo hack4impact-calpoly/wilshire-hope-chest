@@ -18,6 +18,24 @@ function AddItemButton() {
     },
   ];
 
+  const handleEmailSubmit = () => {
+    fetch("https://xgjrtv69b5.execute-api.us-west-2.amazonaws.com/sendEmail", {
+      mode: "no-cors",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        senderName: "wilshire-health",
+        senderEmail: "lukeforadream@gmail.com",
+        message: "HI HERE IS YOUR DONATION LIST...",
+        toAddress: ["lukeforadream@gmail.com"], // developer's test email
+        date: new Date(),
+      }),
+    });
+  };
+
   async function handleClick() {
     // Handle a request to add a list of items
     await Promise.all(
@@ -67,25 +85,9 @@ function AddItemButton() {
         }
       })
     );
-  }
 
-  const handleEmailSubmit = () => {
-    fetch("https://xgjrtv69b5.execute-api.us-west-2.amazonaws.com/sendEmail", {
-      mode: "no-cors",
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        senderName: "wilshire-health",
-        senderEmail: "lukeforadream@gmail.com",
-        message: "HI HERE IS YOUR DONATION LIST...",
-        toAddress: ["lukeforadream@gmail.com"],
-        date: new Date(),
-      }),
-    });
-  };
+    handleEmailSubmit();
+  }
 
   return (
     <div>
@@ -93,9 +95,9 @@ function AddItemButton() {
         Submit item
       </button>
 
-      <button type="button" onClick={handleEmailSubmit}>
+      {/* <button type="button" onClick={handleEmailSubmit}>
         Send email
-      </button>
+      </button> */}
     </div>
   );
 }
