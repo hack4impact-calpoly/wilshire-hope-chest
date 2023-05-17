@@ -1,5 +1,5 @@
 import { DataStore } from "aws-amplify";
-import { Category, Item, ItemCategory } from "../models";
+import { Category, Item, ItemCategory } from "../../models";
 
 function AddItemButton() {
   // Sample data for testing

@@ -1,5 +1,5 @@
-import "./Header.css";
 import logo from "../images/wilshire-logo.png";
+import "../styles/Header.css";
 
 function Header() {
   return (

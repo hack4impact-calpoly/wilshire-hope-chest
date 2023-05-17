@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsCalendarEvent } from "react-icons/bs";
-import "./Report.css";
+import "../styles/Report.css";
 
 export default function Report() {
   const [startDate, setStartDate] = useState<Date | null>(null);

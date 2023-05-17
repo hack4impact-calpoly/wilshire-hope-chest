@@ -1,8 +1,8 @@
 import { Auth } from "aws-amplify";
-import "../App.css";
+import "../styles/Home.css";
 import Header from "./Header";
-import "./Home.css";
-import ItemTable from "./ItemTable";
+import ItemDrawer from "./addItems/ItemDrawer";
+import ItemTable from "./tables/ItemTable";
 
 function Home() {
   async function signOut() {
@@ -22,6 +22,7 @@ function Home() {
           Sign out
         </button>
         <ItemTable />
+        <ItemDrawer />
       </div>
     </>
   );
