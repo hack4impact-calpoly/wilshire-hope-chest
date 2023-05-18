@@ -5,6 +5,7 @@ import { DataStore } from "aws-amplify";
 import { useState } from "react";
 import { Category } from "../../models";
 import "../../styles/TagStyle.css";
+import DeleteCategoryChildModal from "./DeleteCategoryChildModal";
 import EditCategoryChildModal from "./EditCategoryChildModal";
 
 type EditTagProps = {
@@ -22,9 +23,10 @@ function EditTag({
   handleEdit,
   handleDelete,
 }: EditTagProps) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const handleOpen = () => setEditOpen(true);
+  const handleClose = () => setEditOpen(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const handleEditRequest = async (
     newName?: string | null,
@@ -57,17 +59,24 @@ function EditTag({
       <IconButton
         aria-label="delete"
         size="small"
-        onClick={() => handleDelete(id)}
+        onClick={() => setDeleteOpen(true)}
       >
         <HighlightOffIcon />
       </IconButton>
       <EditCategoryChildModal
-        open={open}
+        open={editOpen}
         handleClose={handleClose}
         handleEdit={handleEditRequest}
         id={id}
         name={name}
         description={description}
+      />
+      <DeleteCategoryChildModal
+        open={deleteOpen}
+        id={id}
+        name={name}
+        handleClose={() => setDeleteOpen(false)}
+        handleDelete={handleDelete}
       />
     </div>
   );
