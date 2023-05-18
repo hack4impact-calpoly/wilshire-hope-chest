@@ -1,0 +1,49 @@
+.category-main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 500px;
+  max-height: 500px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 24;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.category-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.category-buttons {
+  align-self: flex-end;
+}
+.category-child-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 350px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 24;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.delete {
+  justify-content: space-around;
+}
+.delete-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
