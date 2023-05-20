@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import AddIcon from "@mui/icons-material/Add";
 import { Drawer } from "@mui/material";
 import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
@@ -20,7 +21,7 @@ function ItemDrawer() {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const [rows, setRows] = useState<GridRowsProp>([]);
-
+  const [email, setEmail] = useState("");
   useEffect(() => {
     if (rows.length === 0) {
       setIsDisabled(true);
@@ -63,6 +64,9 @@ function ItemDrawer() {
       cats: categories,
     };
     return rowFormatter;
+  };
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
   };
 
   return (
@@ -144,6 +148,16 @@ function ItemDrawer() {
             >
               Send Receipt
             </button>
+            <div className="email-field">
+              {/* <label htmlFor="email">Email:</label> */}
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={handleEmailChange}
+                placeholder="Please enter your email"
+              />
+            </div>
           </div>
         </div>
       </Drawer>
