@@ -24,7 +24,7 @@
     "@types/react-dom": "^18.0.6",
     "aws-amplify": "^5.2.0",
     "dayjs": "^1.11.7",
-    "emailjs": "^4.0.2",
+    "emailjs-com": "^3.2.0",
     "react": "^18.2.0",
     "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",

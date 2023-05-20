@@ -5,6 +5,7 @@ import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
 import { DataStore } from "aws-amplify";
 import { useEffect, useState } from "react";
 import "../../styles/ItemDrawer.css";
+
 import Table from "../tables/Table";
 
 const testRow = {
@@ -21,7 +22,7 @@ function ItemDrawer() {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const [rows, setRows] = useState<GridRowsProp>([]);
-  const [email, setEmail] = useState("");
+
   useEffect(() => {
     if (rows.length === 0) {
       setIsDisabled(true);
@@ -63,10 +64,8 @@ function ItemDrawer() {
       value: parseFloat(newRow.value),
       cats: categories,
     };
+
     return rowFormatter;
-  };
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
   };
 
   return (
@@ -148,16 +147,6 @@ function ItemDrawer() {
             >
               Send Receipt
             </button>
-            <div className="email-field">
-              {/* <label htmlFor="email">Email:</label> */}
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={handleEmailChange}
-                placeholder="Please enter your email"
-              />
-            </div>
           </div>
         </div>
       </Drawer>

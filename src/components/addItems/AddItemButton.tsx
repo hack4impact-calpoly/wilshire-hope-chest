@@ -1,7 +1,12 @@
+import { useState } from "react";
 import { DataStore } from "aws-amplify";
+import emailjs from "emailjs-com";
 import { Category, Item, ItemCategory } from "../../models";
+import "../../styles/AddItemButton.css";
 
 function AddItemButton() {
+  const [email, setEmail] = useState("");
+  const [message] = useState("Here's a list...");
   // Sample data for testing
   const items = [
     {
@@ -18,24 +23,42 @@ function AddItemButton() {
     },
   ];
 
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  // helper function to create form inputs
+  const createInput = (name: string, value: string) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = value;
+    return input;
+  };
+
   const handleEmailSubmit = () => {
-    // Sends a POST request to the specified API endpoint for sending emails
-    fetch("https://xgjrtv69b5.execute-api.us-west-2.amazonaws.com/sendEmail", {
-      mode: "no-cors",
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      // Converts the data into a JSON string and sets it as the request body
-      body: JSON.stringify({
-        senderName: "wilshire-health",
-        senderEmail: "lukeforadream@gmail.com",
-        message: "HI HERE IS YOUR DONATION LIST...",
-        toAddress: ["lukeforadream@gmail.com"], // developer's test email
-        date: new Date(),
-      }),
-    });
+    const form = document.createElement("form");
+
+    // add the email and message fields to the form
+    form.appendChild(createInput("email", email));
+    form.appendChild(createInput("message", message));
+
+    // need to move all the id info to .env
+    emailjs
+      .sendForm(
+        "service_tc4tbeh",
+        "template_30lkbx1",
+        form,
+        "kGHTJu039TVZoCWxs"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   };
 
   async function handleClick() {
@@ -95,6 +118,20 @@ function AddItemButton() {
     <div>
       <button type="button" onClick={handleClick}>
         Submit item
+      </button>
+      <div className="email-field">
+        {/* <label htmlFor="email">Email:</label> */}
+        <input
+          name="email"
+          type="email"
+          id="email"
+          value={email}
+          onChange={handleEmailChange}
+          placeholder="Please enter your email"
+        />
+      </div>
+      <button name="submit" type="button" onClick={handleEmailSubmit}>
+        Send Email Test
       </button>
     </div>
   );
