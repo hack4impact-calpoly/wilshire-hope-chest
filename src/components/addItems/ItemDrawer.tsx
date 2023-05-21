@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import AddIcon from "@mui/icons-material/Add";
 import { Drawer } from "@mui/material";
 import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
 import { DataStore } from "aws-amplify";
 import { useEffect, useState } from "react";
 import "../../styles/ItemDrawer.css";
+
 import Table from "../tables/Table";
 
 const testRow = {
@@ -62,6 +64,7 @@ function ItemDrawer() {
       value: parseFloat(newRow.value),
       cats: categories,
     };
+
     return rowFormatter;
   };
 

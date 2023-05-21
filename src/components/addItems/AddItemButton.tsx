@@ -1,7 +1,12 @@
+import { useState } from "react";
 import { DataStore } from "aws-amplify";
+import emailjs from "emailjs-com";
 import { Category, Item, ItemCategory } from "../../models";
+import "../../styles/AddItemButton.css";
 
 function AddItemButton() {
+  const [email, setEmail] = useState("");
+
   // Sample data for testing
   const items = [
     {
@@ -18,24 +23,54 @@ function AddItemButton() {
     },
   ];
 
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  // helper function to create form inputs
+  const createInput = (name: string, value: string) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = value;
+    return input;
+  };
+
   const handleEmailSubmit = () => {
-    // Sends a POST request to the specified API endpoint for sending emails
-    fetch("https://xgjrtv69b5.execute-api.us-west-2.amazonaws.com/sendEmail", {
-      mode: "no-cors",
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      // Converts the data into a JSON string and sets it as the request body
-      body: JSON.stringify({
-        senderName: "wilshire-health",
-        senderEmail: "lukeforadream@gmail.com",
-        message: "HI HERE IS YOUR DONATION LIST...",
-        toAddress: ["lukeforadream@gmail.com"], // developer's test email
-        date: new Date(),
-      }),
-    });
+    // generate the report based on test items (items should be replaced with real data)
+    const itemCount = items.length;
+    const totalValue = items.reduce((total, item) => total + item.value, 0);
+    const itemRows = items.map(
+      (item, index) =>
+        `${index + 1}. Name: ${item.name}, Value: $${item.value.toFixed(2)}`
+    );
+
+    const message = `Items Donated: ${itemCount}\n\n${itemRows.join(
+      "\n"
+    )}\n\nTotal Value: $${totalValue.toFixed(2)}`;
+
+    // add the email and message fields to the form
+    const form = document.createElement("form");
+    form.appendChild(createInput("email", email));
+    form.appendChild(createInput("message", message));
+
+    // need to move all the id info to .env
+    emailjs
+      .sendForm(
+        "service_tc4tbeh",
+        "template_30lkbx1",
+        form,
+        "kGHTJu039TVZoCWxs"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+    setEmail("");
   };
 
   async function handleClick() {
@@ -96,6 +131,16 @@ function AddItemButton() {
       <button type="button" onClick={handleClick}>
         Submit item
       </button>
+      <div className="email-field">
+        <input
+          name="email"
+          type="email"
+          id="email"
+          value={email}
+          onChange={handleEmailChange}
+          placeholder="Please enter your email"
+        />
+      </div>
     </div>
   );
 }
