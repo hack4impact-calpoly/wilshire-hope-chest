@@ -6,7 +6,7 @@ import "../../styles/AddItemButton.css";
 
 function AddItemButton() {
   const [email, setEmail] = useState("");
-  const [message] = useState("Here's a list...");
+
   // Sample data for testing
   const items = [
     {
@@ -37,9 +37,25 @@ function AddItemButton() {
   };
 
   const handleEmailSubmit = () => {
-    const form = document.createElement("form");
+    // generate the report based on test items (items should be replaced with real data)
+    const reportDate = new Date().toLocaleDateString();
+    const itemCount = items.length;
+    const totalValue = items.reduce((total, item) => total + item.value, 0);
+    const itemRows = items.map(
+      (item, index) =>
+        `${index + 1}. Item: ${item.name}, Date Added: ${
+          item.dateAdded
+        }, Value: $${item.value.toFixed(2)}, Categories: ${item.categories.join(
+          ", "
+        )}`
+    );
+
+    const message = `Date: ${reportDate}\n\nItems Donated: ${itemCount}\n\n${itemRows.join(
+      "\n"
+    )}\n\nTotal Value: $${totalValue.toFixed(2)}`;
 
     // add the email and message fields to the form
+    const form = document.createElement("form");
     form.appendChild(createInput("email", email));
     form.appendChild(createInput("message", message));
 
@@ -130,9 +146,9 @@ function AddItemButton() {
           placeholder="Please enter your email"
         />
       </div>
-      <button name="submit" type="button" onClick={handleEmailSubmit}>
+      {/* <button name="submit" type="button" onClick={handleEmailSubmit}>
         Send Email Test
-      </button>
+      </button> */}
     </div>
   );
 }
