@@ -75,6 +75,7 @@ function AddItemButton() {
           console.log(error.text);
         }
       );
+    setEmail("");
   };
 
   async function handleClick() {
@@ -136,7 +137,6 @@ function AddItemButton() {
         Submit item
       </button>
       <div className="email-field">
-        {/* <label htmlFor="email">Email:</label> */}
         <input
           name="email"
           type="email"
@@ -146,9 +146,6 @@ function AddItemButton() {
           placeholder="Please enter your email"
         />
       </div>
-      {/* <button name="submit" type="button" onClick={handleEmailSubmit}>
-        Send Email Test
-      </button> */}
     </div>
   );
 }
