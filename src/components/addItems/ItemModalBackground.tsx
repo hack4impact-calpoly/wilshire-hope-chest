@@ -4,16 +4,36 @@ import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DataStore } from "aws-amplify";
+import { GridRowsProp } from "@mui/x-data-grid";
+import { Category, LazyCategory } from "../../models";
 
 export default function ItemModalBackground({
   setOpenModal,
+  rows,
+  setRows,
 }: {
   setOpenModal: () => void;
+  rows: GridRowsProp;
+  setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
 }) {
+  interface FormData {
+    DateAdded: dayjs.Dayjs;
+    Name: string;
+    Price: string;
+    Categories: string[];
+  }
+
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [nameError, setNameError] = useState(false);
   const [priceError, setPriceError] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<FormData>({
+    DateAdded: dayjs(),
+    Name: "",
+    Price: "0",
+    Categories: [],
+  });
+  const [categories, setCategories] = useState<LazyCategory[]>([]);
 
   useEffect(() => {
     setFormData({
@@ -21,6 +41,14 @@ export default function ItemModalBackground({
       Categories: selectedTags,
     });
   }, [selectedTags]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const cats = await DataStore.query(Category);
+      setCategories(cats);
+    };
+    fetchCategories();
+  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -38,6 +66,7 @@ export default function ItemModalBackground({
 
   const handleSubmit = () => {
     console.log(formData);
+    console.log(rows);
     if (
       formData["Name" as keyof typeof formData] === undefined ||
       formData["Name" as keyof typeof formData] === ""
@@ -63,12 +92,25 @@ export default function ItemModalBackground({
       formData["Price" as keyof typeof formData] !== "" &&
       !Number.isNaN(Number(formData["Price" as keyof typeof formData]))
     ) {
+      // TODO: implement counter for unique id
+      const newRow = {
+        id: rows.length + 1,
+        name: formData["Name" as keyof typeof formData],
+        dateAdded: formData["DateAdded" as keyof typeof formData],
+        value: parseFloat(formData.Price),
+        cats: formData["Categories" as keyof typeof formData],
+      };
+      setRows((prevRows) => [...prevRows, newRow]);
       setOpenModal();
+      console.log(rows);
     }
   };
 
   return (
-    <div className="modalBackground">
+    <div
+      className="modalBackground"
+      style={{ zIndex: 9999, position: "absolute", right: "0px", top: "0px" }}
+    >
       <div className="modalContainer">
         <div className="titleCloseBtn">
           <button type="button" onClick={setOpenModal}>
@@ -87,9 +129,10 @@ export default function ItemModalBackground({
                 helperText={nameError ? "Name Required" : ""}
                 name="Name"
                 className="textField"
+                // remove added padding from helperText using sx
                 sx={{
                   width: 600,
-                  paddingBottom: 2,
+                  height: 80,
                 }}
                 label="Name"
                 onChange={handleInputChange}
@@ -114,6 +157,7 @@ export default function ItemModalBackground({
                   className="textField"
                   sx={{
                     width: 295,
+                    height: 60,
                   }}
                   label="Price"
                   onChange={handleInputChange}
@@ -130,7 +174,7 @@ export default function ItemModalBackground({
                   label="Date Added"
                   value={dayjs()} // default to today
                   onChange={(newValue) => {
-                    setFormData({ ...formData, DateAdded: newValue });
+                    setFormData({ ...formData, DateAdded: newValue! });
                   }}
                 />
               </LocalizationProvider>
@@ -166,44 +210,32 @@ export default function ItemModalBackground({
             <div
               style={{
                 display: "flex",
+                flexWrap: "wrap",
                 flexDirection: "row",
-                paddingBottom: 30,
+                paddingBottom: 10,
                 justifyContent: "center",
               }}
             >
-              {/* Category Selectable Buttons */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingBottom: 30,
-                  justifyContent: "center",
-                }}
-              >
-                {/* Map tag names to their buttons */}
-                {[
-                  "Clothing",
-                  "Collectibles",
-                  "Jewlery",
-                  "Art",
-                  "Household Items",
-                ].map((tag) => (
-                  <button
-                    style={{
-                      marginRight: 10,
-                      width: tag === "Household Items" ? 150 : 100,
-                    }}
-                    type="button"
-                    className={
-                      selectedTags.includes(tag) ? "tag" : "tagSelected"
-                    }
-                    onClick={() => handleTagClick(tag)}
-                    key={tag}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
+              {/* Map tags to categories name fields */}
+              {categories.map((category) => (
+                <button
+                  style={{
+                    marginRight: 10,
+                    marginBottom: 10,
+                    width: category.name === "Household Items" ? 150 : 100,
+                  }}
+                  type="button"
+                  className={
+                    selectedTags.includes(category.name!)
+                      ? "tag"
+                      : "tagSelected"
+                  }
+                  onClick={() => handleTagClick(category.name!)}
+                  key={category.name}
+                >
+                  {category.name}
+                </button>
+              ))}
             </div>
           </div>
 
