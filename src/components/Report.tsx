@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import DescriptionIcon from "@mui/icons-material/Description";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsCalendarEvent } from "react-icons/bs";
 import "../styles/Report.css";
 import { DataStore } from "aws-amplify";
+import { Button, Modal } from "@mui/material";
 import { Item } from "../models";
 
 export default function Report() {
+  const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [totalSales, setTotalSales] = useState<number | null>(null);
@@ -59,35 +62,50 @@ export default function Report() {
     setEndDate(date);
   };
 
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
-    <div className="report_box">
-      <span className="intro-text"> Enter Dates </span>
-      <span id="icon">
-        <BsCalendarEvent />
-      </span>
-      <div id="segment">
-        <div id="divTable" className="InsideContent">
-          <table id="logtable">
-            <DatePicker
-              className="date_box"
-              selected={startDate}
-              onChange={(date: Date | null) => {
-                setStartDate(date);
-              }}
-              placeholderText="Start Date"
-            />
-          </table>
+    <>
+      <Button
+        variant="contained"
+        onClick={handleOpen}
+        startIcon={<DescriptionIcon />}
+        sx={{ backgroundColor: "#006d7d", borderRadius: 10 }}
+      >
+        Create Report
+      </Button>
+      <Modal open={open} onClose={handleClose}>
+        <div className="report_box">
+          <span className="intro-text"> Enter Dates </span>
+          <span id="icon">
+            <BsCalendarEvent />
+          </span>
+          <div id="segment">
+            <div id="divTable" className="InsideContent">
+              <table id="logtable">
+                <DatePicker
+                  className="date_box"
+                  selected={startDate}
+                  onChange={(date: Date | null) => {
+                    setStartDate(date);
+                  }}
+                  placeholderText="Start Date"
+                />
+              </table>
+            </div>
+            <div id="divMessage" className="InsideContent">
+              <DatePicker
+                className="date_box2"
+                selected={endDate}
+                onChange={handleEndDateChange}
+                placeholderText="End Date"
+              />
+            </div>
+          </div>
+          <p id="sales-text"> Total Sales: $ {totalSales}</p>
         </div>
-        <div id="divMessage" className="InsideContent">
-          <DatePicker
-            className="date_box2"
-            selected={endDate}
-            onChange={handleEndDateChange}
-            placeholderText="End Date"
-          />
-        </div>
-      </div>
-      <p id="sales-text"> Total Sales: $ {totalSales}</p>
-    </div>
+      </Modal>
+    </>
   );
 }
