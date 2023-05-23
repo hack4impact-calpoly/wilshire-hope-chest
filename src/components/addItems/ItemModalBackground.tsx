@@ -6,7 +6,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DataStore } from "aws-amplify";
 import { GridRowsProp } from "@mui/x-data-grid";
-import { Category, LazyCategory } from "../../models";
+import { Category, LazyCategory, Item } from "../../models";
 
 export default function ItemModalBackground({
   setOpenModal,
@@ -24,6 +24,7 @@ export default function ItemModalBackground({
     Categories: string[];
   }
 
+  const [itemLength, setItemLength] = useState<number>(0);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [nameError, setNameError] = useState(false);
   const [priceError, setPriceError] = useState(false);
@@ -45,6 +46,8 @@ export default function ItemModalBackground({
   useEffect(() => {
     const fetchCategories = async () => {
       const cats = await DataStore.query(Category);
+      const items = await DataStore.query(Item);
+      setItemLength(items.length);
       setCategories(cats);
     };
     fetchCategories();
@@ -66,7 +69,6 @@ export default function ItemModalBackground({
 
   const handleSubmit = () => {
     console.log(formData);
-    console.log(rows);
     if (
       formData["Name" as keyof typeof formData] === undefined ||
       formData["Name" as keyof typeof formData] === ""
@@ -92,9 +94,9 @@ export default function ItemModalBackground({
       formData["Price" as keyof typeof formData] !== "" &&
       !Number.isNaN(Number(formData["Price" as keyof typeof formData]))
     ) {
-      // TODO: implement counter for unique id
       const newRow = {
-        id: rows.length + 1,
+        // get length of item table from amplify for unique id
+        id: itemLength + rows.length + 1,
         name: formData["Name" as keyof typeof formData],
         dateAdded: formData["DateAdded" as keyof typeof formData],
         value: parseFloat(formData.Price),
@@ -102,7 +104,6 @@ export default function ItemModalBackground({
       };
       setRows((prevRows) => [...prevRows, newRow]);
       setOpenModal();
-      console.log(rows);
     }
   };
 
