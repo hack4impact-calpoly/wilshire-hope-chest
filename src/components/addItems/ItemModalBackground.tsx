@@ -94,9 +94,18 @@ export default function ItemModalBackground({
       formData["Price" as keyof typeof formData] !== "" &&
       !Number.isNaN(Number(formData["Price" as keyof typeof formData]))
     ) {
+      // store max id field in rows
+      const maxId =
+        rows.length === 0
+          ? itemLength
+          : rows.reduce(
+              (max, row) => (row.id > max ? row.id : max),
+              rows[0].id
+            );
+
       const newRow = {
-        // get length of item table from amplify for unique id
-        id: itemLength + rows.length + 1,
+        // get the max id in rows then increment by 1
+        id: maxId + 1,
         name: formData["Name" as keyof typeof formData],
         dateAdded: formData["DateAdded" as keyof typeof formData],
         value: parseFloat(formData.Price),
@@ -200,7 +209,9 @@ export default function ItemModalBackground({
               <div>
                 <button
                   type="button"
-                  className={selectedTags.length > 0 ? "tag" : "tagSelected"}
+                  className={
+                    selectedTags.length > 0 ? "modalTag" : "modalTagSelected"
+                  }
                 >
                   {selectedTags.length} selected
                 </button>
@@ -228,8 +239,8 @@ export default function ItemModalBackground({
                   type="button"
                   className={
                     selectedTags.includes(category.name!)
-                      ? "tag"
-                      : "tagSelected"
+                      ? "modalTag"
+                      : "modalTagSelected"
                   }
                   onClick={() => handleTagClick(category.name!)}
                   key={category.name}
