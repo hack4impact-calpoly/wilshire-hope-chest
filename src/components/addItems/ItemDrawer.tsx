@@ -5,16 +5,8 @@ import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
 import { DataStore } from "aws-amplify";
 import { useEffect, useState } from "react";
 import "../../styles/ItemDrawer.css";
-
 import Table from "../tables/Table";
-
-const testRow = {
-  id: 2324,
-  name: "New balance sneaker",
-  dateAdded: "01 Jan 1970 00:00:00 GMT",
-  value: 60,
-  cats: ["Alothing", "tag2", "tag3", "tag4", "tag5"],
-};
+import ItemModalButton from "./itemModalButton";
 
 function ItemDrawer() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -100,21 +92,12 @@ function ItemDrawer() {
             }}
             aria-label="back"
           />
+
           <div className="summary-row">
             <div className="summary-text">
               Donation Summary: {rows.length} Items
             </div>
-            <button
-              className="add-button"
-              type="button"
-              onClick={() => setRows([...rows, testRow])}
-              // need to change this to get new item from Add Item modal
-            >
-              <div className="button-layout">
-                <AddIcon sx={{ color: "white", fontSize: 12 }} />
-                <div className="add-text">Add Item</div>
-              </div>
-            </button>
+            <ItemModalButton rows={rows} setRows={setRows} />
           </div>
           <div className="data-table">
             <Table
