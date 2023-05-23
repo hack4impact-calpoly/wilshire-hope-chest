@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import AddIcon from "@mui/icons-material/Add";
-import { Drawer } from "@mui/material";
+import { Button, Drawer } from "@mui/material";
 import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
 import { DataStore } from "aws-amplify";
 import { useEffect, useState } from "react";
@@ -70,17 +70,19 @@ function ItemDrawer() {
 
   return (
     <>
-      <button
-        className="add-button2"
-        type="button"
+      <Button
+        variant="contained"
         onClick={() => setIsDrawerOpen(true)}
+        startIcon={<AddIcon />}
+        sx={{
+          backgroundColor: "#006d7d",
+          borderRadius: 10,
+          width: "fit-content",
+          alignSelf: "end",
+        }}
       >
-        <div className="button-layout2">
-          {/* <div className="plus" /> */}
-          <AddIcon sx={{ color: "white", fontSize: 12 }} />
-          <div className="add-text2">Add Items</div>
-        </div>
-      </button>
+        New Donation
+      </Button>
       <Drawer
         anchor="bottom"
         hideBackdrop
