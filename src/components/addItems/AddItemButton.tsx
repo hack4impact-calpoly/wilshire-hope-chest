@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { DataStore } from "aws-amplify";
+import { Button } from "@mui/material";
 import emailjs from "emailjs-com";
 import { GridRowsProp } from "@mui/x-data-grid";
 import { Category, Item, ItemCategory } from "../../models";
@@ -138,18 +139,7 @@ function AddItemButton({
   }
 
   return (
-    <div>
-      <button
-        type="button"
-        disabled={isDisabled}
-        onClick={() => {
-          handleClick();
-          setIsDrawerOpen(false);
-          setRows([]);
-        }}
-      >
-        Submit item
-      </button>
+    <div className="inputs-box">
       <div className="email-field">
         <input
           name="email"
@@ -160,6 +150,27 @@ function AddItemButton({
           placeholder="Please enter your email"
         />
       </div>
+      <Button
+        variant="contained"
+        disabled={isDisabled}
+        onClick={() => {
+          handleClick();
+          setIsDrawerOpen(false);
+          setRows([]);
+        }}
+        sx={{
+          width: 166,
+          height: 53,
+          borderRadius: 100,
+          background: "#006d7d",
+          fontWeight: 600,
+          fontSize: 18,
+          lineHeight: 22,
+          color: "#ffffff",
+        }}
+      >
+        Submit Items
+      </Button>
     </div>
   );
 }

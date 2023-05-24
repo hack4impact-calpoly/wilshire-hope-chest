@@ -95,16 +95,26 @@ function ItemDrawer() {
             />
           </div>
           <div className="end-buttons">
-            <button
-              className="cancel-button"
-              type="button"
+            <Button
+              variant="outlined"
               onClick={() => {
                 setIsDrawerOpen(false);
                 setRows([]);
               }}
+              sx={{
+                width: 166,
+                height: 53,
+                borderRadius: 100,
+                border: 1,
+                borderColor: "#006d7d",
+                fontWeight: 600,
+                fontSize: 18,
+                lineHeight: 22,
+                color: "#006d7d",
+              }}
             >
               Cancel
-            </button>
+            </Button>
             <AddItemButton
               isDisabled={isDisabled}
               rows={rows}
