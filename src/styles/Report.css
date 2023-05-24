@@ -27,11 +27,13 @@
 }
 .InsideContent {
   display: inline-block;
+  padding-bottom: 1.5px;
 }
 #logtable {
   margin-bottom: -18px;
   margin-left: 5px;
 }
+
 .date_box {
   text-align: center;
   font-family: "Roboto";
@@ -63,7 +65,7 @@
   padding: 0px;
   gap: 10px;
   width: 95px;
-  height: 38px;
+  height: 40px;
   border: 1px solid #79747e;
   border-radius: 0px 100px 100px 0px;
   flex: none;
@@ -112,3 +114,4 @@
   padding-left: 120px;
   font-size: 13px;
 }
+
