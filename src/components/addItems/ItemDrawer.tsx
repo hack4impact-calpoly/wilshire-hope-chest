@@ -2,11 +2,11 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Drawer } from "@mui/material";
 import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
-import { DataStore } from "aws-amplify";
 import { useEffect, useState } from "react";
 import "../../styles/ItemDrawer.css";
 import Table from "../tables/Table";
 import ItemModalButton from "./itemModalButton";
+import AddItemButton from "./AddItemButton";
 
 function ItemDrawer() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -22,20 +22,6 @@ function ItemDrawer() {
       setIsDisabled(false);
     }
   }, [rows]);
-
-  async function sendData() {
-    console.log(rows);
-    for (let i = 0; i < rows.length; i++) {
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        await DataStore.save(rows[i]);
-        console.log("Item sent successfully!");
-      } catch (error) {
-        console.log("Error sending row", error);
-      }
-    }
-    setRows([]);
-  }
 
   const handleDeleteClick = (id: GridRowId) => () => {
     setRows(rows.filter((row) => row.id !== id));
@@ -77,7 +63,6 @@ function ItemDrawer() {
       </Button>
       <Drawer
         anchor="bottom"
-        hideBackdrop
         open={isDrawerOpen}
         onClose={() => {
           setIsDrawerOpen(false);
@@ -120,18 +105,12 @@ function ItemDrawer() {
             >
               Cancel
             </button>
-            <button
-              className="send-button"
-              type="button"
-              disabled={isDisabled}
-              onClick={() => {
-                console.log("sent receipt");
-                sendData();
-                setIsDrawerOpen(false);
-              }}
-            >
-              Send Receipt
-            </button>
+            <AddItemButton
+              isDisabled={isDisabled}
+              rows={rows}
+              setRows={setRows}
+              setIsDrawerOpen={setIsDrawerOpen}
+            />
           </div>
         </div>
       </Drawer>
