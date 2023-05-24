@@ -18,7 +18,7 @@
   border: none;
 }
 
-.tag {
+.modalTag {
   color: white;
   flex-direction: row;
   justify-content: center;
@@ -36,7 +36,7 @@
   border: none;
 }
 
-.tagSelected {
+.modalTagSelected {
   color: #006d7d;
   flex-direction: row;
   justify-content: center;

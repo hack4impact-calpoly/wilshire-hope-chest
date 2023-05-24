@@ -4,16 +4,37 @@ import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DataStore } from "aws-amplify";
+import { GridRowsProp } from "@mui/x-data-grid";
+import { Category, LazyCategory, Item } from "../../models";
 
 export default function ItemModalBackground({
   setOpenModal,
+  rows,
+  setRows,
 }: {
   setOpenModal: () => void;
+  rows: GridRowsProp;
+  setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
 }) {
+  interface FormData {
+    DateAdded: dayjs.Dayjs;
+    Name: string;
+    Price: string;
+    Categories: string[];
+  }
+
+  const [itemLength, setItemLength] = useState<number>(0);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [nameError, setNameError] = useState(false);
   const [priceError, setPriceError] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<FormData>({
+    DateAdded: dayjs(),
+    Name: "",
+    Price: "0",
+    Categories: [],
+  });
+  const [categories, setCategories] = useState<LazyCategory[]>([]);
 
   useEffect(() => {
     setFormData({
@@ -21,6 +42,16 @@ export default function ItemModalBackground({
       Categories: selectedTags,
     });
   }, [selectedTags]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const cats = await DataStore.query(Category);
+      const items = await DataStore.query(Item);
+      setItemLength(items.length);
+      setCategories(cats);
+    };
+    fetchCategories();
+  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -63,12 +94,33 @@ export default function ItemModalBackground({
       formData["Price" as keyof typeof formData] !== "" &&
       !Number.isNaN(Number(formData["Price" as keyof typeof formData]))
     ) {
+      // store max id field in rows
+      const maxId =
+        rows.length === 0
+          ? itemLength
+          : rows.reduce(
+              (max, row) => (row.id > max ? row.id : max),
+              rows[0].id
+            );
+
+      const newRow = {
+        // get the max id in rows then increment by 1
+        id: maxId + 1,
+        name: formData["Name" as keyof typeof formData],
+        dateAdded: formData["DateAdded" as keyof typeof formData],
+        value: parseFloat(formData.Price),
+        cats: formData["Categories" as keyof typeof formData],
+      };
+      setRows((prevRows) => [...prevRows, newRow]);
       setOpenModal();
     }
   };
 
   return (
-    <div className="modalBackground">
+    <div
+      className="modalBackground"
+      style={{ zIndex: 9999, position: "absolute", right: "0px", top: "0px" }}
+    >
       <div className="modalContainer">
         <div className="titleCloseBtn">
           <button type="button" onClick={setOpenModal}>
@@ -87,9 +139,10 @@ export default function ItemModalBackground({
                 helperText={nameError ? "Name Required" : ""}
                 name="Name"
                 className="textField"
+                // remove added padding from helperText using sx
                 sx={{
                   width: 600,
-                  paddingBottom: 2,
+                  height: 80,
                 }}
                 label="Name"
                 onChange={handleInputChange}
@@ -114,6 +167,7 @@ export default function ItemModalBackground({
                   className="textField"
                   sx={{
                     width: 295,
+                    height: 60,
                   }}
                   label="Price"
                   onChange={handleInputChange}
@@ -130,7 +184,7 @@ export default function ItemModalBackground({
                   label="Date Added"
                   value={dayjs()} // default to today
                   onChange={(newValue) => {
-                    setFormData({ ...formData, DateAdded: newValue });
+                    setFormData({ ...formData, DateAdded: newValue! });
                   }}
                 />
               </LocalizationProvider>
@@ -155,7 +209,9 @@ export default function ItemModalBackground({
               <div>
                 <button
                   type="button"
-                  className={selectedTags.length > 0 ? "tag" : "tagSelected"}
+                  className={
+                    selectedTags.length > 0 ? "modalTag" : "modalTagSelected"
+                  }
                 >
                   {selectedTags.length} selected
                 </button>
@@ -166,44 +222,32 @@ export default function ItemModalBackground({
             <div
               style={{
                 display: "flex",
+                flexWrap: "wrap",
                 flexDirection: "row",
-                paddingBottom: 30,
+                paddingBottom: 10,
                 justifyContent: "center",
               }}
             >
-              {/* Category Selectable Buttons */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  paddingBottom: 30,
-                  justifyContent: "center",
-                }}
-              >
-                {/* Map tag names to their buttons */}
-                {[
-                  "Clothing",
-                  "Collectibles",
-                  "Jewlery",
-                  "Art",
-                  "Household Items",
-                ].map((tag) => (
-                  <button
-                    style={{
-                      marginRight: 10,
-                      width: tag === "Household Items" ? 150 : 100,
-                    }}
-                    type="button"
-                    className={
-                      selectedTags.includes(tag) ? "tag" : "tagSelected"
-                    }
-                    onClick={() => handleTagClick(tag)}
-                    key={tag}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
+              {/* Map tags to categories name fields */}
+              {categories.map((category) => (
+                <button
+                  style={{
+                    marginRight: 10,
+                    marginBottom: 10,
+                    width: category.name === "Household Items" ? 150 : 100,
+                  }}
+                  type="button"
+                  className={
+                    selectedTags.includes(category.name!)
+                      ? "modalTag"
+                      : "modalTagSelected"
+                  }
+                  onClick={() => handleTagClick(category.name!)}
+                  key={category.name}
+                >
+                  {category.name}
+                </button>
+              ))}
             </div>
           </div>
 
