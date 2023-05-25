@@ -5,13 +5,15 @@ import "../../styles/ItemModal.css";
 import { GridRowsProp } from "@mui/x-data-grid";
 import ItemModalBackground from "./ItemModalBackground";
 
+type ItemModalButtonProps = {
+  rows: GridRowsProp;
+  setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
+};
+
 export default function ItemModalButton({
   rows,
   setRows,
-}: {
-  rows: GridRowsProp;
-  setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
-}) {
+}: ItemModalButtonProps) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

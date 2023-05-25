@@ -6,17 +6,19 @@ import { GridRowsProp } from "@mui/x-data-grid";
 import { Category, Item, ItemCategory } from "../../models";
 import "../../styles/AddItemButton.css";
 
+type AddItemButtonProps = {
+  isDisabled: boolean;
+  rows: GridRowsProp;
+  setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
+  setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 function AddItemButton({
   isDisabled,
   rows,
   setRows,
   setIsDrawerOpen,
-}: {
-  isDisabled: boolean;
-  rows: GridRowsProp;
-  setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
-  setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+}: AddItemButtonProps) {
   const [email, setEmail] = useState("");
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
