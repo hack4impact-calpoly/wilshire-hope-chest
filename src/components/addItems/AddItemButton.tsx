@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DataStore } from "aws-amplify";
 import { Button } from "@mui/material";
 import emailjs from "emailjs-com";
@@ -11,6 +11,8 @@ type AddItemButtonProps = {
   rows: GridRowsProp;
   setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
   setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  emailValid: boolean;
+  setEmailValid: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function AddItemButton({
@@ -18,8 +20,21 @@ function AddItemButton({
   rows,
   setRows,
   setIsDrawerOpen,
+  emailValid,
+  setEmailValid,
 }: AddItemButtonProps) {
   const [email, setEmail] = useState("");
+
+  const validRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  useEffect(() => {
+    if (email.length === 0 || !email.match(validRegex)) {
+      setEmailValid(false);
+    } else if (email.match(validRegex)) {
+      setEmailValid(true);
+    }
+  }, [email]);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -134,6 +149,7 @@ function AddItemButton({
           value={email}
           onChange={handleEmailChange}
           placeholder="Please enter your email"
+          required={!emailValid}
         />
       </div>
       <Button

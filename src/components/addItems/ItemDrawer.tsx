@@ -15,13 +15,15 @@ function ItemDrawer() {
 
   const [rows, setRows] = useState<GridRowsProp>([]);
 
+  const [emailValid, setEmailValid] = useState(false);
+
   useEffect(() => {
-    if (rows.length === 0) {
+    if (rows.length === 0 || !emailValid) {
       setIsDisabled(true);
-    } else if (rows.length > 0) {
+    } else if (rows.length > 0 && emailValid) {
       setIsDisabled(false);
     }
-  }, [rows]);
+  }, [rows, emailValid]);
 
   const handleDeleteClick = (id: GridRowId) => () => {
     setRows(rows.filter((row) => row.id !== id));
@@ -128,6 +130,8 @@ function ItemDrawer() {
               rows={rows}
               setRows={setRows}
               setIsDrawerOpen={setIsDrawerOpen}
+              emailValid={emailValid}
+              setEmailValid={setEmailValid}
             />
           </div>
         </div>
