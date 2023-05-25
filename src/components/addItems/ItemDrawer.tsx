@@ -5,8 +5,8 @@ import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import "../../styles/ItemDrawer.css";
 import Table from "../tables/Table";
-import ItemModalButton from "./itemModalButton";
 import AddItemButton from "./AddItemButton";
+import ItemModalButton from "./itemModalButton";
 
 function ItemDrawer() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -42,6 +42,14 @@ function ItemDrawer() {
       value: parseFloat(newRow.value),
       cats: categories,
     };
+
+    const newRows = rows.map((row) => {
+      if (row.id === newRow.id) {
+        return rowFormatter;
+      }
+      return row;
+    });
+    setRows(newRows);
 
     return rowFormatter;
   };
