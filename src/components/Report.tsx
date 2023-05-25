@@ -12,6 +12,7 @@ export default function Report() {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [totalSales, setTotalSales] = useState<number | null>(null);
 
@@ -58,9 +59,14 @@ export default function Report() {
   const handleEndDateChange = (date: Date | null) => {
     if (startDate && date && date < startDate) {
       // End date is before start date, do not update the end date state
-      return;
+      setErrorMessage(
+        "Please Select an End date that is before the Start Date"
+      );
+      setEndDate(null);
+    } else {
+      setErrorMessage(null);
+      setEndDate(date);
     }
-    setEndDate(date);
   };
 
   const handleOpen = () => setOpen(true);
@@ -104,6 +110,7 @@ export default function Report() {
               />
             </div>
           </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
           <p id="sales-text"> Total Sales: $ {totalSales}</p>
         </div>
       </Modal>
