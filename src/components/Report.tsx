@@ -12,6 +12,7 @@ export default function Report() {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+
   const [totalSales, setTotalSales] = useState<number | null>(null);
 
   useEffect(() => {
