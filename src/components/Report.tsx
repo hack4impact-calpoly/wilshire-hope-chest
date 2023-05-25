@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
 import DescriptionIcon from "@mui/icons-material/Description";
+import { Button, Modal } from "@mui/material";
+import { DataStore } from "aws-amplify";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsCalendarEvent } from "react-icons/bs";
-import "../styles/Report.css";
-import { DataStore } from "aws-amplify";
-import { Button, Modal } from "@mui/material";
 import { Item } from "../models";
+import "../styles/Report.css";
 
 export default function Report() {
   const [open, setOpen] = useState(false);
@@ -20,9 +20,19 @@ export default function Report() {
     const calculateTotalValue = async () => {
       let filteredItems = [];
 
+      if (startDate && endDate && endDate < startDate) {
+        // End date is before start date, do not update the end date state
+        setErrorMessage(
+          "Please Select an End date that is before the Start Date"
+        );
+        return;
+      }
+
       if (startDate && endDate) {
+        const prevDay = new Date(startDate);
+        prevDay.setDate(prevDay.getDate() - 1);
         filteredItems = await DataStore.query(Item, (c) =>
-          c.dateAdded.between(startDate.toISOString(), endDate.toISOString())
+          c.dateAdded.between(prevDay.toISOString(), endDate.toISOString())
         );
       } else if (startDate) {
         const prevDay = new Date(startDate);
