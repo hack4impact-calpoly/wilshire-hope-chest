@@ -1,15 +1,83 @@
 import DescriptionIcon from "@mui/icons-material/Description";
 import { Button, Modal } from "@mui/material";
-import React, { useState } from "react";
+import { DataStore } from "aws-amplify";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsCalendarEvent } from "react-icons/bs";
+import { Item } from "../models";
 import "../styles/Report.css";
 
 export default function Report() {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const [totalSales, setTotalSales] = useState<number | null>(null);
+
+  useEffect(() => {
+    const calculateTotalValue = async () => {
+      let filteredItems = [];
+
+      if (startDate && endDate && endDate < startDate) {
+        // End date is before start date, do not update the end date state
+        setErrorMessage(
+          "Please Select an End date that is before the Start Date"
+        );
+        return;
+      }
+
+      if (startDate && endDate) {
+        const prevDay = new Date(startDate);
+        prevDay.setDate(prevDay.getDate() - 1);
+        filteredItems = await DataStore.query(Item, (c) =>
+          c.dateAdded.between(prevDay.toISOString(), endDate.toISOString())
+        );
+      } else if (startDate) {
+        const prevDay = new Date(startDate);
+        prevDay.setDate(prevDay.getDate() - 1);
+
+        filteredItems = await DataStore.query(Item, (c) =>
+          c.dateAdded.gt(prevDay.toISOString())
+        );
+      } else if (endDate) {
+        const nextDay = new Date(endDate);
+        nextDay.setDate(nextDay.getDate() + 1);
+
+        filteredItems = await DataStore.query(Item, (c) =>
+          c.dateAdded.lt(nextDay.toISOString())
+        );
+      } else {
+        filteredItems = await DataStore.query(Item);
+      }
+
+      const totalValue = filteredItems.reduce((sum, item) => {
+        if (item.value != null) {
+          return sum + item.value;
+        }
+        return sum;
+      }, 0);
+
+      const roundedTotal = Math.round(totalValue * 100) / 100; // Round to nearest 0.01
+      setTotalSales(roundedTotal);
+    };
+
+    calculateTotalValue();
+  }, [startDate, endDate]);
+
+  const handleEndDateChange = (date: Date | null) => {
+    if (startDate && date && date < startDate) {
+      // End date is before start date, do not update the end date state
+      setErrorMessage(
+        "Please Select an End date that is before the Start Date"
+      );
+      setEndDate(null);
+    } else {
+      setErrorMessage(null);
+      setEndDate(date);
+    }
+  };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -28,7 +96,7 @@ export default function Report() {
         <div className="report_box">
           <span className="intro-text"> Enter Dates </span>
           <span id="icon">
-            <BsCalendarEvent />{" "}
+            <BsCalendarEvent />
           </span>
           <div id="segment">
             <div id="divTable" className="InsideContent">
@@ -36,9 +104,9 @@ export default function Report() {
                 <DatePicker
                   className="date_box"
                   selected={startDate}
-                  onChange={(date: React.SetStateAction<Date | null>) =>
-                    setStartDate(date)
-                  }
+                  onChange={(date: Date | null) => {
+                    setStartDate(date);
+                  }}
                   placeholderText="Start Date"
                 />
               </table>
@@ -47,29 +115,13 @@ export default function Report() {
               <DatePicker
                 className="date_box2"
                 selected={endDate}
-                onChange={(date: React.SetStateAction<Date | null>) =>
-                  setEndDate(date)
-                }
+                onChange={handleEndDateChange}
                 placeholderText="End Date"
               />
             </div>
           </div>
-          <p id="sales-text"> Total Sales: $ </p>
-          <p id="catt"> Clothing </p>
-          <span id="subtitle"> Total Sales: $</span>
-          <span id="subtitle2"> Total Items: </span>
-          <p id="cat"> Jewlery </p>
-          <span id="subtitle"> Total Sales: $</span>
-          <span id="subtitle2"> Total Items: </span>
-          <p id="cat"> Household Items </p>
-          <span id="subtitle"> Total Sales: $</span>
-          <span id="subtitle2"> Total Items: </span>
-          <p id="cat"> Art </p>
-          <span id="subtitle"> Total Sales: $</span>
-          <span id="subtitle2"> Total Items: </span>
-          <p id="cat"> Collectibles </p>
-          <span id="subtitle"> Total Sales: $</span>
-          <span id="subtitle2"> Total Items: </span>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <p id="sales-text"> Total Sales: $ {totalSales}</p>
         </div>
       </Modal>
     </>
