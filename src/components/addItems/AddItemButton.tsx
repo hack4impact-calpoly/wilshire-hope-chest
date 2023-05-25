@@ -19,22 +19,6 @@ function AddItemButton({
 }) {
   const [email, setEmail] = useState("");
 
-  // Sample data for testing
-  // const items = [
-  //   {
-  //     name: "white desk",
-  //     dateAdded: "2023-04-16",
-  //     value: 30.0,
-  //     categories: ["Furniture"],
-  //   },
-  //   {
-  //     name: "leather cardholder",
-  //     dateAdded: "2023-04-16",
-  //     value: 5.0,
-  //     categories: ["Misc"],
-  //   },
-  // ];
-
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
