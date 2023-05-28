@@ -91,5 +91,23 @@
 .error-message {
   padding-left: 10px;
   padding-top: 10px;
+}
+
+#catt {
+  padding-left: 10px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0;
+}
+
+#subtitle {
+  padding-left: 10px;
+  font-size: 13px;
+}
+#subtitle2 {
+  padding-left: 120px;
+  font-size: 13px;
   padding-bottom: -2px;
 }

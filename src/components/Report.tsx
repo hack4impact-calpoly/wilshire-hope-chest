@@ -1,17 +1,21 @@
+/* eslint-disable react/no-unstable-nested-components */
 import DescriptionIcon from "@mui/icons-material/Description";
+import PrintIcon from "@mui/icons-material/Print";
 import { Button, Modal } from "@mui/material";
 import { DataStore } from "aws-amplify";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsCalendarEvent } from "react-icons/bs";
+import ReactToPrint from "react-to-print";
 import { Item } from "../models";
 import "../styles/Report.css";
 
 export default function Report() {
   const [open, setOpen] = useState(false);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const componentRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [totalSales, setTotalSales] = useState<number | null>(null);
@@ -94,34 +98,48 @@ export default function Report() {
       </Button>
       <Modal open={open} onClose={handleClose}>
         <div className="report_box">
-          <span className="intro-text"> Enter Dates </span>
-          <span id="icon">
-            <BsCalendarEvent />
-          </span>
-          <div id="segment">
-            <div id="divTable" className="InsideContent">
-              <table id="logtable">
+          <ReactToPrint
+            trigger={() => (
+              <Button
+                variant="text"
+                startIcon={<PrintIcon />}
+                sx={{ color: "#006d7d" }}
+              >
+                Print
+              </Button>
+            )}
+            content={() => componentRef.current}
+          />
+          <div ref={componentRef}>
+            <span className="intro-text"> Enter Dates </span>
+            <span id="icon">
+              <BsCalendarEvent />{" "}
+            </span>
+            <div id="segment">
+              <div id="divTable" className="InsideContent">
+                <table id="logtable">
+                  <DatePicker
+                    className="date_box"
+                    selected={startDate}
+                    onChange={(date: Date | null) => {
+                      setStartDate(date);
+                    }}
+                    placeholderText="Start Date"
+                  />
+                </table>
+              </div>
+              <div id="divMessage" className="InsideContent">
                 <DatePicker
-                  className="date_box"
-                  selected={startDate}
-                  onChange={(date: Date | null) => {
-                    setStartDate(date);
-                  }}
-                  placeholderText="Start Date"
+                  className="date_box2"
+                  selected={endDate}
+                  onChange={handleEndDateChange}
+                  placeholderText="End Date"
                 />
-              </table>
+              </div>
             </div>
-            <div id="divMessage" className="InsideContent">
-              <DatePicker
-                className="date_box2"
-                selected={endDate}
-                onChange={handleEndDateChange}
-                placeholderText="End Date"
-              />
-            </div>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <p id="sales-text"> Total Sales: $ {totalSales}</p>
           </div>
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <p id="sales-text"> Total Sales: $ {totalSales}</p>
         </div>
       </Modal>
     </>
