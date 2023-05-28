@@ -2,10 +2,10 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Button, Drawer } from "@mui/material";
 import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
-import { DataStore } from "aws-amplify";
 import { useEffect, useState } from "react";
 import "../../styles/ItemDrawer.css";
 import Table from "../tables/Table";
+import AddItemButton from "./AddItemButton";
 import ItemModalButton from "./itemModalButton";
 
 function ItemDrawer() {
@@ -15,27 +15,15 @@ function ItemDrawer() {
 
   const [rows, setRows] = useState<GridRowsProp>([]);
 
+  const [emailValid, setEmailValid] = useState(false);
+
   useEffect(() => {
-    if (rows.length === 0) {
+    if (rows.length === 0 || !emailValid) {
       setIsDisabled(true);
-    } else if (rows.length > 0) {
+    } else if (rows.length > 0 && emailValid) {
       setIsDisabled(false);
     }
-  }, [rows]);
-
-  async function sendData() {
-    console.log(rows);
-    for (let i = 0; i < rows.length; i++) {
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        await DataStore.save(rows[i]);
-        console.log("Item sent successfully!");
-      } catch (error) {
-        console.log("Error sending row", error);
-      }
-    }
-    setRows([]);
-  }
+  }, [rows, emailValid]);
 
   const handleDeleteClick = (id: GridRowId) => () => {
     setRows(rows.filter((row) => row.id !== id));
@@ -57,6 +45,14 @@ function ItemDrawer() {
       cats: categories,
     };
 
+    const newRows = rows.map((row) => {
+      if (row.id === newRow.id) {
+        return rowFormatter;
+      }
+      return row;
+    });
+    setRows(newRows);
+
     return rowFormatter;
   };
 
@@ -77,7 +73,6 @@ function ItemDrawer() {
       </Button>
       <Drawer
         anchor="bottom"
-        hideBackdrop
         open={isDrawerOpen}
         onClose={() => {
           setIsDrawerOpen(false);
@@ -110,28 +105,34 @@ function ItemDrawer() {
             />
           </div>
           <div className="end-buttons">
-            <button
-              className="cancel-button"
-              type="button"
+            <Button
+              variant="outlined"
               onClick={() => {
                 setIsDrawerOpen(false);
                 setRows([]);
               }}
-            >
-              Cancel
-            </button>
-            <button
-              className="send-button"
-              type="button"
-              disabled={isDisabled}
-              onClick={() => {
-                console.log("sent receipt");
-                sendData();
-                setIsDrawerOpen(false);
+              sx={{
+                width: 166,
+                height: 53,
+                borderRadius: 100,
+                border: 1,
+                borderColor: "#006d7d",
+                fontWeight: 600,
+                fontSize: 18,
+                lineHeight: 22,
+                color: "#006d7d",
               }}
             >
-              Send Receipt
-            </button>
+              Cancel
+            </Button>
+            <AddItemButton
+              isDisabled={isDisabled}
+              rows={rows}
+              setRows={setRows}
+              setIsDrawerOpen={setIsDrawerOpen}
+              emailValid={emailValid}
+              setEmailValid={setEmailValid}
+            />
           </div>
         </div>
       </Drawer>

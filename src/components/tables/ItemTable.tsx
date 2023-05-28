@@ -158,7 +158,7 @@ export default function ItemTable() {
       }
     };
     fetchData();
-  }, []);
+  }, [rows]);
 
   return (
     <Table
