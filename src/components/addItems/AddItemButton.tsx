@@ -1,27 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DataStore } from "aws-amplify";
+import { Button } from "@mui/material";
 import emailjs from "emailjs-com";
+import { GridRowsProp } from "@mui/x-data-grid";
 import { Category, Item, ItemCategory } from "../../models";
 import "../../styles/AddItemButton.css";
 
-function AddItemButton() {
+type AddItemButtonProps = {
+  isDisabled: boolean;
+  rows: GridRowsProp;
+  setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
+  setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  emailValid: boolean;
+  setEmailValid: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function AddItemButton({
+  isDisabled,
+  rows,
+  setRows,
+  setIsDrawerOpen,
+  emailValid,
+  setEmailValid,
+}: AddItemButtonProps) {
   const [email, setEmail] = useState("");
 
-  // Sample data for testing
-  const items = [
-    {
-      name: "white desk",
-      dateAdded: "2023-04-16",
-      value: 30.0,
-      categories: ["Furniture"],
-    },
-    {
-      name: "leather cardholder",
-      dateAdded: "2023-04-16",
-      value: 5.0,
-      categories: ["Misc"],
-    },
-  ];
+  const validRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  useEffect(() => {
+    if (email.length === 0 || !email.match(validRegex)) {
+      setEmailValid(false);
+    } else if (email.match(validRegex)) {
+      setEmailValid(true);
+    }
+  }, [email]);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -38,9 +51,9 @@ function AddItemButton() {
 
   const handleEmailSubmit = () => {
     // generate the report based on test items (items should be replaced with real data)
-    const itemCount = items.length;
-    const totalValue = items.reduce((total, item) => total + item.value, 0);
-    const itemRows = items.map(
+    const itemCount = rows.length;
+    const totalValue = rows.reduce((total, item) => total + item.value, 0);
+    const itemRows = rows.map(
       (item, index) =>
         `${index + 1}. Name: ${item.name}, Value: $${item.value.toFixed(2)}`
     );
@@ -76,10 +89,10 @@ function AddItemButton() {
   async function handleClick() {
     // Handle a request to add a list of items
     await Promise.all(
-      items.map(async (item) => {
+      rows.map(async (item) => {
         // To get the detail of the chosen categories
         const categories = await Promise.all(
-          item.categories.map(async (name) => {
+          item.cats.map(async (name: string) => {
             const category = await DataStore.query(Category, (c) =>
               c.name.eq(name)
             );
@@ -95,7 +108,7 @@ function AddItemButton() {
         // Create the item and save it to DataStore first
         const newItem = new Item({
           name: item.name,
-          dateAdded: item.dateAdded,
+          dateAdded: item.dateAdded.format("YYYY-MM-DD").toString(),
           value: item.value,
         });
         try {
@@ -127,10 +140,7 @@ function AddItemButton() {
   }
 
   return (
-    <div>
-      <button type="button" onClick={handleClick}>
-        Submit item
-      </button>
+    <div className="inputs-box">
       <div className="email-field">
         <input
           name="email"
@@ -139,8 +149,30 @@ function AddItemButton() {
           value={email}
           onChange={handleEmailChange}
           placeholder="Please enter your email"
+          required={!emailValid}
         />
       </div>
+      <Button
+        variant="contained"
+        disabled={isDisabled}
+        onClick={() => {
+          handleClick();
+          setIsDrawerOpen(false);
+          setRows([]);
+        }}
+        sx={{
+          width: 166,
+          height: 53,
+          borderRadius: 100,
+          background: "#006d7d",
+          fontWeight: 600,
+          fontSize: 18,
+          lineHeight: 22,
+          color: "#ffffff",
+        }}
+      >
+        Submit Items
+      </Button>
     </div>
   );
 }
