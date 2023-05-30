@@ -14,7 +14,7 @@ import "../styles/Report.css";
 export default function Report() {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState<Date | null>(
-    new Date("2020-01-02T00:00:00.000Z")
+    new Date("2023-01-02T00:00:00.000Z")
   );
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const componentRef = useRef(null);
@@ -33,6 +33,7 @@ export default function Report() {
         );
         return;
       }
+      setErrorMessage(null);
 
       if (startDate && endDate) {
         const prevDay = new Date(startDate);
