@@ -13,7 +13,9 @@ import "../styles/Report.css";
 
 export default function Report() {
   const [open, setOpen] = useState(false);
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(
+    new Date("2020-01-02T00:00:00.000Z")
+  );
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const componentRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

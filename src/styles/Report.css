@@ -1,4 +1,4 @@
-::placeholder {
+.report_box ::placeholder {
   color: black;
 }
 .report_box {
@@ -74,7 +74,7 @@
   flex-grow: 1;
 }
 
-:placeholder-shown {
+.report_box :placeholder-shown {
   text-align: center;
   font-family: "Roboto";
   font-style: normal;
