@@ -1,3 +1,9 @@
+.item-drawer {
+  padding: 2.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
 .back-button {
   all: unset;
   background-image: url(https://openmoji.org/data/black/svg/E24D.svg);
@@ -7,8 +13,6 @@
   background-origin: content-box;
   width: 57px;
   height: 57px;
-  padding-left: 1.75%;
-  padding-top: 1%;
 }
 
 .summary-row {
@@ -17,8 +21,6 @@
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  padding: 2.5%;
-  padding-top: 1.5%;
 }
 
 .summary-text {
@@ -32,9 +34,6 @@
 .data-table {
   height: 550px;
   width: "100%";
-  padding-left: 2.5%;
-  padding-right: 2.5%;
-  padding-bottom: 2.5%;
 }
 
 .add-button {

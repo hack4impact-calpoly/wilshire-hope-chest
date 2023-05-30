@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import AddIcon from "@mui/icons-material/Add";
-import { Button, Drawer } from "@mui/material";
+import { Button, Drawer, TextField } from "@mui/material";
 import { GridRowId, GridRowModel, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import "../../styles/ItemDrawer.css";
@@ -10,12 +10,10 @@ import ItemModalButton from "./itemModalButton";
 
 function ItemDrawer() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const [isDisabled, setIsDisabled] = useState(true);
-
   const [rows, setRows] = useState<GridRowsProp>([]);
-
-  const [emailValid, setEmailValid] = useState(false);
+  const [email, setEmail] = useState<string | undefined>(undefined);
+  const [emailValid, setEmailValid] = useState<boolean | null>(null);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     if (rows.length === 0 || !emailValid) {
@@ -31,8 +29,6 @@ function ItemDrawer() {
 
   // This function will only be called when user click edit and save button
   // The newRow is the updated row, and the table will display the updated row
-  // TODO: modify this function to update the rows with the newRow
-  // suggestion: find the old row by id and update the field
   const handleRowEditCommit = (newRow: GridRowModel) => {
     let categories = newRow.cats;
     if (typeof categories === "string") {
@@ -79,7 +75,7 @@ function ItemDrawer() {
           setRows([]);
         }}
       >
-        <div>
+        <div className="item-drawer">
           <button
             className="back-button"
             type="button"
@@ -96,6 +92,20 @@ function ItemDrawer() {
             </div>
             <ItemModalButton rows={rows} setRows={setRows} />
           </div>
+          <TextField
+            className="email-input"
+            label="Donator Email"
+            type="email"
+            size="small"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={emailValid === false}
+            helperText={
+              emailValid === false ? "Please enter a valid email address" : ""
+            }
+            sx={{ width: "30%" }}
+          />
           <div className="data-table">
             <Table
               tableHeight="54vh"
@@ -130,7 +140,7 @@ function ItemDrawer() {
               rows={rows}
               setRows={setRows}
               setIsDrawerOpen={setIsDrawerOpen}
-              emailValid={emailValid}
+              email={email}
               setEmailValid={setEmailValid}
             />
           </div>

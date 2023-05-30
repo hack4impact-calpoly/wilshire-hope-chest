@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { DataStore } from "aws-amplify";
 import { Button } from "@mui/material";
-import emailjs from "emailjs-com";
 import { GridRowsProp } from "@mui/x-data-grid";
+import { DataStore } from "aws-amplify";
+import emailjs from "emailjs-com";
+import { useEffect } from "react";
 import { Category, Item, ItemCategory } from "../../models";
 import "../../styles/AddItemButton.css";
 
@@ -11,34 +11,29 @@ type AddItemButtonProps = {
   rows: GridRowsProp;
   setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
   setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  emailValid: boolean;
-  setEmailValid: React.Dispatch<React.SetStateAction<boolean>>;
+  email: string | undefined;
+  setEmailValid: React.Dispatch<React.SetStateAction<boolean | null>>;
 };
+
+const validRegex =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 function AddItemButton({
   isDisabled,
   rows,
   setRows,
   setIsDrawerOpen,
-  emailValid,
+  email,
   setEmailValid,
 }: AddItemButtonProps) {
-  const [email, setEmail] = useState("");
-
-  const validRegex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
   useEffect(() => {
+    if (email === undefined) return;
     if (email.length === 0 || !email.match(validRegex)) {
       setEmailValid(false);
     } else if (email.match(validRegex)) {
       setEmailValid(true);
     }
   }, [email]);
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
 
   // helper function to create form inputs
   const createInput = (name: string, value: string) => {
@@ -64,7 +59,7 @@ function AddItemButton({
 
     // add the email and message fields to the form
     const form = document.createElement("form");
-    form.appendChild(createInput("email", email));
+    form.appendChild(createInput("email", email || ""));
     form.appendChild(createInput("message", message));
 
     // need to move all the id info to .env
@@ -83,7 +78,6 @@ function AddItemButton({
           console.log(error.text);
         }
       );
-    setEmail("");
   };
 
   async function handleClick() {
@@ -141,17 +135,6 @@ function AddItemButton({
 
   return (
     <div className="inputs-box">
-      <div className="email-field">
-        <input
-          name="email"
-          type="email"
-          id="email"
-          value={email}
-          onChange={handleEmailChange}
-          placeholder="Please enter your email"
-          required={!emailValid}
-        />
-      </div>
       <Button
         variant="contained"
         disabled={isDisabled}
