@@ -9,8 +9,7 @@ import "../../styles/AddItemButton.css";
 type AddItemButtonProps = {
   isDisabled: boolean;
   rows: GridRowsProp;
-  setRows: React.Dispatch<React.SetStateAction<GridRowsProp>>;
-  setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClose: () => void;
   email: string | undefined;
   setEmailValid: React.Dispatch<React.SetStateAction<boolean | null>>;
 };
@@ -21,8 +20,7 @@ const validRegex =
 function AddItemButton({
   isDisabled,
   rows,
-  setRows,
-  setIsDrawerOpen,
+  handleClose,
   email,
   setEmailValid,
 }: AddItemButtonProps) {
@@ -80,7 +78,7 @@ function AddItemButton({
       );
   };
 
-  async function handleClick() {
+  const handleClick = async () => {
     // Handle a request to add a list of items
     await Promise.all(
       rows.map(async (item) => {
@@ -131,18 +129,15 @@ function AddItemButton({
     );
 
     handleEmailSubmit();
-  }
+    handleClose();
+  };
 
   return (
     <div className="inputs-box">
       <Button
         variant="contained"
         disabled={isDisabled}
-        onClick={() => {
-          handleClick();
-          setIsDrawerOpen(false);
-          setRows([]);
-        }}
+        onClick={handleClick}
         sx={{
           width: 166,
           height: 53,

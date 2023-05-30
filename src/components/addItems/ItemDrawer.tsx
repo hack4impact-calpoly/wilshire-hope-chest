@@ -23,6 +23,13 @@ function ItemDrawer() {
     }
   }, [rows, emailValid]);
 
+  const handleClose = () => {
+    setIsDrawerOpen(false);
+    setRows([]);
+    setEmailValid(null);
+    setEmail(undefined);
+  };
+
   const handleDeleteClick = (id: GridRowId) => () => {
     setRows(rows.filter((row) => row.id !== id));
   };
@@ -67,22 +74,12 @@ function ItemDrawer() {
       >
         New Donation
       </Button>
-      <Drawer
-        anchor="bottom"
-        open={isDrawerOpen}
-        onClose={() => {
-          setIsDrawerOpen(false);
-          setRows([]);
-        }}
-      >
+      <Drawer anchor="bottom" open={isDrawerOpen} onClose={handleClose}>
         <div className="item-drawer">
           <button
             className="back-button"
             type="button"
-            onClick={() => {
-              setIsDrawerOpen(false);
-              setRows(() => []);
-            }}
+            onClick={handleClose}
             aria-label="back"
           />
 
@@ -117,10 +114,7 @@ function ItemDrawer() {
           <div className="end-buttons">
             <Button
               variant="outlined"
-              onClick={() => {
-                setIsDrawerOpen(false);
-                setRows([]);
-              }}
+              onClick={handleClose}
               sx={{
                 width: 166,
                 height: 53,
@@ -138,8 +132,7 @@ function ItemDrawer() {
             <AddItemButton
               isDisabled={isDisabled}
               rows={rows}
-              setRows={setRows}
-              setIsDrawerOpen={setIsDrawerOpen}
+              handleClose={handleClose}
               email={email}
               setEmailValid={setEmailValid}
             />
