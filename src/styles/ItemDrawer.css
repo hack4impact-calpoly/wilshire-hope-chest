@@ -32,7 +32,6 @@
 }
 
 .data-table {
-  height: 550px;
   width: "100%";
 }
 
@@ -84,8 +83,6 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 2%;
-  padding-top: 0%;
   column-gap: 25px;
 }
 
