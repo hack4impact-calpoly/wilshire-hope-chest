@@ -7,3 +7,5 @@ There are many tools in this repository to help you with code quality and organi
 ## Pre-commit Hook
 
 ## CI with GitHub Actions
+
+Currently disabled due to issues with integration with Amplify.

@@ -30,3 +30,11 @@ When interacting with Git/GitHub, feel free to use the command line, VSCode exte
 4. Link your PR to the corresponding **Issue**  
 5. Request a reviewer to check your code
 6. Once approved, your code is ready to be merged in 🎉
+
+## Deploying
+
+1. Run `amplify pull` when in the Amplify staging environment
+2. Run `amplify env checkout prod` to switch to the production environment
+3. Run `amplify push` to commit changes to production
+4. Merge source branch into main branch
+5. This will execute the deployment process in AWS. Wait for it to finish then view the link given.
