@@ -1,11 +1,11 @@
-type Category @model @auth(rules: [{allow: public}]) {
+type Category @model @auth(rules: [{allow: groups, groups: ["verified"], operations: [read, create, update, delete]}]) {
   id: ID!
   name: String
   description: String
   items: [Item] @manyToMany(relationName: "ItemCategory")
 }
 
-type Item @model @auth(rules: [{allow: public}]) {
+type Item @model @auth(rules: [{allow: groups, groups: ["verified"], operations: [read, create, update, delete]}]) {
   id: ID!
   name: String
   dateAdded: AWSDate

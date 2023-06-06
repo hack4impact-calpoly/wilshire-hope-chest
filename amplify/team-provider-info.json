@@ -14,7 +14,8 @@
     "categories": {
       "auth": {
         "h4iwilshired2cf4e2d": {},
-        "h4iwilshire": {}
+        "h4iwilshire": {},
+        "userPoolGroups": {}
       },
       "api": {
         "h4iwilshire": {}
