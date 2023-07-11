@@ -45,15 +45,11 @@ function AddItemButton({
   const handleEmailSubmit = () => {
     // generate the report based on test items (items should be replaced with real data)
     const itemCount = rows.length;
-    const totalValue = rows.reduce((total, item) => total + item.value, 0);
     const itemRows = rows.map(
-      (item, index) =>
-        `${index + 1}. Name: ${item.name}, Value: $${item.value.toFixed(2)}`
+      (item, index) => `${index + 1}. Name: ${item.name}`
     );
 
-    const message = `Items Donated: ${itemCount}\n\n${itemRows.join(
-      "\n"
-    )}\n\nTotal Value: $${totalValue.toFixed(2)}`;
+    const message = `Items Donated: ${itemCount}\n\n${itemRows.join("\n")}`;
 
     // add the email and message fields to the form
     const form = document.createElement("form");
